@@ -1,0 +1,148 @@
+body {
+  height: 1000px;
+  margin: 0;
+  font: 400 15px/1.8 "Lato", sans-serif;
+  color: #777;
+}
+
+div.header {
+  width: 100%;
+  position: fixed;
+  z-index: 100;
+  overflow: auto;
+  background: #fefefe;
+  text-align: left;
+  padding: 15px 10px;
+  transition: all 0.2s linear;
+}
+
+div.searchBox {
+  margin: auto;
+  width: 50%;
+  border: 1px solid #000000;
+  background-color: white;
+  padding: 100px 100px;
+  position: absolute;
+}
+
+h1, h2 {
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  font: "Lato", sans-serif;
+  text-align: center;
+  color: #111;
+}
+
+.white {
+  color: #aaaaaa;
+}
+
+div.absolute {
+  position: absolute;
+  top: 80px;
+  right: 0;
+  width: 200px;
+  height: 100px;
+  border: 3px solid #73AD21;
+}
+
+.bgimg-1, .bgimg-2 {
+  position: relative;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bgimg-1 {
+  background-image: url("doge.jpg");
+  min-height: 83%;
+}
+
+.bgimg-2 {
+  background-image: url("doge2.jpg");
+  min-height: 50%;
+}
+
+.caption {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  text-align: center;
+  color: #000;
+}
+
+div.content {
+  position: absolute;
+  text-align: left;
+  left: 15%;
+  top: 20%;
+  width: 25%;
+  background-color: white;
+  border-width: 1px;
+  border-style: solid;
+  border-color: darkgrey;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+div.menuChoice {
+  padding: 1.5%;
+}
+
+.button {
+  background-color: #4CAF50;
+  /* Green */
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.1s;
+  /* Safari */
+  transition-duration: 0.1s;
+  cursor: pointer;
+}
+
+.button1 {
+  background-color: #27ae60;
+  color: white;
+}
+
+.button1:hover {
+  background-color: #196f3d;
+  color: white;
+}
+
+.floatRight {
+  float: left;
+}
+
+div.captionStuff {
+  color: #777;
+  text-align: center;
+  padding: 10px 10px; //text-align: justify;
+}
+
+div.captionStuff.b {
+  background-color: black;
+  color: white;
+}
+
+div.captionStuff.w {
+  background-color: white;
+  color: black;
+}
+
+.caption span.border {
+  background-color: #111;
+  color: #fff;
+  padding: 18px;
+  font-size: 25px;
+  letter-spacing: 10px;
+}
