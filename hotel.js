@@ -23,11 +23,12 @@ var temp;
 function colorLoop() {
   temp = document.getElementsByTagName("button");
   console.log("got: " + temp);
-  setInterval(colors, 100);
+  setInterval(loop, 100);
 }
 
-async function colors() {
+async function loop() {
   t++;
+  document.getElementById("fakeCounter").textContent++;
   console.log("Main loop: " + temp);
   //temp.style.color = white;
   $("#epicButton").css("background-color", getRainboxHex(t));

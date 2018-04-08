@@ -16,6 +16,11 @@ div.header {
   transition: all 0.2s linear;
 }
 
+ul {
+  text-align: left;
+  font-size: 120%;
+}
+
 div.searchBox {
   margin: auto;
   width: 50%;
@@ -61,7 +66,7 @@ div.absolute {
 
 .bgimg-2 {
   background-image: url("doge2.jpg");
-  min-height: 50%;
+  min-height: 40%;
 }
 
 .caption {
@@ -85,6 +90,13 @@ div.content {
   border-color: darkgrey;
   border-radius: 8px;
   padding: 10px;
+}
+
+div.content2 {
+  text-align: auto;
+  width: 50%;
+  left: 25%;
+  top: 30%
 }
 
 div.menuChoice {
@@ -126,6 +138,7 @@ div.menuChoice {
 div.captionStuff {
   color: #777;
   text-align: center;
+  position: relative;
   padding: 10px 10px; //text-align: justify;
 }
 
