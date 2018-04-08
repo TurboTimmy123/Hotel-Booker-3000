@@ -26,6 +26,8 @@ function colorLoop() {
   setInterval(loop, 100);
 }
 
+//test
+
 async function loop() {
   t++;
   document.getElementById("fakeCounter").textContent++;
