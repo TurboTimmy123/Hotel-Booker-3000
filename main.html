@@ -8,13 +8,42 @@
   </head>
 
   <body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="jquery.min.js"></script>
     <script src="hotel.js"></script>
     <script>
       colorLoop()
     </script>
 
-    <div id="banner" class="header">Dogeotels</div>
+    <div id="banner" class="navbar">
+
+      <a href="">Dogeotels</a>
+
+      <div class="dropdown">
+        <button class="dropbtn">My Account
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="Register">Register</a>
+          <hr>
+          <a href="Login">Login</a>
+          <a href="Logout">Logout</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <button class="dropbtn">Currency
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="aud">Dollaridoos</a>
+          <a href="doge">Dogecoin</a>
+          <a href="btc">Bitconnect</a>
+        </div>
+      </div>
+
+    </div>
+
+
 
     <div class="bgimg-1">
       <div class="content">
@@ -97,7 +126,7 @@
 
     <div style="position:relative;">
       <div class="captionStuff">
-        <p>Dogeotels Copyright 2018</p>
+        <p>Dogeotels Copywrite 1970-2018</p>
       </div>
     </div>
   </body>

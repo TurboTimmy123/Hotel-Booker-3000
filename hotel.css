@@ -139,7 +139,7 @@ div.captionStuff {
   color: #777;
   text-align: center;
   position: relative;
-  padding: 10px 10px; //text-align: justify;
+  padding: 10px 10px;
 }
 
 div.captionStuff.b {
@@ -158,4 +158,71 @@ div.captionStuff.w {
   padding: 18px;
   font-size: 25px;
   letter-spacing: 10px;
+}
+
+.navbar {
+    overflow: visible;
+    font-family: Arial, Helvetica, sans-serif;
+
+    width: 100%;
+    position: fixed;
+    z-index: 20;
+    background: #44aa77;
+    text-align: left;
+    padding: 0px 10px;
+    transition: all 0.2s linear;
+}
+
+.navbar a {
+    font-size: 24px;
+    color: white;
+    text-align: left;
+    padding: 16px 16px;
+    text-decoration: none;
+}
+
+.dropdown {
+    float: right;
+    padding-right: 20px;
+}
+
+.dropdown .dropbtn {
+    font-size: 19px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: blue;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 0px;
+    width: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }

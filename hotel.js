@@ -26,9 +26,7 @@ function colorLoop() {
   setInterval(loop, 100);
 }
 
-//test
-
-async function loop() {
+function loop() {
   t++;
   document.getElementById("fakeCounter").textContent++;
   console.log("Main loop: " + temp);
@@ -45,7 +43,7 @@ function clamp(x, min, max) {
     return min;
   }
 
-  return x
+  return x;
 }
 
 function getRainboxHex(t) {
