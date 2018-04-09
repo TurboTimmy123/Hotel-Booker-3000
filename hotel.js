@@ -32,7 +32,7 @@ function loop() {
   //temp.style.color = white;
   $("#epicButton").css("background-color", getRainboxHex(t));
 
-  if ((Math.random() * 100) > 99) {
+  if ((Math.random() * 1000) > 999) {
     if (confirm("CONGRATULATIONS, You just won a free iPad, click OK to claim prize!!!")) {
       console.log("Pressed ok");
     } else {
