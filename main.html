@@ -10,23 +10,29 @@
   <body>
     <script src="jquery.min.js"></script>
     <script src="hotel.js"></script>
-    <script>
-      colorLoop()
-    </script>
 
     <!--load up our header and footer includes here-->
     <script>
+      colorLoop();
+      counterLoop();
+
       $(function () {
         $("#header").load("header.html");
         $("#footer").load("footer.html");
+        $("#login").load("login.html");
       });
     </script>
 
     <!--Inserts header.html here-->
     <div id="header"></div>
 
+    <!--Inserts login.html here-->
+    <div id="login"></div>
+
+    <div id="theBackground" class="overLayBg"></div>
+
     <div class="bgimg-1">
-      <div class="content">
+      <div id="search" class="floatingWindow searchBox">
         <form class="form" action="/action_page.php">
           <h1>HI THERE!!!</h1>
           <div class="menuChoice">Destination:
@@ -98,7 +104,7 @@
     </div>
 
     <div class="bgimg-2">
-      <div class="content content2">
+      <div class="floatingWindow customersServed">
         <h1 class="floatRight">Customers proudly served:</h1>
         <h2 id="fakeCounter">1337420</h2>
       </div>

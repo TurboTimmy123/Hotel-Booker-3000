@@ -20,18 +20,8 @@ ul {
   font-size: 120%;
 }
 
-div.searchBox {
-  margin: auto;
-  width: 50%;
-  border: 1px solid #000000;
-  background-color: white;
-  padding: 100px 100px;
-  position: absolute;
-}
-
-h1, h2 {
+h1, h2, h3 {
   letter-spacing: 5px;
-  text-transform: uppercase;
   font: "Lato", sans-serif;
   text-align: center;
   color: #111;
@@ -77,21 +67,37 @@ div.absolute {
   color: #000;
 }
 
-div.content {
+div.floatingWindow {
   position: absolute;
   text-align: left;
-  left: 15%;
-  top: 20%;
-  width: 25%;
   background-color: white;
-  border-width: 1px;
+  border-width: 2px;
   border-style: solid;
   border-color: darkgrey;
   border-radius: 8px;
   padding: 10px;
 }
 
-div.content2 {
+div.searchBox {
+  left: 15%;
+  top: 20%;
+  width: 25%;
+}
+
+div.loginBox {
+  left: 40%;
+  top: 30%;
+  width: 20%;
+  z-index: 10;
+  position: fixed;
+  display: inline-block;
+}
+
+div.LoginPopup {
+  display: none;
+}
+
+div.customersServed {
   text-align: auto;
   width: 50%;
   left: 25%;
@@ -164,7 +170,7 @@ div.captionStuff.w {
   font-family: Arial, Helvetica, sans-serif;
   width: 100%;
   position: fixed;
-  z-index: 20;
+  z-index: 10;
   background: #44aa77;
   text-align: left;
   padding: 0px 10px;
@@ -249,6 +255,17 @@ div.captionStuff.w {
   width: 50%;
 }
 
+.overLayBg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 9;
+  pointer-events: none;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
 /* Clear floats after the columns */
 
 .row:after {
@@ -261,4 +278,15 @@ div.captionStuff.w {
   border: none;
   height: 100%;
   width: 100%;
+}
+
+.close:before {
+  content: '✕';
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 2%;
+  cursor: pointer;
 }
