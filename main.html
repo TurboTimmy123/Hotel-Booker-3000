@@ -14,36 +14,16 @@
       colorLoop()
     </script>
 
-    <div id="banner" class="navbar">
+    <!--load up our header and footer includes here-->
+    <script>
+      $(function () {
+        $("#header").load("header.html");
+        $("#footer").load("footer.html");
+      });
+    </script>
 
-      <a href="">Dogeotels</a>
-
-      <div class="dropdown">
-        <button class="dropbtn">My Account
-          <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-content">
-          <a href="Register">Register</a>
-          <hr>
-          <a href="Login">Login</a>
-          <a href="Logout">Logout</a>
-        </div>
-      </div>
-
-      <div class="dropdown">
-        <button class="dropbtn">Currency
-          <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-content">
-          <a href="aud">Dollaridoos</a>
-          <a href="doge">Dogecoin</a>
-          <a href="btc">Bitconnect</a>
-        </div>
-      </div>
-
-    </div>
-
-
+    <!--Inserts header.html here-->
+    <div id="header"></div>
 
     <div class="bgimg-1">
       <div class="content">
@@ -102,7 +82,7 @@
         <li>I dunno!</li>
       </ul>
 
-      <img style="position: absolute; top: 0px; right: 0px;" src="dogeLogo.png">
+      <img style="position: absolute; top: 0px; right: 0px;" src="dogeLogo.png" alt="Error lol">
     </div>
 
     <div class="captionStuff w">
@@ -124,10 +104,7 @@
       </div>
     </div>
 
-    <div style="position:relative;">
-      <div class="captionStuff">
-        <p>Dogeotels Copywrite 1970-2018</p>
-      </div>
-    </div>
+    <!--Inserts footer.html here-->
+    <div id="footer"></div>
   </body>
 </html>
