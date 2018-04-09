@@ -11,8 +11,8 @@ $(window).scroll(function() {
   var shadowIntensity = clamp(scrollPosition / scrollDistanceToMaxShadow, 0, maxShadowStrength);
   getRainboxHex(scrollPosition);
 
-  console.log("shadowIntensity: " + shadowIntensity);
-  console.log("scrollPosition: " + scrollPosition);
+  //console.log("shadowIntensity: " + shadowIntensity);
+  //console.log("scrollPosition: " + scrollPosition);
   $(temp).css("box-shadow", "0px 0px 20px rgba(0,0,0," + shadowIntensity + ")");
 
 });
@@ -29,9 +29,17 @@ function colorLoop() {
 function loop() {
   t++;
   document.getElementById("fakeCounter").textContent++;
-  console.log("Main loop: " + temp);
   //temp.style.color = white;
   $("#epicButton").css("background-color", getRainboxHex(t));
+
+  if ((Math.random() * 100) > 99) {
+    if (confirm("CONGRATULATIONS, You just won a free iPad, click OK to claim prize!!!")) {
+      console.log("Pressed ok");
+    } else {
+      console.log("Pressed cancel");
+    }
+
+  }
 }
 
 //simple clamp function, yay!
