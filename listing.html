@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="hotel.css">
+    <title>This page definitely has a title</title>
+  </head>
+
+  <body>
+    <script src="jquery.min.js"></script>
+    <script src="hotel.js"></script>
+    <script>
+      colorLoop()
+    </script>
+
+    <!--load up our header and footer includes here-->
+    <script>
+      $(function () {
+        $("#header").load("header.html");
+        $("#footer").load("footer.html");
+      });
+
+      $(function () {
+        //Am hiding the overlay after 2 sec
+        $("#overlay").delay(3000).hide(200);
+      })
+    </script>
+
+    <!--Inserts header.html here-->
+    <div id="header"></div>
+
+    <div class="row">
+      <div class="column left" style="background-color:#aaa;">
+        <h2>Column 1</h2>
+        <p>Some text..</p>
+      </div>
+      <div class="column middle" style="background-color:#bbb;">
+        <h2>Column 2</h2>
+        <p>Some text..</p>
+      </div>
+      <div class="column right" style="background-color:#ccc;">
+        <h2>Column 3</h2>
+        <p>Some text..</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="wide" style="background-color:orange;">
+      <h2>Reviews</h2>
+      <textarea id="msg" rows="4">Write your review here...</textarea>
+
+      <div class="reviews">
+        <hr>
+        <p class="review">Amazing 8/8</p>
+        <hr>
+        <p class="review">Woah 5/7</p>
+        <hr>
+      </div>
+    </div>
+
+    <!--Inserts footer.html here-->
+    <div id="footer"></div>
+
+  </body>
+</html>
