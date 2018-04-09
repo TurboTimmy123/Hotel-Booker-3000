@@ -43,7 +43,7 @@ function loop() {
   t++;
   //temp.style.color = white;
   //$("#epicButton").css("background-color", getRainboxHex(t / 2));
-  $("#theBackground").css("background-color", getRainboxHex(t / 2, 0.1));
+  $("#theBackground").css("background-color", getRainboxHex(t / 2, 0.05));
 
   for (var i = 0; i < ourFloatingWindows.length; i++) {
     $(ourFloatingWindows[i]).css("border-color", getRainboxHex(t / 2, 1));
