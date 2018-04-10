@@ -4,7 +4,7 @@ var temp;
 var lol;
 var ourFloatingWindows;
 var ourButtons;
-var usingNecessaryEffects = true;
+var usingNecessaryEffects = false;
 var usingDefaults = false;
 
 
@@ -47,7 +47,6 @@ function fakeCounterIncrementer() {
 }
 
 function loop() {
-  console.log("asdfasdfa: " + usingNecessaryEffects);
   if (usingNecessaryEffects) {
     usingDefaults = false;
     t++;
@@ -58,7 +57,7 @@ function loop() {
 
     for (var i = 0; i < ourFloatingWindows.length; i++) {
       $(ourFloatingWindows[i]).css("border-color", getRainboxHex(t / 2, 1));
-      $(ourFloatingWindows[i]).css("transform", "rotate(" + Math.sin(k * 2) * 10 + "deg)");
+      $(ourFloatingWindows[i]).css("transform", "rotate(" + Math.sin(k * 2) * 100 + "deg)");
       k++;
     }
 
@@ -72,6 +71,8 @@ function loop() {
         $(ourFloatingWindows[b]).css("border-color", "black");
         $(ourFloatingWindows[b]).css("transform", "rotate(0deg)");
       }
+
+      //we use this variable so we only apply these settings once
       usingDefaults = true;
     }
   }
@@ -147,4 +148,25 @@ function userLogOut() {
 function toggleEffects() {
   usingNecessaryEffects = !usingNecessaryEffects;
   console.log("RGB is: " + usingNecessaryEffects);
+}
+
+//the following 2 function were copied from here:
+//https://stackoverflow.com/questions/3898130/check-if-a-user-has-scrolled-to-the-bottom
+window.onscroll = function(ev) {
+  if ($(window).scrollTop() + $(window).height() == getDocHeight()) {
+    console.log("Reached bottom");
+    $("#foot").css("bottom", "0");
+  } else {
+    console.log("not bottom");
+    $("#foot").css("bottom", "-10%");
+  }
+};
+
+function getDocHeight() {
+  var D = document;
+  return Math.max(
+    D.body.scrollHeight, D.documentElement.scrollHeight,
+    D.body.offsetHeight, D.documentElement.offsetHeight,
+    D.body.clientHeight, D.documentElement.clientHeight
+  );
 }
