@@ -1,9 +1,11 @@
 var t = 1;
+var k = 1;
 var temp;
 var lol;
 var ourFloatingWindows;
 var ourButtons;
-var usingRGB = true;
+var usingNecessaryEffects = true;
+var usingDefaults = false;
 
 
 //this function is run whenever the user scrolls through the page
@@ -45,8 +47,9 @@ function fakeCounterIncrementer() {
 }
 
 function loop() {
-  console.log("asdfasdfa: " + usingRGB);
-  if (usingRGB) {
+  console.log("asdfasdfa: " + usingNecessaryEffects);
+  if (usingNecessaryEffects) {
+    usingDefaults = false;
     t++;
     //temp.style.color = white;
     //$("#epicButton").css("background-color", getRainboxHex(t / 2));
@@ -55,13 +58,22 @@ function loop() {
 
     for (var i = 0; i < ourFloatingWindows.length; i++) {
       $(ourFloatingWindows[i]).css("border-color", getRainboxHex(t / 2, 1));
+      $(ourFloatingWindows[i]).css("transform", "rotate(" + Math.sin(k * 2) * 10 + "deg)");
+      k++;
     }
 
     for (var j = 0; j < ourButtons.length; j++) {
       $(ourButtons[j]).css("background-color", getRainboxHex(t / 2, 1));
     }
   } else {
-    $("#theBackground").css("background-color", "rgba(0, 0, 0, 0)");
+    if (!usingDefaults) {
+      $("#theBackground").css("background-color", "rgba(0, 0, 0, 0)");
+      for (var b = 0; b < ourFloatingWindows.length; b++) {
+        $(ourFloatingWindows[b]).css("border-color", "black");
+        $(ourFloatingWindows[b]).css("transform", "rotate(0deg)");
+      }
+      usingDefaults = true;
+    }
   }
 
   if ((Math.random() * 1000) > 999) {
@@ -132,7 +144,7 @@ function userLogOut() {
   alert("User attempted to log out");
 }
 
-function toggleRGB() {
-  usingRGB = !usingRGB;
-  console.log("RGB is: " + usingRGB);
+function toggleEffects() {
+  usingNecessaryEffects = !usingNecessaryEffects;
+  console.log("RGB is: " + usingNecessaryEffects);
 }
