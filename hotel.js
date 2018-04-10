@@ -51,6 +51,7 @@ function loop() {
     //temp.style.color = white;
     //$("#epicButton").css("background-color", getRainboxHex(t / 2));
     $("#theBackground").css("background-color", getRainboxHex(t / 2, 0.05));
+    $("#name").css("color", getSimpleRainbow(t));
 
     for (var i = 0; i < ourFloatingWindows.length; i++) {
       $(ourFloatingWindows[i]).css("border-color", getRainboxHex(t / 2, 1));
@@ -59,18 +60,17 @@ function loop() {
     for (var j = 0; j < ourButtons.length; j++) {
       $(ourButtons[j]).css("background-color", getRainboxHex(t / 2, 1));
     }
-
-    if ((Math.random() * 1000) > 999) {
-      if (confirm("CONGRATULATIONS, You just won a free iPad, click OK to claim prize!!!")) {
-        console.log("Pressed ok");
-      } else {
-        console.log("Pressed cancel");
-      }
-    }
   } else {
     $("#theBackground").css("background-color", "rgba(0, 0, 0, 0)");
   }
 
+  if ((Math.random() * 1000) > 999) {
+    if (confirm("CONGRATULATIONS, You just won a free iPad, click OK to claim prize!!!")) {
+      console.log("Pressed ok");
+    } else {
+      console.log("Pressed cancel");
+    }
+  }
 }
 
 //simple clamp function, yay!
@@ -94,6 +94,20 @@ function getRainboxHex(t, opacity) {
 
 
   return lol;
+}
+
+function getSimpleRainbow(t) {
+  console.log("trying: " + (t % 3));
+  switch (t % 3) {
+    case 0:
+      return "rgb(255, 255, 0)";
+    case 1:
+      return "rgb(0, 255, 255)";
+    case 2:
+      return "rgb(255, 0, 255)";
+  }
+  console.log("hmmmm");
+  return "rgb(0, 0, 0)";
 }
 
 function showLoginScreen() {
