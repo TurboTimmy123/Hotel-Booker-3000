@@ -1,8 +1,8 @@
 body {
-  height: 1000px;
+  height: 1200px;
   margin: 0;
   font: 400 15px/1.8 "Lato", sans-serif;
-  color: #777;
+  background-color: #eaeaea;
   transition: all 0.2s linear;
 }
 
@@ -71,10 +71,10 @@ div.absolute {
 div.floatingWindow {
   text-align: left;
   background-color: white;
-  border-width: 2px;
+  border-width: 0px;
   border-style: solid;
   border-color: darkgrey;
-  border-radius: 2px;
+  border-radius: 4px;
   padding: 10px;
   transition: all 0.2s linear;
 }
@@ -93,7 +93,7 @@ div.loginBox {
   z-index: 10;
   position: fixed;
   display: inline-block;
-  transform: rotate(-20deg);
+  background-color: #5aa8fb;
 }
 
 div.LoginPopup {
@@ -121,7 +121,7 @@ div.searchListing {
 }
 
 .button {
-  background-color: #4CAF50;
+  background-color: #437ebc;
   /* Green */
   border: none;
   color: white;
@@ -130,6 +130,7 @@ div.searchListing {
   text-align: center;
   text-decoration: none;
   display: inline-block;
+  border-radius: 100px;
   font-size: 16px;
   margin: 4px 2px;
   -webkit-transition-duration: 0.1s;
@@ -139,12 +140,12 @@ div.searchListing {
 }
 
 .button1 {
-  background-color: #27ae60;
+  background-color: #437ebc;
   color: white;
 }
 
 .button1:hover {
-  background-color: #196f3d;
+  background-color: #432ebc;
   color: white;
 }
 
@@ -183,7 +184,7 @@ div.captionStuff.w {
   width: 100%;
   position: fixed;
   z-index: 10;
-  background: #44aa77;
+  background: #5aa8fb;
   text-align: left;
   padding: 0px 10px;
   transition: all 0.2s linear;
@@ -263,16 +264,32 @@ div.captionStuff.w {
 }
 
 .left2 {
-  background-color: #228855;
+  position: fixed;
+  background-color: blue;
   width: 20%;
-  height: 2000px;
+  margin-left: 0%;
+  margin-top: 0%;
+  height: 100%;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.sideBar {
+  min-height: 50%;
+  min-width: 50%;
+  left: 21%;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+  margin: 2%;
 }
 
 .right2 {
+  position: absolute;
+  right: 0px;
   width: 20%;
 }
 
 .middle2 {
+  position: absolute;
+  left: 23%;
   width: 60%;
 }
 
@@ -303,9 +320,21 @@ div.captionStuff.w {
 }
 
 .textarea {
+  background: rgba(255, 255, 255, .1);
   border: none;
-  height: 100%;
-  width: 100%;
+  border-radius: 10px;
+  margin: 0;
+  outline: 0;
+  padding: 7px;
+  width: 75%;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  background-color: #e8eeef;
+  color: #8a97a0;
+  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1) inset;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1) inset;
+  margin-bottom: 10px;
 }
 
 .close:before {
@@ -320,9 +349,13 @@ div.captionStuff.w {
 }
 
 .footer {
-  position: relative;
-  z-index: 10;
-  bottom: 0%;
-  background-color: #44aa77;
+  position: fixed;
+  text-align: center;
+  left: -50%;
+  width: 200%;
+  bottom: -10%;
+  z-index: 1;
+  background-color: #5aa8fb;
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.5);
+  transition: all 0.5s ease-in-out;
 }

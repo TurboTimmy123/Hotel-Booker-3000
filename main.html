@@ -20,6 +20,7 @@
         $("#header").load("includes/header.html");
         $("#footer").load("includes/footer.html");
         $("#login").load("includes/login.html");
+        $("#searchForm").load("includes/search.html");
       });
     </script>
 
@@ -33,45 +34,9 @@
 
     <div class="bgimg-1">
       <div id="search" class="floatingWindow searchBox">
-        <form class="form" action="/action_page.php">
-          <h1>HI THERE!!!</h1>
-          <div class="menuChoice">Destination:
-            <input type="text" name="first" value="420" size="35"></div>
-
-          <div class="menuChoice floatRight">Check in:
-            <input type="date" name="inDate"></div>
-          <div class="menuChoice">Check out:
-            <input type="date" name="outDate"></div>
-
-          <div class="menuChoice floatRight">Adults:
-            <select name="Adults">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
-          </div>
-          <div class="menuChoice floatRight">Children:
-            <select name="Children">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
-          </div>
-          <div class="menuChoice floatRight">Doges:
-            <select name="Doges">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
-          </div>
-
-          <div class="menuChoice">
-            <input id="epicButton" class="button button1" type="submit" value="Find">
-          </div>
-        </form>
+        <h1>Hi There!</h1>
+        <!--Inserts search.html here-->
+        <div id="searchForm"></div>
       </div>
     </div>
 
