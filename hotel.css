@@ -3,6 +3,7 @@ body {
   margin: 0;
   font: 400 15px/1.8 "Lato", sans-serif;
   color: #777;
+  transition: all 0.2s linear;
 }
 
 div.header {
@@ -75,6 +76,7 @@ div.floatingWindow {
   border-color: darkgrey;
   border-radius: 2px;
   padding: 10px;
+  transition: all 0.2s linear;
 }
 
 div.searchBox {
@@ -91,6 +93,7 @@ div.loginBox {
   z-index: 10;
   position: fixed;
   display: inline-block;
+  transform: rotate(-20deg);
 }
 
 div.LoginPopup {
