@@ -93,7 +93,7 @@ div.loginBox {
   z-index: 10;
   position: fixed;
   display: inline-block;
-  background-color: #5aa8fb;
+  background-color: #fefefe;
 }
 
 div.LoginPopup {
@@ -125,7 +125,8 @@ div.searchListing {
   /* Green */
   border: none;
   color: white;
-  padding: 16px 32px;
+  padding-top: 3%;
+  padding-bottom: 3%;
   width: 100%;
   text-align: center;
   text-decoration: none;
@@ -265,7 +266,7 @@ div.captionStuff.w {
 
 .left2 {
   position: fixed;
-  background-color: blue;
+  background-color: #fefefe;
   width: 20%;
   margin-left: 0%;
   margin-top: 0%;
@@ -320,21 +321,22 @@ div.captionStuff.w {
 }
 
 .textarea {
-  background: rgba(255, 255, 255, .1);
-  border: none;
-  border-radius: 10px;
-  margin: 0;
-  outline: 0;
-  padding: 7px;
-  width: 75%;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  background-color: #e8eeef;
-  color: #8a97a0;
-  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1) inset;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1) inset;
+  outline: none;
+  width: 70%;
+  padding: 7px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  background: transparent;
   margin-bottom: 10px;
+  font: 16px Arial, Helvetica, sans-serif;
+  height: 45px;
+}
+
+.wideTextarea {
+  width: 100%;
 }
 
 .close:before {
