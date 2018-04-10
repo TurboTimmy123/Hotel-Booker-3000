@@ -1,3 +1,11 @@
+var t = 1;
+var temp;
+var lol;
+var ourFloatingWindows;
+var ourButtons;
+var usingRGB = true;
+
+
 //this function is run whenever the user scrolls through the page
 $(window).scroll(function() {
   //the maximum shadow strength cast from the banner
@@ -17,17 +25,14 @@ $(window).scroll(function() {
 
 });
 
-var t = 1;
-var temp;
 
-var ourFloatingWindows;
-var ourButtons;
 
 function colorLoop() {
   temp = document.getElementsByTagName("button");
   console.log("got: " + temp);
   ourFloatingWindows = document.getElementsByClassName("floatingWindow");
   ourButtons = document.getElementsByClassName("button");
+
   setInterval(loop, 100);
 }
 
@@ -40,27 +45,32 @@ function fakeCounterIncrementer() {
 }
 
 function loop() {
-  t++;
-  //temp.style.color = white;
-  //$("#epicButton").css("background-color", getRainboxHex(t / 2));
-  $("#theBackground").css("background-color", getRainboxHex(t / 2, 0.05));
+  console.log("asdfasdfa: " + usingRGB);
+  if (usingRGB) {
+    t++;
+    //temp.style.color = white;
+    //$("#epicButton").css("background-color", getRainboxHex(t / 2));
+    $("#theBackground").css("background-color", getRainboxHex(t / 2, 0.05));
 
-  for (var i = 0; i < ourFloatingWindows.length; i++) {
-    $(ourFloatingWindows[i]).css("border-color", getRainboxHex(t / 2, 1));
-  }
-
-  for (var j = 0; j < ourButtons.length; j++) {
-    $(ourButtons[j]).css("background-color", getRainboxHex(t / 2, 1));
-  }
-
-  if ((Math.random() * 1000) > 999) {
-    if (confirm("CONGRATULATIONS, You just won a free iPad, click OK to claim prize!!!")) {
-      console.log("Pressed ok");
-    } else {
-      console.log("Pressed cancel");
+    for (var i = 0; i < ourFloatingWindows.length; i++) {
+      $(ourFloatingWindows[i]).css("border-color", getRainboxHex(t / 2, 1));
     }
 
+    for (var j = 0; j < ourButtons.length; j++) {
+      $(ourButtons[j]).css("background-color", getRainboxHex(t / 2, 1));
+    }
+
+    if ((Math.random() * 1000) > 999) {
+      if (confirm("CONGRATULATIONS, You just won a free iPad, click OK to claim prize!!!")) {
+        console.log("Pressed ok");
+      } else {
+        console.log("Pressed cancel");
+      }
+    }
+  } else {
+    $("#theBackground").css("background-color", "rgba(0, 0, 0, 0)");
   }
+
 }
 
 //simple clamp function, yay!
@@ -74,8 +84,6 @@ function clamp(x, min, max) {
 
   return x;
 }
-
-var lol;
 
 function getRainboxHex(t, opacity) {
   var red = Math.sin(t + 0) * 127 + 128;
@@ -108,4 +116,9 @@ function addReview() {
 
 function userLogOut() {
   alert("User attempted to log out");
+}
+
+function toggleRGB() {
+  usingRGB = !usingRGB;
+  console.log("RGB is: " + usingRGB);
 }
