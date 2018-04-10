@@ -68,17 +68,17 @@ div.absolute {
 }
 
 div.floatingWindow {
-  position: absolute;
   text-align: left;
   background-color: white;
   border-width: 2px;
   border-style: solid;
   border-color: darkgrey;
-  border-radius: 8px;
+  border-radius: 2px;
   padding: 10px;
 }
 
 div.searchBox {
+  position: absolute;
   left: 15%;
   top: 20%;
   width: 25%;
@@ -98,6 +98,7 @@ div.LoginPopup {
 }
 
 div.customersServed {
+  position: absolute;
   text-align: auto;
   width: 50%;
   left: 25%;
@@ -106,6 +107,14 @@ div.customersServed {
 
 div.menuChoice {
   padding: 1.5%;
+}
+
+div.searchListing {
+  min-height: 20%;
+  min-width: 50%;
+  left: 21%;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+  margin: 2%;
 }
 
 .button {
@@ -242,10 +251,26 @@ div.captionStuff.w {
 
 .left, .right {
   width: 33.4%;
+  background-color: #aa0;
 }
 
 .middle {
   width: 33.2%;
+  background-color: #a0a;
+}
+
+.left2 {
+  background-color: #228855;
+  width: 20%;
+  height: 2000px;
+}
+
+.right2 {
+  width: 20%;
+}
+
+.middle2 {
+  width: 60%;
 }
 
 .wide {
@@ -289,4 +314,12 @@ div.captionStuff.w {
   top: 0;
   right: 2%;
   cursor: pointer;
+}
+
+.footer {
+  position: relative;
+  z-index: 10;
+  bottom: 0%;
+  background-color: #44aa77;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.5);
 }
