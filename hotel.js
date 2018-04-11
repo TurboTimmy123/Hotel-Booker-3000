@@ -177,3 +177,15 @@ function getDocHeight() {
     D.body.clientHeight, D.documentElement.clientHeight
   );
 }
+
+function showPostButton() {
+  $("#reviewButton").css("width", "10%");
+  $("#reviewButton").css("height", "10%");
+  $("#reviewButton").css("font-size", "100%");
+}
+
+function hidePostButton() {
+  $("#reviewButton").css("width", "0px");
+  $("#reviewButton").css("height", "0px");
+  $("#reviewButton").css("font-size", "0px");
+}
