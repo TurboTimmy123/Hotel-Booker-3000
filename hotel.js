@@ -1,3 +1,4 @@
+//global variables used throughout the functions
 var t = 1;
 var k = 1;
 var temp;
@@ -8,11 +9,27 @@ var usingNecessaryEffects = false;
 var usingDefaults = false;
 var body;
 
+//to be called once when the page is loaded
+function Start() {
+  temp = document.getElementsByTagName("button");
+  ourFloatingWindows = document.getElementsByClassName("floatingWindow");
+  ourButtons = document.getElementsByClassName("button");
+  body = document.getElementsByTagName("body")[0];
+
+  //Call this function to loop asynchronously
+  if (document.getElementById("fakeCounter") != null) {
+    console.log("counter exists");
+    setInterval(fakeCounterIncrementer, 10);
+  } else {
+    console.log("counter not found");
+  }
+}
 
 //this function is run whenever the user scrolls through the page
 $(window).scroll(function() {
   //the maximum shadow strength cast from the banner
   var maxShadowStrength = 0.5;
+
   //how far we have to scroll until the shadow reaches maximum intensity
   var scrollDistanceToMaxShadow = 500;
 
@@ -20,114 +37,11 @@ $(window).scroll(function() {
   var scrollPosition = $(window).scrollTop();
   var temp = document.getElementById("banner");
   var shadowIntensity = clamp(scrollPosition / scrollDistanceToMaxShadow, 0, maxShadowStrength);
-  getRainboxHex(scrollPosition);
-
-  //console.log("shadowIntensity: " + shadowIntensity);
-  //console.log("scrollPosition: " + scrollPosition);
   $(temp).css("box-shadow", "0px 0px 20px rgba(0,0,0," + shadowIntensity + ")");
-
 });
-
-
-function colorLoop() {
-  temp = document.getElementsByTagName("button");
-  console.log("got: " + temp);
-  ourFloatingWindows = document.getElementsByClassName("floatingWindow");
-  ourButtons = document.getElementsByClassName("button");
-  body = document.getElementsByTagName("body")[0];
-
-  setInterval(loop, 100);
-}
-
-function counterLoop() {
-  setInterval(fakeCounterIncrementer, 10);
-}
 
 function fakeCounterIncrementer() {
   document.getElementById("fakeCounter").textContent++;
-}
-
-function loop() {
-  if (usingNecessaryEffects) {
-    usingDefaults = false;
-    t++;
-    //temp.style.color = white;
-    //$("#epicButton").css("background-color", getRainboxHex(t / 2));
-    $("#theBackground").css("background-color", getRainboxHex(t / 2, 0.05));
-    $("#name").css("color", getSimpleRainbow(t));
-
-    for (var i = 0; i < ourFloatingWindows.length; i++) {
-      $(ourFloatingWindows[i]).css("border-color", getRainboxHex(t / 2, 1));
-      $(ourFloatingWindows[i]).css("transform", "rotate(" + Math.sin(k * 2) * 10 + "deg)");
-      k++;
-    }
-
-    for (var j = 0; j < ourButtons.length; j++) {
-      $(ourButtons[j]).css("background-color", getRainboxHex(t / 2, 1));
-    }
-  } else {
-    if (!usingDefaults) {
-      $("#theBackground").css("background-color", "rgba(0, 0, 0, 0)");
-      for (var b = 0; b < ourFloatingWindows.length; b++) {
-        $(ourFloatingWindows[b]).css("border-color", "black");
-        $(ourFloatingWindows[b]).css("transform", "rotate(0deg)");
-      }
-
-      //we use this variable so we only apply these settings once
-      usingDefaults = true;
-    }
-  }
-
-  if ((Math.random() * 10000) > 9999) {
-    if (confirm("CONGRATULATIONS, You just won a free iPad, click OK to claim prize!!!")) {
-      console.log("Pressed ok");
-    } else {
-      console.log("Pressed cancel");
-    }
-  }
-
-  if ((Math.random() * 10) > 5) {
-    body.style.cursor = "wait";
-  } else {
-    body.style.cursor = "default";
-  }
-}
-
-//simple clamp function, yay!
-function clamp(x, min, max) {
-  if (x > max) {
-    return max;
-  }
-  if (x < min) {
-    return min;
-  }
-
-  return x;
-}
-
-function getRainboxHex(t, opacity) {
-  var red = Math.sin(t + 0) * 127 + 128;
-  var green = Math.sin(t + 2) * 127 + 128;
-  var blue = Math.sin(t + 4) * 127 + 128;
-
-  lol = "rgba(" + red + "," + green + "," + blue + "," + opacity + ")";
-
-
-  return lol;
-}
-
-function getSimpleRainbow(t) {
-  console.log("trying: " + (t % 3));
-  switch (t % 3) {
-    case 0:
-      return "rgb(255, 255, 0)";
-    case 1:
-      return "rgb(0, 255, 255)";
-    case 2:
-      return "rgb(255, 0, 255)";
-  }
-  console.log("hmmmm");
-  return "rgb(0, 0, 0)";
 }
 
 function showLoginScreen() {
@@ -144,19 +58,12 @@ function addReview() {
   console.log("Adding Review...");
   var ourText = document.getElementById("msg");
   console.log(ourText.value);
-
   $("#reviews").append("<div class=\"reviews\">" + ourText.value + "</div><hr>");
-
   closeReviewBox();
 }
 
 function userLogOut() {
   alert("User attempted to log out");
-}
-
-function toggleEffects() {
-  usingNecessaryEffects = !usingNecessaryEffects;
-  console.log("RGB is: " + usingNecessaryEffects);
 }
 
 //the following 2 function were copied from here:
@@ -197,44 +104,6 @@ function closeReviewBox() {
   $("#msg").css("width", "20%");
   $("#msg").css("height", "40px");
 
+  //clear our review once it's posted
   document.getElementById("msg").value = "";
-}
-
-var t = 0;
-
-function callLoop() {
-  setInterval(dank, 70);
-}
-
-function dank() {
-  var xD = document.getElementsByTagName("body")[0];
-  t++;
-  console.log(t);
-  switch (t) {
-    case 1:
-      xD.style.cursor = "n-resize";
-      break;
-    case 2:
-      xD.style.cursor = "ne-resize";
-      break;
-    case 3:
-      xD.style.cursor = "e-resize";
-      break;
-    case 4:
-      xD.style.cursor = "se-resize";
-      break;
-    case 5:
-      xD.style.cursor = "s-resize";
-      break;
-    case 6:
-      xD.style.cursor = "sw-resize";
-      break;
-    case 7:
-      xD.style.cursor = "w-resize";
-      break;
-    case 8:
-      xD.style.cursor = "nw-resize";
-      t = 0;
-      break;
-  }
 }
