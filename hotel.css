@@ -250,17 +250,21 @@ div.captionStuff.w {
 .column {
   float: left;
   padding-top: 2%;
-  height: 500px;
-  /* Should be removed. Only for demonstration */
 }
 
-.left, .right {
-  width: 33.4%;
+.left {
+  padding-left: 22%;
+  width: 25%;
+  background-color: #aa0;
+}
+
+.right: {
+  left: 25%;
   background-color: #aa0;
 }
 
 .middle {
-  width: 33.2%;
+  width: 30.2%;
   background-color: #a0a;
 }
 
