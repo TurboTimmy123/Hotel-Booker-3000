@@ -61,10 +61,10 @@
 
     <hr>
 
-    <div class="wide" style="background-color:orange;">
+    <div class="wide">
       <h2>Reviews</h2>
-      <textarea id="msg" class="textarea" rows="4">Write your review here...</textarea>
-      <button onclick="addReview()">Post</button>
+      <textarea id="msg" onfocus="setTimeout(showPostButton, 200)" onblur="setTimeout(hidePostButton, 200)" class="reviewTextArea" rows="4" placeholder="Write your review here..."></textarea>
+      <button id="reviewButton" class="button reviewButton" onclick="addReview()">Post</button>
 
       <div id="reviews" class="reviews">
         <hr>

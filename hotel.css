@@ -3,7 +3,7 @@ body {
   margin: 0;
   font: 400 15px/1.8 "Lato", sans-serif;
   background-color: #eaeaea;
-  transition: all 0.2s linear;
+  transition: all 0.2s ease-in-out;
   cursor: default;
 }
 
@@ -14,7 +14,7 @@ div.header {
   background: #fefefe;
   text-align: left;
   padding: 15px 10px;
-  transition: all 0.2s linear;
+  transition: all 0.2s ease-in-out;
 }
 
 ul {
@@ -77,7 +77,8 @@ div.floatingWindow {
   border-color: darkgrey;
   border-radius: 4px;
   padding: 10px;
-  transition: all 0.2s linear;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
 }
 
 div.searchBox {
@@ -131,9 +132,13 @@ div.searchListingImageDescription {
   background-color: blue;
 }
 
+hr {
+  border-top: 1;
+  background-color: rgb(0, 0, 0, 0.2);
+}
+
 .button {
-  background-color: #437ebc;
-  /* Green */
+  background-color: rgb(5, 170, 155);
   border: none;
   color: white;
   padding-top: 3%;
@@ -151,13 +156,26 @@ div.searchListingImageDescription {
   cursor: pointer;
 }
 
+.button:hover {
+  box-shadow: 0px 0px 5px 5px rgb(5, 170, 155, 0.5);
+}
+
+.reviewButton {
+  display: block;
+  width: 0px;
+  height: 0px;
+  font-size: 0px;
+  padding-top: 0%;
+  padding-bottom: 0%;
+}
+
 .button1 {
-  background-color: #437ebc;
+  background-color: rgb(5, 190, 175);
   color: white;
 }
 
 .button1:hover {
-  background-color: #432ebc;
+  background-color: rgb(5, 170, 155);
   color: white;
 }
 
@@ -196,7 +214,7 @@ div.captionStuff.w {
   width: 100%;
   position: fixed;
   z-index: 10;
-  background: #5aa8fb;
+  background: rgb(5, 190, 175);
   text-align: left;
   padding: 0px 10px;
   transition: all 0.2s linear;
@@ -227,7 +245,7 @@ div.captionStuff.w {
 }
 
 .navbar a:hover, .dropdown:hover .dropbtn {
-  background-color: blue;
+  background-color: rgb(5, 170, 155);
 }
 
 .dropdown-content {
@@ -313,7 +331,12 @@ div.captionStuff.w {
   margin: auto;
   padding: 10px;
   align-content: center;
-  width: 50%;
+  width: 60%;
+  margin-top: 1%;
+  margin-left: 27%;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
 }
 
 .overLayBg {
@@ -348,6 +371,29 @@ div.captionStuff.w {
   margin-bottom: 10px;
   font: 16px Arial, Helvetica, sans-serif;
   height: 45px;
+  resize: none;
+}
+
+.reviewTextArea {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  border: none;
+  outline: none;
+  width: 20%;
+  padding: 7px;
+  border-radius: 3px;
+  border-bottom: 1px solid #ddd;
+  background: rgb(5, 190, 175);
+  margin-bottom: 10px;
+  font: 16px Arial, Helvetica, sans-serif;
+  height: 45px;
+  transition: all 0.3s linear;
+  resize: none;
+}
+
+.reviewTextArea:focus {
+  width: 100%;
 }
 
 .wideTextarea {
@@ -372,7 +418,7 @@ div.captionStuff.w {
   width: 200%;
   bottom: -10%;
   z-index: 1;
-  background-color: #5aa8fb;
+  background-color: rgb(5, 190, 175);
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.5);
   transition: all 0.5s ease-in-out;
 }
