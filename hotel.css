@@ -114,11 +114,14 @@ div.menuChoice {
   padding: 1.5%;
 }
 
+.boxShadow {
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+}
+
 div.searchListing {
   min-height: 200px;
   min-width: 50%;
   left: 21%;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
   margin: 2%;
 }
 
@@ -137,15 +140,43 @@ h3 {
 
 div.searchListingTitle {
   min-width: 75%;
-  background-color: rgb(150, 150, 150);
+}
+
+.vl {
+  border-left: 6px solid green;
+  height: 500px;
 }
 
 div.searchListingDescription {
-  min-height: 100px;
+  padding-left: 10px;
+  float: left;
   background-color: rgb(220, 220, 220);
 }
 
+div.priceBox {
+  position: absolute;
+  right: 10px;
+  font-size: 200%;
+  min-height: 85px;
+  min-width: 100px;
+  text-align: center;
+  line-height: 85px;
+  padding-right: 10px;
+  background-color: rgb(130, 130, 130);
+}
+
+div.goto {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  min-width: 110px;
+  text-align: right;
+  padding-right: 10px;
+}
+
 hr {
+  padding: 0px;
+  margin: 0px;
   border-top: 1;
   background-color: rgb(0, 0, 0, 0.2);
 }
