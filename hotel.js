@@ -199,3 +199,42 @@ function closeReviewBox() {
 
   document.getElementById("msg").value = "";
 }
+
+var t = 0;
+
+function callLoop() {
+  setInterval(dank, 70);
+}
+
+function dank() {
+  var xD = document.getElementsByTagName("body")[0];
+  t++;
+  console.log(t);
+  switch (t) {
+    case 1:
+      xD.style.cursor = "n-resize";
+      break;
+    case 2:
+      xD.style.cursor = "ne-resize";
+      break;
+    case 3:
+      xD.style.cursor = "e-resize";
+      break;
+    case 4:
+      xD.style.cursor = "se-resize";
+      break;
+    case 5:
+      xD.style.cursor = "s-resize";
+      break;
+    case 6:
+      xD.style.cursor = "sw-resize";
+      break;
+    case 7:
+      xD.style.cursor = "w-resize";
+      break;
+    case 8:
+      xD.style.cursor = "nw-resize";
+      t = 0;
+      break;
+  }
+}

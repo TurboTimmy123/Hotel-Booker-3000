@@ -13,7 +13,7 @@
 
     <!--load up our header and footer includes here-->
     <script>
-      colorLoop()
+      colorLoop();
 
       $(function () {
         $("#header").load("includes/header.html");
@@ -43,13 +43,19 @@
         <h2>Listings</h2>
         <p>Some text..</p>
         <div class="floatingWindow searchListing">
-          <div class="searchListingImage">image goes here</div>
+          <div class="searchListingImage boxShadow">image goes here</div>
           <div class="searchListingTitle">
             <h3>h3 title</h3>
+            <hr/>
             <div class="searchListingDescription">Description stuff here
               <br>asdf
               <br>asdf
               <br>asdf</div>
+            <div class="rightSide"></div>
+            <div class="priceBox">$1337</div>
+            <div class="goto">
+              <button id="goto" class="button" onclick="addReview()">Goto</button>
+            </div>
           </div>
         </div>
 
