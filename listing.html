@@ -63,7 +63,7 @@
 
     <div class="floatingWindow wide">
       <h2>Reviews</h2>
-      <textarea id="msg" onfocus="setTimeout(showPostButton, 200)" onblur="setTimeout(hidePostButton, 200)" class="reviewTextArea" rows="10" placeholder="Write your review here..."></textarea>
+      <textarea id="msg" onclick="openReviewBox()" class="reviewTextArea" rows="10" placeholder="Write your review here..."></textarea>
       <button id="reviewButton" class="button reviewButton" onclick="addReview()">Post</button>
 
       <div id="reviews" class="reviews">
