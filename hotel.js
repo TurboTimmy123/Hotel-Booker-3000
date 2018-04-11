@@ -78,7 +78,7 @@ function loop() {
     }
   }
 
-  if ((Math.random() * 1000) > 999) {
+  if ((Math.random() * 10000) > 9999) {
     if (confirm("CONGRATULATIONS, You just won a free iPad, click OK to claim prize!!!")) {
       console.log("Pressed ok");
     } else {
@@ -179,8 +179,8 @@ function getDocHeight() {
 }
 
 function showPostButton() {
-  $("#reviewButton").css("width", "10%");
-  $("#reviewButton").css("height", "10%");
+  $("#reviewButton").css("width", "8%");
+  $("#reviewButton").css("height", "100%");
   $("#reviewButton").css("font-size", "100%");
 }
 
