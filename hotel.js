@@ -146,6 +146,8 @@ function addReview() {
   console.log(ourText.value);
 
   $("#reviews").append("<div class=\"reviews\">" + ourText.value + "</div><hr>");
+
+  closeReviewBox();
 }
 
 function userLogOut() {
@@ -178,14 +180,22 @@ function getDocHeight() {
   );
 }
 
-function showPostButton() {
+function openReviewBox() {
   $("#reviewButton").css("width", "8%");
   $("#reviewButton").css("height", "100%");
   $("#reviewButton").css("font-size", "100%");
+
+  $("#msg").css("width", "100%");
+  $("#msg").css("height", "100px");
 }
 
-function hidePostButton() {
+function closeReviewBox() {
   $("#reviewButton").css("width", "0px");
   $("#reviewButton").css("height", "0px");
   $("#reviewButton").css("font-size", "0px");
+
+  $("#msg").css("width", "20%");
+  $("#msg").css("height", "40px");
+
+  document.getElementById("msg").value = "";
 }
