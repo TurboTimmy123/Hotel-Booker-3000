@@ -161,13 +161,22 @@ div.priceBox {
   background-color: rgb(130, 130, 130);
 }
 
-div.goto {
+div.bottomRight {
   position: absolute;
   right: 10px;
   bottom: 10px;
   min-width: 110px;
   text-align: right;
   padding-right: 10px;
+}
+
+div.bookButton {
+  position: relative;
+  left: 73%;
+  top: 100px;
+  width: 24%;
+  text-align: right;
+  color: orange;
 }
 
 hr {
@@ -355,19 +364,25 @@ div.captionStuff.w {
 .left {
   left: 0%;
   width: 28%;
-  background-color: blue;
 }
 
 .right {
+  top: 24%;
+  height: 497px;
   right: 0%;
   width: 28%;
-  background-color: blue;
+}
+
+.bookNow {
+  position: absolute;
+  bottom: 50px;
+  right: 60px;
+  width: 320px;
 }
 
 .middle {
   left: 29%;
   width: 40%;
-  background-color: green;
 }
 
 .fixedColumn {
@@ -379,9 +394,7 @@ div.captionStuff.w {
   margin-top: 0%;
 }
 
-.listingPicture {
-  background-color: red;
-}
+.listingPicture {}
 
 .left2 {
   width: 20%;
@@ -497,6 +510,6 @@ div.captionStuff.w {
 }
 
 .suchMap {
-  height: 500px;
+  height: 497px;
   background: yellow;
 }

@@ -125,7 +125,6 @@ function closeReviewBox() {
 function scrollingDoge() {
   scroll -= 1;
   $("#tilingDoge").css('background-position', -scroll + "px " + scroll + "px");
-  console.log("doing stuff..." + scroll);
 }
 
 function myMap() {
