@@ -46,7 +46,6 @@ div.absolute {
   position: relative;
   background-attachment: fixed;
   background-position: center;
-  background-repeat: no-repeat;
   background-size: cover;
 }
 
@@ -56,8 +55,9 @@ div.absolute {
 }
 
 .bgimg-2 {
-  background-image: url("doge2.jpg");
+  background-image: url("dogeRepeat.png");
   min-height: 40%;
+  background-repeat: repeat;
 }
 
 .caption {
@@ -79,6 +79,11 @@ div.floatingWindow {
   padding: 10px;
   transition: all 0.2s ease-in-out;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+}
+
+.listingsWindow {
+  width: 100%;
+  height: 700px;
 }
 
 div.searchBox {
@@ -191,7 +196,7 @@ hr {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  border-radius: 100px;
+  border-radius: 10px;
   font-size: 16px;
   margin: 4px 2px;
   -webkit-transition-duration: 0.1s;
@@ -211,6 +216,16 @@ hr {
   font-size: 0px;
   padding-top: 0%;
   padding-bottom: 0%;
+  padding: 0px;
+}
+
+.backButton {
+  position: fixed;
+  left: 20px;
+  top: 80px;
+  width: 120px;
+  padding: 1%;
+  max-height: 2px;
 }
 
 .button1 {
@@ -322,33 +337,43 @@ div.captionStuff.w {
 
 .column {
   float: left;
-  padding-top: 2%;
+  padding: 0px;
+  padding-top: 40px;
+  height: 650px;
+  /* Should be removed. Only for demonstration */
 }
 
-.left {
-  padding-left: 22%;
-  width: 25%;
-  background-color: #aa0;
-}
-
-.right: {
-  left: 25%;
-  background-color: #aa0;
+.left, .right {
+  width: 30%;
+  background-color: blue;
 }
 
 .middle {
-  width: 30.2%;
-  background-color: #a0a;
+  width: 40%;
+  background-color: green;
+}
+
+.fixedColumn {
+  padding-top: 2%;
+  position: fixed;
+  background-color: #fefefe;
+  height: 100%;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  margin-top: 0%;
+}
+
+.listingPicture {
+  background-color: red;
 }
 
 .left2 {
-  position: fixed;
-  background-color: #fefefe;
   width: 20%;
   margin-left: 0%;
-  margin-top: 0%;
-  height: 100%;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.right2 {
+  width: 20%;
+  right: 0px;
 }
 
 .sideBar {
@@ -359,12 +384,6 @@ div.captionStuff.w {
   margin: 2%;
 }
 
-.right2 {
-  position: absolute;
-  right: 0px;
-  width: 20%;
-}
-
 .middle2 {
   position: absolute;
   left: 23%;
@@ -372,7 +391,7 @@ div.captionStuff.w {
 }
 
 .wide {
-  width: 60%;
+  width: 50%;
   margin-top: 1%;
   margin-left: 27%;
 }
@@ -455,4 +474,11 @@ div.captionStuff.w {
   background-color: rgb(5, 190, 175);
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.5);
   transition: all 0.5s ease-in-out;
+}
+
+.suchMap {
+  right: 50px;
+  width: 100%;
+  height: 500px;
+  background: yellow;
 }

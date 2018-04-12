@@ -11,6 +11,7 @@
     <script src="jquery.min.js"></script>
     <script src="hotel.js"></script>
     <script src="veryImportant.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
 
     <!--load up our header and footer includes here-->
     <script>
@@ -30,16 +31,11 @@
 
     <div id="theBackground" class="overLayBg"></div>
 
-    <div class="row">
-      <div class="column left2">
-        <h2>Test</h2>
-        <hr/>
-        <!--Inserts search.html here-->
-        <div id="searchForm"></div>
-      </div>
+    <input class="button button1 backButton" value="Back to results"></input>
 
+    <div class="floatingWindow listingsWindow">
       <div class="row">
-        <div class="column left">
+        <div class="column left listingPicture">
           <h2>Column 1</h2>
           <p>Some text..</p>
         </div>
@@ -51,11 +47,10 @@
             <br>asdf</p>
         </div>
         <div class="column right">
-          <h2>Column 3</h2>
-          <p>Some text..</p>
+          <div id="map" class="suchMap">My map will go here</div>
         </div>
-      </div>
 
+      </div>
     </div>
 
     <hr>
@@ -76,6 +71,8 @@
 
     <!--Inserts footer.html here-->
     <div id="footer"></div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDchyfgrUwcKhzKErEHfGSeXOsjIk6-bbg&callback=myMap&v=3.exp"></script>
 
     <script>
       Start();
