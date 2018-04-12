@@ -52,8 +52,9 @@ function fakeCounterIncrementer() {
   document.getElementById("fakeCounter").textContent++;
 }
 
-function showLoginScreen() {
+function showLoginScreen(reg) {
   console.log("Open login");
+  showRegisterOptions(reg);
   document.getElementById("loginPopup").style.display = 'block';
 }
 
@@ -130,4 +131,34 @@ function myMap() {
     mapTypeId: google.maps.MapTypeId.roadmap
   }
   var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+}
+
+function showRegisterOptions(i) {
+  var temp1 = "none";
+  var temp2 = "block";
+
+  document.getElementById("loginRegisterScreen").innerHTML = "Login";
+  if (i) {
+    temp1 = "block";
+    temp2 = "none";
+    document.getElementById("loginRegisterScreen").innerHTML = "Register";
+  }
+
+  //the folowing chunk will reveal all options that have a register class
+  var hiddenOptions = document.getElementsByClassName("register");
+  for (var b = 0; b < hiddenOptions.length; b++) {
+    $(hiddenOptions[b]).css("display", temp1);
+    $(hiddenOptions[b]).css("display", temp1);
+  }
+
+  //the following chunk will hide any options with this class
+  var hideThis = document.getElementsByClassName("hideWhenRegistering");
+  for (var q = 0; q < hideThis.length; q++) {
+    $(hideThis[q]).css("display", temp2);
+  }
+
+}
+
+function changedFavouriteColor() {
+
 }
