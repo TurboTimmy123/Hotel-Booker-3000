@@ -13,7 +13,7 @@ function initializeEffects() {
   ourFloatingWindows = document.getElementsByClassName("floatingWindow");
   ourButtons = document.getElementsByClassName("button");
   body = document.getElementsByTagName("body")[0];
-  setInterval(mainLoop, 100);
+  setInterval(mainLoop, 50);
 }
 
 function toggleEffects() {
@@ -50,7 +50,7 @@ function mainLoop() {
     }
   }
 
-  if ((Math.random() * 10000) > 9999) {
+  if ((Math.random() * 100000) > 99999) {
     if (confirm("CONGRATULATIONS, You just won a free iPad, click OK to claim prize!!!")) {
       console.log("Pressed ok");
     } else {

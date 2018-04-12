@@ -8,6 +8,7 @@ var ourButtons;
 var usingNecessaryEffects = false;
 var usingDefaults = false;
 var body;
+var scroll = 0;
 
 //to be called once when the page is loaded
 function Start() {
@@ -22,6 +23,13 @@ function Start() {
     setInterval(fakeCounterIncrementer, 10);
   } else {
     console.log("counter not found");
+  }
+
+  if (document.getElementById("tilingDoge") != null) {
+    console.log("doges exists");
+    setInterval(scrollingDoge, 10);
+  } else {
+    console.log("doges not found");
   }
 }
 
@@ -106,4 +114,20 @@ function closeReviewBox() {
 
   //clear our review once it's posted
   document.getElementById("msg").value = "";
+}
+
+
+function scrollingDoge() {
+  scroll -= 1;
+  $("#tilingDoge").css('background-position', -scroll + "px " + scroll + "px");
+  console.log("doing stuff..." + scroll);
+}
+
+function myMap() {
+  var mapOptions = {
+    center: new google.maps.LatLng(51.5, -0.12),
+    zoom: 10,
+    mapTypeId: google.maps.MapTypeId.roadmap
+  }
+  var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 }
