@@ -7,16 +7,6 @@ body {
   cursor: default;
 }
 
-div.header {
-  width: 100%;
-  position: fixed;
-  overflow: auto;
-  background: #fefefe;
-  text-align: left;
-  padding: 15px 10px;
-  transition: all 0.2s ease-in-out;
-}
-
 ul {
   text-align: left;
   font-size: 120%;
@@ -188,7 +178,7 @@ hr {
 }
 
 .button {
-  background-color: rgb(5, 170, 155);
+  background-color: rgb(5, 190, 175);
   border: none;
   color: white;
   padding-top: 3%;
@@ -264,6 +254,12 @@ div.captionStuff {
 div.captionStuff.b {
   background-color: black;
   color: white;
+}
+
+.maxImage {
+  width: 210px;
+  height: 200px;
+  display: block;
 }
 
 div.captionStuff.w {
