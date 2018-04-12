@@ -98,7 +98,7 @@ function getRainboxHex(t, opacity) {
 }
 
 function getSimpleRainbow(t) {
-  console.log("trying: " + (t % 3));
+  //console.log("trying: " + (t % 3));
   switch (t % 3) {
     case 0:
       return "rgb(255, 255, 0)";

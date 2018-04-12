@@ -26,8 +26,8 @@
     </div>
 
     <div class="menuChoice register">Favourite Color:
-      <select name="color">
-        <option onclick="changedFavouriteColor()" value="Red">Red</option>
+      <select onchange="applyThemeColor(this.value)" name="color">
+        <option value="Red">Red</option>
         <option value="Green">Green</option>
         <option value="Blue">Blue</option>
       </select>
@@ -39,7 +39,7 @@
     </div>
 
     <div class="menuChoice">
-      <input id="epicButton" onclick="alert('Login...')" class="button button1 register" type="Register" value="Register"></input>
+      <input id="epicButton" class="button button1 register" type="Register" value="Register"></input>
     </div>
 
   </div>

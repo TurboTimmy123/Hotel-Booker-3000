@@ -75,6 +75,10 @@ function userLogOut() {
   alert("User attempted to log out");
 }
 
+function userLogIn() {
+  alert("User attempted to log in");
+}
+
 //the following 2 function were copied from here:
 //https://stackoverflow.com/questions/3898130/check-if-a-user-has-scrolled-to-the-bottom
 window.onscroll = function(ev) {
@@ -159,6 +163,12 @@ function showRegisterOptions(i) {
 
 }
 
-function changedFavouriteColor() {
+function applyThemeColor(col) {
+  console.log("got: " + col);
 
+  for (var q = 0; q < ourButtons.length; q++) {
+    $(ourButtons[q]).css("background-color", col);
+  }
+  $('#banner').css("background", col);
+  $('#foot').css("background", col);
 }
