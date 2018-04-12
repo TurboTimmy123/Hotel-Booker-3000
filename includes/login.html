@@ -1,23 +1,47 @@
 <div id="loginPopup" class="LoginPopup">
   <div id="theLoginBackground" class="overLayBg"></div>
   <div class="floatingWindow loginBox">
+
     <span class="close" onclick="hideLoginScreen()"></span>
-    <h2>Login:</h2>
+    <h2 id="loginRegisterScreen">Login:</h2>
+
+    <div class="menuChoice register">
+      <input type="text" class="textarea wideTextarea" name="Email" placeholder="Email"></input>
+    </div>
+
     <div class="menuChoice">
       <input type="text" class="textarea wideTextarea" name="Username" placeholder="Username"></input>
-      <div class="menuChoice">
-        <input type="text" class="textarea wideTextarea" name="Password" placeholder="Password"></input>
-
-        <div class="menuChoice">
-          <input id="epicButton" class="button button1" type="login" value="Login"></input>
-        </div>
-
-        <h3>No account? Register for free!</h3>
-        <div class="menuChoice">
-          <input id="epicButton" class="button button1" type="Register" value="Register"></input>
-        </div>
-      </div>
-      <form class="form" action="/action_page.php"></form>
     </div>
+
+    <div class="menuChoice">
+      <input type="text" class="textarea wideTextarea" name="Password" placeholder="Password"></input>
+    </div>
+
+    <div class="menuChoice register">
+      <input type="text" class="textarea wideTextarea register" name="ConfirmPassword" placeholder="Confirm Password"></input>
+    </div>
+
+    <div class="menuChoice">
+      <input id="epicButton" class="button button1 hideWhenRegistering" type="login" value="Login"></input>
+    </div>
+
+    <div class="menuChoice register">Favourite Color:
+      <select name="color">
+        <option onclick="changedFavouriteColor()" value="Red">Red</option>
+        <option value="Green">Green</option>
+        <option value="Blue">Blue</option>
+      </select>
+    </div>
+
+    <h3 class="hideWhenRegistering">No account? Register for free!</h3>
+    <div class="menuChoice">
+      <input id="epicButton" onclick="showRegisterOptions('true')" class="button button1 hideWhenRegistering" type="Register" value="Create Account!"></input>
+    </div>
+
+    <div class="menuChoice">
+      <input id="epicButton" onclick="alert('Login...')" class="button button1 register" type="Register" value="Register"></input>
+    </div>
+
   </div>
+  <form class="form" action="/action_page.php"></form>
 </div>
