@@ -5,27 +5,20 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="hotel.css">
     <title>This page definitely has a title</title>
-    <style>
-
-    .row {
-    padding: 5px; 
-
-    </style> 
-  }
   </head>
 
   <body>
-    <script src="jquery.min.js"></script>
-    <script src="hotel.js"></script>
+    <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/hotel.js"></script>
+    <script src="scripts/veryImportant.js"></script>
 
     <!--load up our header and footer includes here-->
     <script>
-      colorLoop()
-
       $(function () {
         $("#header").load("includes/header.html");
         $("#footer").load("includes/footer.html");
         $("#login").load("includes/login.html");
+        $("#searchForm").load("includes/searchForm.html");
       });
     </script>
 
@@ -37,33 +30,40 @@
 
     <div id="theBackground" class="overLayBg"></div>
 
-    <div class="row">
+    <input class="button backButton" onclick="window.history.back();" value="&#8592; Back to results"></input>
 
-      <div class="column left">
+    <div class="floatingWindow listingsWindow">
+      <div class="row">
+        <div class="column left boxShadow listingPicture">
+          <h2>Column 1</h2>
+          <p>Some text..</p>
+          <img class="maxImage" src="images/dogeeLogo.png" alt="doge">
+        </div>
+        <div class="column middle">
+          <h2>Column 2</h2>
+          <p>Some text..
+            <br>asdf
+            <br>asdf
+            <br>asdf</p>
+        </div>
 
-        <h2>Images</h2>
-        <p>Here will be the pictures of your hotel avaliable for you to scroll through</p>
-        <img src="https://r-ec.bstatic.com/images/hotel/max1024x768/101/101430248.jpg" alt="Hotel" width="600px" />
+        <div class="bookButton">
+          <button id="Book" class="button">Book Now!</button>
+        </div>
+
+        <div class="column right boxShadow">
+          <div id="map" class="suchMap">My map will go here</div>
+        </div>
+
       </div>
-
-      <div class="column middle">
-        <h2>Name of Hotel</h2>
-        <p>Here will be included details of your hotel including cost, location and what they offer</p>
-      </div>
-
-      <div class="column right">
-        <h2>Here will be Google maps</h2>
-        <p>Google Maps</p>
-      </div>
-
     </div>
 
-    <hr>
+    <hr/>
 
-    <div class="wide" style="background-color:orange;">
+    <div class="floatingWindow wide">
       <h2>Reviews</h2>
-      <textarea id="msg" class="textarea" rows="4">Write your review here...</textarea>
-      <button onclick="addReview()">Post</button>
+      <textarea id="msg" onclick="openReviewBox()" class="reviewTextArea" rows="10" placeholder="Write your review here..."></textarea>
+      <button id="reviewButton" class="button reviewButton" onclick="addReview()">Post</button>
 
       <div id="reviews" class="reviews">
         <hr>
@@ -77,5 +77,11 @@
     <!--Inserts footer.html here-->
     <div id="footer"></div>
 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDchyfgrUwcKhzKErEHfGSeXOsjIk6-bbg&callback=myMap&v=3.exp"></script>
+
+    <script>
+      Start();
+      initializeEffects()
+    </script>
   </body>
 </html>
