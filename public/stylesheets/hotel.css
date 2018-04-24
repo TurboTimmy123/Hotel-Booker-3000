@@ -429,13 +429,13 @@ div.captionStuff.w {
 }
 
 .middle2 {
-  background: linear-gradient(to right, rgba(250, 250, 250, 1) 70%, rgba(255, 255, 255, 0.3));
+  background: linear-gradient(to right, rgba(250, 250, 250, 0.9) 70%, rgba(255, 255, 255, 0));
   position: absolute;
   left: 0%;
   padding-left: 22%;
   width: 77%;
   z-index: 5;
-  height: 100%;
+  height: 1200px;
 }
 
 .wide {
@@ -540,7 +540,8 @@ div.captionStuff.w {
 .theMap {
   position: fixed;
   height: 100%;
-  width: 100%;
+  width: 80%;
+  right: 0%;
 }
 
 .transitionType1 {

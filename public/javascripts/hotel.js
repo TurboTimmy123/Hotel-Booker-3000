@@ -10,8 +10,13 @@ var usingDefaults = false;
 var body;
 var scroll = 0;
 var showMap = false;
+var theMap;
+var markers = [];
+var currentMarkerIndex = -1;
+var currentMarkerDivRef;
 
-var currentlyActiveHotelPopupIndex;
+//when we have the map, disable it then
+var allowFooter = true;
 
 //to be called once when the page is loaded
 function Start() {
@@ -20,7 +25,7 @@ function Start() {
   ourButtons = document.getElementsByClassName("button");
   body = document.getElementsByTagName("body")[0];
 
-
+  populateMapWithMarkers();
 
   //Call this function to loop asynchronously
   if (document.getElementById("fakeCounter") != null) {
@@ -89,12 +94,21 @@ function userLogIn() {
 window.onscroll = function(ev) {
   if ($(window).scrollTop() + $(window).height() >= getDocHeight()) {
     console.log("Reached bottom");
-    $("#foot").css("bottom", "0");
+    if (allowFooter) {
+      $("#foot").css("bottom", "0");
+    }
   } else {
     console.log("not bottom");
-    $("#foot").css("bottom", "-10%");
+    if (allowFooter) {
+      $("#foot").css("bottom", "-10%");
+    }
   }
 };
+
+//when we see the map, force hide the footer
+function hideFooterNow() {
+  $("#foot").css("bottom", "-10%");
+}
 
 function getDocHeight() {
   var D = document;
@@ -134,11 +148,11 @@ function scrollingDoge() {
 
 function myMap() {
   var mapOptions = {
-    center: new google.maps.LatLng(51.5, -0.12),
-    zoom: 10,
+    center: new google.maps.LatLng(-34.9, 138.6),
+    zoom: 13,
     mapTypeId: google.maps.MapTypeId.roadmap
   }
-  var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+  theMap = new google.maps.Map(document.getElementById("map"), mapOptions);
 }
 
 function showRegisterOptions(i) {
@@ -183,42 +197,109 @@ function toggleMap() {
   var listOffset;
   var buttonOffset;
   if (showMap) {
+    allowFooter = false;
+    hideFooterNow();
+
     listOffset = -100;
     buttonOffset = 75;
   } else {
+    allowFooter = true;
     listOffset = 0;
     buttonOffset = 0;
-    hideHotel(currentlyActiveHotelPopupIndex);
+    hideHotel(currentMarkerDivRef);
   }
 
   $('#theList').css("left", listOffset + "%");
   $('#showMapButton').css("right", buttonOffset + "%");
 }
 
+
+
 function showHotel(index) {
-  console.log("Show hotel, button from list pressed, index: " + index);
+  var meow = "list" + index;
+  var divRef = document.getElementById(meow);
+  console.log("index: " + index + " | Div reference: " + divRef);
+
+  currentMarkerDivRef = divRef;
   if (!showMap) {
     toggleMap();
   }
 
   setTimeout(function() {
-    revealHotelPopup(index)
-  }, 1000);
+    revealHotelPopup(divRef, index)
+  }, 500);
 }
 
-function revealHotelPopup(index) {
-  currentlyActiveHotelPopupIndex = index;
-  console.log("Revealing: " + index);
-  $(index).css("position", "fixed");
-  $(index).css("bottom", "5%");
-  $(index).css("left", "25%");
-  $(index).css("width", "70%");
+//takes the same div used in the search result and places
+//it on top of the map
+function revealHotelPopup(divRef, index) {
+  console.log("Revealing: " + divRef);
+  $(divRef).css("position", "fixed");
+  $(divRef).css("bottom", "5%");
+  $(divRef).css("left", "25%");
+  $(divRef).css("width", "70%");
+
+  //when showing the popup, we assume we want to go to it's position
+  theMap.panTo(markers[index].position);
 }
 
-function hideHotel(index) {
-  console.log("Hiding hotel: " + index);
-  $(index).css("position", "static");
-  $(index).css("bottom", "null");
-  $(index).css("left", "null");
-  $(index).css("width", "85%");
+//simply puts the popup div back to it's place
+function hideHotel(divRef) {
+  console.log("Hiding hotel: " + divRef);
+  $(divRef).css("position", "static");
+  $(divRef).css("bottom", "null");
+  $(divRef).css("left", "null");
+  $(divRef).css("width", "85%");
+}
+
+//this function will load all the markers corresponding with the search results
+function populateMapWithMarkers() {
+  ////////////////////////////////////////////////////////////////////
+  //THIS IS HARD CODED AND NOT THE RIGHT WAY TO DO THIS
+  //UNTIL WE GET A DATABASE THIS IS JUST FOR DEMONSTRATION PURPOSES
+  /////////////////////////////////////////////////////////////////////
+
+  //marker 1
+  temp = new google.maps.LatLng(-34.91, 138.68);
+  markers[0] = addMarker(temp);
+  markers[0].id = 0;
+  console.log("me got: " + markers[0]);
+  google.maps.event.addDomListener(markers[0], 'click', function() {
+    markerClicked(markers[0])
+  });
+
+  //marker 2
+  temp = new google.maps.LatLng(-34.92, 138.69);
+  markers[1] = addMarker(temp);
+  markers[1].id = 1;
+  console.log("me got: " + markers[1]);
+  google.maps.event.addDomListener(markers[1], 'click', function() {
+    markerClicked(markers[1])
+  });
+
+
+}
+
+function addMarker(dank) {
+  console.log("Adding dank marker...");
+  var marker = new google.maps.Marker({
+    position: dank,
+    map: theMap
+  });
+
+  return marker;
+}
+
+//marker on click code from here:
+//https://stackoverflow.com/questions/15299495/how-to-identify-a-google-map-marker-on-click
+function markerClicked(e) {
+  console.log(e.id + " " + currentMarkerIndex);
+  if (e.id == currentMarkerIndex) {
+    console.log("Reclicked same marker");
+  } else {
+    hideHotel(currentMarkerDivRef);
+    currentMarkerIndex = e.id;
+    console.log('Marker ' + e.id + ' has been clicked');
+    showHotel(e.id);
+  }
 }

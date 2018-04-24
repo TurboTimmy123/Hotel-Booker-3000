@@ -50,7 +50,7 @@
         </p>
 
         <!--Middle Listing 1-->
-        <div id="list1" class="floatingWindow searchListing">
+        <div id="list0" class="floatingWindow searchListing">
           <div class="searchListingImage boxShadow">
             <img class="maxImage" src="images/doge2.jpg" alt="doge">
           </div>
@@ -66,7 +66,7 @@
             <div class="priceBox">$1337</div>
 
             <div class="middleRight">
-              <button onclick="showHotel(list1)" class="button">Show on map</button>
+              <button onclick="showHotel(0)" class="button listButton">Show on map</button>
             </div>
             <div class="bottomRight">
               <button class="button">Goto</button>
@@ -75,7 +75,7 @@
         </div>
 
         <!--Middle Listing 2-->
-        <div class="floatingWindow searchListing">
+        <div id="list1" class="floatingWindow searchListing">
           <div class="searchListingImage boxShadow">
             <img class="maxImage" src="images/doge2.jpg" alt="doge">
           </div>
@@ -89,6 +89,10 @@
               <p>123 test st</p>
             </div>
             <div class="priceBox">$250</div>
+
+            <div class="middleRight">
+              <button onclick="showHotel(1)" class="button listButton">Show on map</button>
+            </div>
             <div class="bottomRight">
               <button class="button">Goto</button>
             </div>
