@@ -11,12 +11,16 @@ var body;
 var scroll = 0;
 var showMap = false;
 
+var currentlyActiveHotelPopupIndex;
+
 //to be called once when the page is loaded
 function Start() {
   temp = document.getElementsByTagName("button");
   ourFloatingWindows = document.getElementsByClassName("floatingWindow");
   ourButtons = document.getElementsByClassName("button");
   body = document.getElementsByTagName("body")[0];
+
+
 
   //Call this function to loop asynchronously
   if (document.getElementById("fakeCounter") != null) {
@@ -184,7 +188,37 @@ function toggleMap() {
   } else {
     listOffset = 0;
     buttonOffset = 0;
+    hideHotel(currentlyActiveHotelPopupIndex);
   }
+
   $('#theList').css("left", listOffset + "%");
   $('#showMapButton').css("right", buttonOffset + "%");
+}
+
+function showHotel(index) {
+  console.log("Show hotel, button from list pressed, index: " + index);
+  if (!showMap) {
+    toggleMap();
+  }
+
+  setTimeout(function() {
+    revealHotelPopup(index)
+  }, 1000);
+}
+
+function revealHotelPopup(index) {
+  currentlyActiveHotelPopupIndex = index;
+  console.log("Revealing: " + index);
+  $(index).css("position", "fixed");
+  $(index).css("bottom", "5%");
+  $(index).css("left", "25%");
+  $(index).css("width", "70%");
+}
+
+function hideHotel(index) {
+  console.log("Hiding hotel: " + index);
+  $(index).css("position", "static");
+  $(index).css("bottom", "null");
+  $(index).css("left", "null");
+  $(index).css("width", "85%");
 }

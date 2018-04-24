@@ -66,7 +66,6 @@ div.floatingWindow {
   border-style: solid;
   border-color: darkgrey;
   border-radius: 4px;
-  transition: all 0.2s ease-in-out;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
 }
 
@@ -162,6 +161,15 @@ div.bottomRight {
   position: absolute;
   right: 10px;
   bottom: 10px;
+  min-width: 110px;
+  text-align: right;
+  padding-right: 10px;
+}
+
+div.middleRight {
+  position: absolute;
+  right: 10px;
+  bottom: 45px;
   min-width: 110px;
   text-align: right;
   padding-right: 10px;
@@ -537,4 +545,8 @@ div.captionStuff.w {
 
 .transitionType1 {
   transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.delayedTransition {
+  transition: all 2s cubic-bezier(0.86, 0, 0.07, 1);
 }

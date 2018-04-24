@@ -48,7 +48,9 @@
         </h2>
         <p>The following hotels match your search filters.
         </p>
-        <div class="floatingWindow searchListing">
+
+        <!--Middle Listing 1-->
+        <div id="list1" class="floatingWindow searchListing">
           <div class="searchListingImage boxShadow">
             <img class="maxImage" src="images/doge2.jpg" alt="doge">
           </div>
@@ -62,6 +64,10 @@
               <p>Romney Rd, Greenwich, London SE10 9NF, UK</p>
             </div>
             <div class="priceBox">$1337</div>
+
+            <div class="middleRight">
+              <button onclick="showHotel(list1)" class="button">Show on map</button>
+            </div>
             <div class="bottomRight">
               <button class="button">Goto</button>
             </div>
@@ -136,7 +142,7 @@
       </div>
 
       <div id="showMapButton" onclick="toggleMap()" class="column right2 transitionType1">
-        <p>Click here (MAKE THIS MORE VISIBLE)</p>
+        <p>Click here (REPLACE THIS WITH BIG ANIMATED BUTTON)</p>
       </div>
     </div>
 
