@@ -38,16 +38,16 @@
       <div id="searchForm"></div>
     </div>
 
+    <div class="theMap">
+      <div id="map" class="suchMap listingMap">Map failed to load lol</div>
+    </div>
+
     <div class="row">
-      <div class="column middle2">
+      <div id="theList" class="column middle2 transitionType1">
         <h2>Avaliable Hotels:
         </h2>
         <p>The following hotels match your search filters.
         </p>
-        <!--*********************-->
-        <!--The follow listings are place holder we will replace them will real listings in the near future-->
-
-        <!--Middle Listing 1-->
         <div class="floatingWindow searchListing">
           <div class="searchListingImage boxShadow">
             <img class="maxImage" src="images/doge2.jpg" alt="doge">
@@ -63,7 +63,7 @@
             </div>
             <div class="priceBox">$1337</div>
             <div class="bottomRight">
-              <button id="goto" class="button">Goto</button>
+              <button class="button">Goto</button>
             </div>
           </div>
         </div>
@@ -84,7 +84,7 @@
             </div>
             <div class="priceBox">$250</div>
             <div class="bottomRight">
-              <button id="goto" class="button">Goto</button>
+              <button class="button">Goto</button>
             </div>
           </div>
         </div>
@@ -106,25 +106,44 @@
             </div>
             <div class="priceBox">$1</div>
             <div class="bottomRight">
+              <button class="button">Goto</button>
+            </div>
+          </div>
+        </div>
+
+        <!--Middle Listing 4-->
+        <div class="floatingWindow searchListing">
+          <div class="searchListingImage boxShadow">
+            <img class="maxImage" src="images/doge2.jpg" alt="doge">
+          </div>
+          <div class="searchListingTitle">
+            <h3>Hotel c</h3>
+            <hr/>
+            <div class="searchListingDescription">
+
+              <p>A general discription of the Hotel</p>
+              <br>
+              <p>Adelaide SA 5000
+              </p>
+            </div>
+            <div class="priceBox">$1</div>
+            <div class="bottomRight">
               <button id="goto" class="button">Goto</button>
             </div>
           </div>
         </div>
 
-        <!--place holder listings-->
-        <div class="floatingWindow searchListing">Listing</div>
-        <div class="floatingWindow searchListing">Listing</div>
-        <div class="floatingWindow searchListing">Listing</div>
-
       </div>
 
-      <div class="column right2">
-        <h2>Ads here</h2>
+      <div id="showMapButton" onclick="toggleMap()" class="column right2 transitionType1">
+        <p>Click here (MAKE THIS MORE VISIBLE)</p>
       </div>
     </div>
 
     <!--Inserts footer.html here-->
     <div id="footer"></div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDchyfgrUwcKhzKErEHfGSeXOsjIk6-bbg&callback=myMap&v=3.exp"></script>
 
     <script>
       Start();

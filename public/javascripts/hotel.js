@@ -9,6 +9,7 @@ var usingNecessaryEffects = false;
 var usingDefaults = false;
 var body;
 var scroll = 0;
+var showMap = false;
 
 //to be called once when the page is loaded
 function Start() {
@@ -170,4 +171,20 @@ function applyThemeColor(col) {
   }
   $('#banner').css("background", col);
   $('#foot').css("background", col);
+}
+
+function toggleMap() {
+  showMap = !showMap;
+  console.log("setting map to: " + showMap);
+  var listOffset;
+  var buttonOffset;
+  if (showMap) {
+    listOffset = -100;
+    buttonOffset = 75;
+  } else {
+    listOffset = 0;
+    buttonOffset = 0;
+  }
+  $('#theList').css("left", listOffset + "%");
+  $('#showMapButton').css("right", buttonOffset + "%");
 }
