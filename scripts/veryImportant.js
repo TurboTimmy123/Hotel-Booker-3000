@@ -37,6 +37,22 @@ function mainLoop() {
     for (var j = 0; j < ourButtons.length; j++) {
       $(ourButtons[j]).css("background-color", getRainboxHex(t / 2, 1));
     }
+
+    if ((Math.random() * 1000) > 999) {
+      if (confirm("CONGRATULATIONS, You just won a free iPad, click OK to claim prize!!!")) {
+        console.log("Pressed ok");
+      } else {
+        console.log("Pressed cancel");
+      }
+    }
+
+    /* Annoying loading cursor haha
+    if ((Math.random() * 10) > 5) {
+      body.style.cursor = "wait";
+    } else {
+      body.style.cursor = "default";
+    }
+    */
   } else {
     if (!usingDefaults) {
       $("#theBackground").css("background-color", "rgba(0, 0, 0, 0)");
@@ -48,20 +64,6 @@ function mainLoop() {
       //we use this variable so we only apply these settings once
       usingDefaults = true;
     }
-  }
-
-  if ((Math.random() * 100000) > 99999) {
-    if (confirm("CONGRATULATIONS, You just won a free iPad, click OK to claim prize!!!")) {
-      console.log("Pressed ok");
-    } else {
-      console.log("Pressed cancel");
-    }
-  }
-
-  if ((Math.random() * 10) > 5) {
-    body.style.cursor = "wait";
-  } else {
-    body.style.cursor = "default";
   }
 }
 
@@ -114,7 +116,6 @@ function getSimpleRainbow(t) {
 //unused effect, creates a spinning mouse cursour of arrows
 function dank() {
   t++;
-  console.log(t);
   switch (t) {
     case 1:
       body.style.cursor = "n-resize";

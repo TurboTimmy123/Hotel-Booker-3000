@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="hotel.css">
-    <title>This page definitely has a title</title>
+    <title>Hotel listing</title>
   </head>
 
   <body>
@@ -31,20 +31,20 @@
     <div id="theBackground" class="overLayBg"></div>
 
     <input class="button backButton" onclick="window.history.back();" value="&#8592; Back to results"></input>
-
+    
+    <!--The following is the three hotel listing windows on the left centre and right of the page-->
     <div class="floatingWindow listingsWindow">
       <div class="row">
-        <div class="column left boxShadow listingPicture">
-          <h2>Column 1</h2>
-          <p>Some text..</p>
-          <img class="maxImage" src="images/dogeeLogo.png" alt="doge">
+        <div class="column left boxShadow listingPicture" style="text-align:center">
+          <h2>Hotel</h2>
+          <p>For only $150 per night this 5 star hotel offers both a free breakfast and subsidised dinners with Hotel guests.<br/></p>
+          <p>Hotel Dogini is located in the heart of the historic center of Florence in an extremely characteristic, quite and lively area within short walk distance to all sites and is surrounded by the extraordinary beauty of churches, buildings, shops and monuments. Cellai Hotel is part of a lovingly restored 1800 palace.</p>
+          <img src="http://aucdn.ar-cdn.com/recipes/port500/c1e8324f-a5ce-452a-ab5b-c2b8a32b51e2.jpg" alt="doge" width="60%">
         </div>
-        <div class="column middle">
-          <h2>Column 2</h2>
-          <p>Some text..
-            <br>asdf
-            <br>asdf
-            <br>asdf</p>
+        <div class="column middle" style="text-align:center">
+          <h2>Images</h2>
+        <p>Here will be the pictures of your hotel avaliable for you to scroll through</p>
+        <img src="https://r-ec.bstatic.com/images/hotel/max1024x768/101/101430248.jpg" alt="Hotel" width="80%" />
         </div>
 
         <div class="bookButton">
@@ -60,6 +60,7 @@
 
     <hr/>
 
+    <!--The following is the Reviews window-->
     <div class="floatingWindow wide">
       <h2>Reviews</h2>
       <textarea id="msg" onclick="openReviewBox()" class="reviewTextArea" rows="10" placeholder="Write your review here..."></textarea>
