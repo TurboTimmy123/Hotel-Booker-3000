@@ -40,12 +40,12 @@ div.absolute {
 }
 
 .bgimg-1 {
-  background-image: url("images/doge.jpg");
+  background-image: url("../images/doge.jpg");
   min-height: 83%;
 }
 
 .bgimg-2 {
-  background-image: url("images/dogeRepeat.png");
+  background-image: url("../images/dogeRepeat.png");
   min-height: 40%;
   background-repeat: repeat;
 }
