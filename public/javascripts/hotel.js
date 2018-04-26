@@ -25,8 +25,6 @@ function Start() {
   ourButtons = document.getElementsByClassName("button");
   body = document.getElementsByTagName("body")[0];
 
-  populateMapWithMarkers();
-
   //Call this function to loop asynchronously
   if (document.getElementById("fakeCounter") != null) {
     console.log("counter exists");
