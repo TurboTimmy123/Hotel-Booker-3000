@@ -258,7 +258,7 @@ function populateMapWithMarkers() {
   /////////////////////////////////////////////////////////////////////
 
   //marker 1
-  temp = new google.maps.LatLng(-34.91, 138.68);
+  temp = new google.maps.LatLng(-34.90, 138.60);
   markers[0] = addMarker(temp);
   markers[0].id = 0;
   console.log("me got: " + markers[0]);

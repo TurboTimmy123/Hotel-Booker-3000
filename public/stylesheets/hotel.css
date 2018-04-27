@@ -365,13 +365,17 @@ div.captionStuff.w {
   /* Should be removed. Only for demonstration */
 }
 
+.columnNoPadding {
+  padding-top: 0%;
+}
+
 .left {
   left: 0%;
   width: 28%;
 }
 
 .right {
-  top: 24%;
+  top: 22%;
   height: 497px;
   right: 0%;
   width: 28%;
@@ -415,7 +419,6 @@ div.captionStuff.w {
   writing-mode: tb-rl;
   top: 0%;
   text-align: center;
-  background-color: rgba(100, 0, 0, 0.2);
   z-index: 6;
   cursor: pointer;
 }
