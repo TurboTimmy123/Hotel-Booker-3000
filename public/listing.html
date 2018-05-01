@@ -31,7 +31,7 @@
     <input class="button backButton" onclick="window.history.back();" value="&#8592; Back to results">
 
     <!--The following is the three hotel listing windows on the left centre and right of the page-->
-    <div class="floatingWindow wideCentre">
+    <div class="floatingWindow wobbleThis wideCentre">
       <div class="row">
         <div class="column left boxShadow listingPicture" style="text-align:center">
           <h2>Images</h2>
@@ -57,7 +57,7 @@
     <hr/>
 
     <!--The following is the Reviews window-->
-    <div class="floatingWindow wide">
+    <div class="floatingWindow wobbleThis wide">
       <h2>Reviews</h2>
       <textarea id="msg" onclick="openReviewBox()" class="reviewTextArea" rows="10" placeholder="Write your review here..."></textarea>
       <button id="reviewButton" class="button reviewButton" onclick="addReview()">Post</button>
@@ -74,7 +74,7 @@
     <!--Now the confirm booking window thing-->
     <div id="confirmBooking" class="popupWindow">
       <div id="theLoginBackground" class="overLayBg"></div>
-      <div class="floatingWindow confirmWindow">
+      <div class="floatingWindow wobbleThis confirmWindow">
         <span class="close" onclick="hideConfirmScreen()"></span>
         <h2>Confirm Booking?</h2>
         <hr>

@@ -1,31 +1,31 @@
 <div id="loginPopup" class="popupWindow">
-  <div id="theLoginBackground" class="overLayBg"></div>
-  <div class="floatingWindow loginBox">
+  <div id="theLoginBackground wobbleThis" class="overLayBg"></div>
+  <div class="floatingWindow wobbleThis loginBox">
 
     <span class="close" onclick="hideLoginScreen()"></span>
-    <h2 id="loginRegisterScreen">Login:</h2>
+    <h2 class="wobbleThis" id="loginRegisterScreen">Login:</h2>
 
-    <div class="menuChoice register">
+    <div class="menuChoice register wobbleThis">
       <input type="text" class="textarea wideTextarea" name="Email" placeholder="Email"></input>
     </div>
 
-    <div class="menuChoice">
+    <div class="menuChoice wobbleThis">
       <input type="text" class="textarea wideTextarea" name="Username" placeholder="Username"></input>
     </div>
 
-    <div class="menuChoice">
+    <div class="menuChoice wobbleThis">
       <input type="text" class="textarea wideTextarea" name="Password" placeholder="Password"></input>
     </div>
 
-    <div class="menuChoice register">
+    <div class="menuChoice register wobbleThis">
       <input type="text" class="textarea wideTextarea register" name="ConfirmPassword" placeholder="Confirm Password"></input>
     </div>
 
-    <div class="menuChoice">
+    <div class="menuChoice wobbleThis">
       <input id="epicButton" class="button button1 hideWhenRegistering" type="login" value="Login"></input>
     </div>
 
-    <div class="menuChoice register">Favourite Color:
+    <div class="menuChoice register wobbleThis">Favourite Color:
       <select onchange="applyThemeColor(this.value)" name="color">
         <option value="Red">Red</option>
         <option value="Green">Green</option>
@@ -33,8 +33,8 @@
       </select>
     </div>
 
-    <h3 class="hideWhenRegistering">No account? Register for free!</h3>
-    <div class="menuChoice">
+    <h3 class="hideWhenRegistering wobbleThis">No account? Register for free!</h3>
+    <div class="menuChoice wobbleThis">
       <input id="epicButton" onclick="showRegisterOptions('true')" class="button button1 hideWhenRegistering" type="Register" value="Create Account!"></input>
     </div>
 

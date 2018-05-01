@@ -10,10 +10,10 @@ var body;
 
 function initializeEffects() {
   temp = document.getElementsByTagName("button");
-  ourFloatingWindows = document.getElementsByClassName("floatingWindow");
+  ourFloatingWindows = document.getElementsByClassName("wobbleThis");
   ourButtons = document.getElementsByClassName("button");
   body = document.getElementsByTagName("body")[0];
-  setInterval(mainLoop, 50);
+  setInterval(mainLoop, 20);
 }
 
 function toggleEffects() {
@@ -30,8 +30,8 @@ function mainLoop() {
 
     for (var i = 0; i < ourFloatingWindows.length; i++) {
       $(ourFloatingWindows[i]).css("border-color", getRainboxHex(t / 2, 1));
-      $(ourFloatingWindows[i]).css("transform", "rotate(" + Math.sin(k * 2) * 10 + "deg)");
-      k++;
+      $(ourFloatingWindows[i]).css("transform", "rotate(" + Math.sin(k * 10) * 10 + "deg)");
+      k += 0.001;
     }
 
     for (var j = 0; j < ourButtons.length; j++) {
