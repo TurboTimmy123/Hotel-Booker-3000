@@ -28,8 +28,6 @@
     <!--Inserts login.html here-->
     <div id="login"></div>
 
-    <div id="theBackground" class="overLayBg"></div>
-
     <input class="button backButton" onclick="window.history.back();" value="&#8592; Back to results">
 
     <!--The following is the three hotel listing windows on the left centre and right of the page-->
@@ -46,7 +44,7 @@
         </div>
 
         <div class="bookButton">
-          <button id="Book" class="button">Book Now!</button>
+          <button id="Book" onclick="confirmBooking()" class="button">Book Now!</button>
         </div>
 
         <div class="column columnNoPadding right boxShadow">
@@ -70,6 +68,19 @@
         <hr>
         <p class="review">Woah 5/7</p>
         <hr>
+      </div>
+    </div>
+
+    <!--Now the confirm booking window thing-->
+    <div id="confirmBooking" class="popupWindow">
+      <div id="theLoginBackground" class="overLayBg"></div>
+      <div class="floatingWindow confirmWindow">
+        <span class="close" onclick="hideConfirmScreen()"></span>
+        <h2>Confirm Booking?</h2>
+        <hr>
+        <div id="searchForm"></div>
+        <button class="button">Book!</button>
+
       </div>
     </div>
 

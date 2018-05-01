@@ -63,12 +63,24 @@ function fakeCounterIncrementer() {
 function showLoginScreen(reg) {
   console.log("Open login");
   showRegisterOptions(reg);
+  //hideConfirmScreen();
   document.getElementById("loginPopup").style.display = 'block';
+}
+
+function confirmBooking() {
+  console.log("Opening confirm Booking window");
+  hideLoginScreen();
+  document.getElementById("confirmBooking").style.display = 'block';
 }
 
 function hideLoginScreen() {
   console.log("close login");
   document.getElementById("loginPopup").style.display = 'none';
+}
+
+function hideConfirmScreen() {
+  console.log("close confirm");
+  document.getElementById("confirmBooking").style.display = 'none';
 }
 
 function addReview() {
