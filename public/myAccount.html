@@ -28,13 +28,33 @@
     <!--Inserts login.html here-->
     <div id="login"></div>
 
-    <br>
-    <br>
-    <br>
-    <br>
-    <center>User account page will be here</center>
+    <div class="floatingWindow wideCentre">
+      <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'Account')" id="defaultOpen">My Account</button>
+        <button class="tablinks" onclick="openTab(event, 'Bookings')">My Bookings</button>
+        <button class="tablinks" onclick="openTab(event, 'Billing')">Billing info</button>
+      </div>
+
+      <div id="Account" class="tabcontent">
+        <h3>My Account</h3>
+        <p>User info here, including name/email/birthday/favourite color/currency/language</p>
+      </div>
+
+      <div id="Bookings" class="tabcontent">
+        <h3>My Bookings</h3>
+        <p>Users purchased bookings will appear here</p>
+      </div>
+
+      <div id="Billing" class="tabcontent">
+        <h3>Billing info</h3>
+        <p>User can fill here their banking stuff and dogecoin address</p>
+      </div>
+    </div>
 
     <div id="footer"></div>
+    <script>
+      document.getElementById("defaultOpen").click();
+    </script>
 
     <script>
       Start();
