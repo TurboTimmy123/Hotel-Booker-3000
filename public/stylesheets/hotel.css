@@ -1,6 +1,6 @@
 body {
   height: 1200px;
-  min-width: 720px;
+  min-width: 800px;
   margin: 0;
   font: 400 15px/1.8 "Lato", sans-serif;
   background-color: #eaeaea;
@@ -219,6 +219,16 @@ hr {
   /* Safari */
   transition-duration: 0.1s;
   cursor: pointer;
+}
+
+.verticalButton {
+  background-color: orange;
+  font-weight: bold;
+  padding: 0px;
+  margin: 0px;
+  height: 440px;
+  width: 40px;
+  box-shadow: 0px 0px 5px 5px rgb(0, 170, 155, 0.5);
 }
 
 .button:hover {

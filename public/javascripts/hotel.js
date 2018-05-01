@@ -209,10 +209,14 @@ function toggleMap() {
   if (showMap) {
     allowFooter = false;
     hideFooterNow();
+    $('#toggleMapText').text('⬆  Show Results  ⬆');
 
     listOffset = -100;
     buttonOffset = 75;
   } else {
+
+    $('#toggleMapText').text('⬇  Show Map  ⬇');
+
     allowFooter = true;
     listOffset = 0;
     buttonOffset = 0;
