@@ -2,7 +2,7 @@ var t = 0;
 var k = 1;
 var temp;
 var lol;
-var ourFloatingWindows;
+var ourWobblingWindows;
 var ourButtons;
 var usingNecessaryEffects = false;
 var usingDefaults = false;
@@ -10,7 +10,10 @@ var body;
 
 function initializeEffects() {
   temp = document.getElementsByTagName("button");
-  ourFloatingWindows = document.getElementsByClassName("wobbleThis");
+  ourWobblingWindows = document.getElementsByClassName("wobbleThis");
+  ourRotatingWindows = document.getElementsByClassName("rotateThis");
+
+
   ourButtons = document.getElementsByClassName("button");
   body = document.getElementsByTagName("body")[0];
   setInterval(mainLoop, 20);
@@ -28,15 +31,19 @@ function mainLoop() {
     $("#theBackground").css("background-color", getRainboxHex(t / 2, 0.05));
     $("#name").css("color", getSimpleRainbow(t));
 
-    for (var i = 0; i < ourFloatingWindows.length; i++) {
-      $(ourFloatingWindows[i]).css("border-color", getRainboxHex(t / 2, 1));
-      $(ourFloatingWindows[i]).css("transform", "rotate(" + Math.sin(k * 10) * 10 + "deg)");
-      k += 0.001;
+    for (var i = 0; i < ourWobblingWindows.length; i++) {
+      $(ourWobblingWindows[i]).css("border-color", getRainboxHex(t / 2, 1));
+      $(ourWobblingWindows[i]).css("transform", "rotate(" + Math.sin(k * 1) * 10 + "deg)");
+      k += 0.005;
+      $(ourRotatingWindows[i]).css("transform", "rotate(" + (k) * 10 + "deg)");
+      k += 0.005;
+
     }
 
     for (var j = 0; j < ourButtons.length; j++) {
       $(ourButtons[j]).css("background-color", getRainboxHex(t / 2, 1));
     }
+    $("#banner").css("background", getRainboxHex(t / 5, 1));
 
     if ((Math.random() * 1000) > 999) {
       if (confirm("CONGRATULATIONS, You just won a free iPad, click OK to claim prize!!!")) {
@@ -56,9 +63,9 @@ function mainLoop() {
   } else {
     if (!usingDefaults) {
       $("#theBackground").css("background-color", "rgba(0, 0, 0, 0)");
-      for (var b = 0; b < ourFloatingWindows.length; b++) {
-        $(ourFloatingWindows[b]).css("border-color", "black");
-        $(ourFloatingWindows[b]).css("transform", "rotate(0deg)");
+      for (var b = 0; b < ourWobblingWindows.length; b++) {
+        $(ourWobblingWindows[b]).css("border-color", "black");
+        $(ourWobblingWindows[b]).css("transform", "rotate(0deg)");
       }
 
       //we use this variable so we only apply these settings once
