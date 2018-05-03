@@ -236,8 +236,7 @@ function toggleMap() {
 
 
 function showHotel(index) {
-  var meow = "list" + index;
-  var divRef = document.getElementById(meow);
+  var divRef = document.getElementById(index);
   console.log("index: " + index + " | Div reference: " + divRef);
 
   currentMarkerDivRef = divRef;
@@ -304,7 +303,7 @@ function populateMapWithMarkers() {
   //marker 1
   temp = new google.maps.LatLng(-34.90, 138.60);
   markers[0] = addMarker(temp);
-  markers[0].id = 0;
+  markers[0].divId = 0;
   console.log("me got: " + markers[0]);
   google.maps.event.addDomListener(markers[0], 'click', function() {
     markerClicked(markers[0])
@@ -313,7 +312,7 @@ function populateMapWithMarkers() {
   //marker 2
   temp = new google.maps.LatLng(-34.92, 138.69);
   markers[1] = addMarker(temp);
-  markers[1].id = 1;
+  markers[1].divId = 1;
   console.log("me got: " + markers[1]);
   google.maps.event.addDomListener(markers[1], 'click', function() {
     markerClicked(markers[1])
@@ -322,7 +321,7 @@ function populateMapWithMarkers() {
 
 }
 
-function addMarker(dankCoordinate, epicLabel) {
+function addMarker(dankCoordinate, epicLabel, i) {
   console.log("Adding dank marker...");
   var marker = new google.maps.Marker({
     position: dankCoordinate,
@@ -330,21 +329,25 @@ function addMarker(dankCoordinate, epicLabel) {
     map: theMap
   });
 
+  marker.index = i;
   return marker;
 }
 
 //marker on click code from here:
 //https://stackoverflow.com/questions/15299495/how-to-identify-a-google-map-marker-on-click
 function markerClicked(e) {
-  console.log(e.id + " " + currentMarkerIndex);
-  if (e.id == currentMarkerIndex) {
+  console.log("click");
+  console.log("e is: " + e + " " + currentMarkerIndex);
+
+  if (e.divId == currentMarkerIndex) {
     console.log("Reclicked same marker");
   } else {
     hideHotel(currentMarkerDivRef);
-    currentMarkerIndex = e.id;
-    console.log('Marker ' + e.id + ' has been clicked');
-    showHotel(e.id);
+    currentMarkerIndex = e.divId;
+    console.log('Marker ' + e.divId + ' has been clicked');
+    showHotel(e.divId);
   }
+
 }
 
 
@@ -389,24 +392,26 @@ function updateListings() {
   xhttp.send();
   $("#plzWait").css("display", "none");
 }
+var i;
 
 function generateListingsAndMarkers() {
   // Loop over hotels array
-  for (var i = 0; i < hotels.length; i++) {
-    console.log("Creating entry: " + i + " with ID: " + hotels[i].uniqueId);
+  for (i = 0; i < hotels.length; i++) {
+    console.log("Creating marker entry: " + i + " with ID: " + hotels[i].uniqueId);
     // Create new marker
 
-    temp = new google.maps.LatLng(hotels[i].lat, hotels[i].lng);
-    var tempMarker = addMarker(temp);
-    tempMarker.id = hotels[i].uniqueId;
-    console.log("me got: " + tempMarker);
-    google.maps.event.addDomListener(tempMarker, 'click', function() {
-      markerClicked(tempMarker);
+    var temp = new google.maps.LatLng(hotels[i].lat, hotels[i].lng);
+    var tempMarker = addMarker(temp, hotels[i].name, i);
+    markers[i] = tempMarker;
+    markers[i].divId = i;
+
+
+    google.maps.event.addDomListener(markers[i], 'click', function() {
+      markerClicked(this)
     });
 
     // Add to markers array
-    markers.push(tempMarker);
-    createListingHtml(hotels[i].name, hotels[i].price, "NULL", hotels[i].uniqueId);
+    createListingHtml(hotels[i].name, hotels[i].price, "NULL", hotels[i].uniqueId, i);
   }
 }
 
@@ -415,14 +420,14 @@ function generateListingsAndMarkers() {
 // a simple template file for 1 listing, i then modify it a bit with
 // the function parameters i got, and then we edit the ID's becuase
 // html can't have duplicate ID's
-function createListingHtml(hotelName, hotelPrice, hotelImage, hotelUniqueID) {
+function createListingHtml(hotelName, hotelPrice, hotelImage, hotelUniqueID, index) {
   console.log("Generating html, ID: " + hotelUniqueID);
 
 
   $("#theResults").append(TEMPLATE);
 
   var blah = document.getElementById("TEMPLATE");
-  $("#TEMPLATE").attr('id', hotelUniqueID);
+  $("#TEMPLATE").attr('id', index);
 
   $("#TEMPLATE_price").html(hotelPrice);
   $("#TEMPLATE_price").removeAttr("id");
@@ -430,6 +435,8 @@ function createListingHtml(hotelName, hotelPrice, hotelImage, hotelUniqueID) {
   $("#TEMPLATE_hotelName").html(hotelName);
   $("#TEMPLATE_hotelName").removeAttr("id");
 
+  $("#TEMPLATE_button").attr("onclick", "showHotel(" + index + ")");
+  $("#TEMPLATE_button").removeAttr("id");
 
 
 
