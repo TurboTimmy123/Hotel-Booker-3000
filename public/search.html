@@ -40,7 +40,7 @@
       <!--Inserts search.html here-->
       <div id="searchForm"></div>
       <div class="menuChoice">
-        <input id="epicButton" class="button button1 wobbleThis" type="submit" value="Update results">
+        <input id="epicButton" onclick="findHotels(false)" class="button button1 wobbleThis" type="submit" value="Update results">
       </div>
 
     </div>
@@ -53,103 +53,35 @@
       <div id="theList" class="column middle2 transitionType1">
         <h2>Avaliable Hotels:
         </h2>
-        <p>The following hotels match your search filters.
-        </p>
+        <h2 id="plzWait" class="hidden">Loading, plz wait thanx...</h2>
+        <div id="theResults">
 
-        <!--Middle Listing 1-->
-        <div id="list0" class="floatingWindow wobbleThis searchListing">
-          <div class="searchListingImage boxShadow">
-            <img class="maxImage rotateThis" src="images/doge2.jpg" alt="doge">
+          <!--Middle Listing 1-->
+          <div id="list0" class="floatingWindow wobbleThis searchListing">
+            <div class="searchListingImage boxShadow">
+              <img class="maxImage rotateThis" src="images/doge2.jpg" alt="doge">
+            </div>
+            <div class="searchListingTitle">
+              <h3>Hotel A</h3>
+              <hr/>
+              <div class="searchListingDescription">
+
+                <p>A general discription of the Hotel</p>
+                <br>
+                <p>Romney Rd, Greenwich, London SE10 9NF, UK</p>
+              </div>
+              <div class="priceBox">$1337</div>
+
+              <div class="middleRight">
+                <button onclick="showHotel(0)" class="button listButton">Show on map</button>
+              </div>
+              <div class="bottomRight">
+                <button class="button" onclick="location.href='listing.html'">Goto</button>
+              </div>
+            </div>
           </div>
-          <div class="searchListingTitle">
-            <h3>Hotel A</h3>
-            <hr/>
-            <div class="searchListingDescription">
 
-              <p>A general discription of the Hotel</p>
-              <br>
-              <p>Romney Rd, Greenwich, London SE10 9NF, UK</p>
-            </div>
-            <div class="priceBox">$1337</div>
-
-            <div class="middleRight">
-              <button onclick="showHotel(0)" class="button listButton">Show on map</button>
-            </div>
-            <div class="bottomRight">
-              <button class="button" onclick="location.href='listing.html'">Goto</button>
-            </div>
-          </div>
         </div>
-
-        <!--Middle Listing 2-->
-        <div id="list1" class="floatingWindow wobbleThis searchListing">
-          <div class="searchListingImage boxShadow">
-            <img class="maxImage rotateThis" src="images/doge2.jpg" alt="doge">
-          </div>
-          <div class="searchListingTitle">
-            <h3>Hotel B</h3>
-            <hr/>
-            <div class="searchListingDescription">
-
-              <p>A general discription of the Hotel</p>
-              <br>
-              <p>123 test st</p>
-            </div>
-            <div class="priceBox">$250</div>
-
-            <div class="middleRight">
-              <button onclick="showHotel(1)" class="button listButton">Show on map</button>
-            </div>
-            <div class="bottomRight">
-              <button class="button" onclick="location.href='listing.html'">Goto</button>
-            </div>
-          </div>
-        </div>
-
-        <!--Middle Listing 3-->
-        <div class="floatingWindow wobbleThis searchListing">
-          <div class="searchListingImage boxShadow">
-            <img class="maxImage rotateThis" src="images/doge2.jpg" alt="doge">
-          </div>
-          <div class="searchListingTitle">
-            <h3>Hotel c</h3>
-            <hr/>
-            <div class="searchListingDescription">
-
-              <p>A general discription of the Hotel</p>
-              <br>
-              <p>Adelaide SA 5000
-              </p>
-            </div>
-            <div class="priceBox">$1</div>
-            <div class="bottomRight">
-              <button class="button" onclick="location.href='listing.html'">Goto</button>
-            </div>
-          </div>
-        </div>
-
-        <!--Middle Listing 4-->
-        <div class="floatingWindow wobbleThis searchListing">
-          <div class="searchListingImage boxShadow">
-            <img class="maxImage rotateThis" src="images/doge2.jpg" alt="doge">
-          </div>
-          <div class="searchListingTitle">
-            <h3>Hotel c</h3>
-            <hr/>
-            <div class="searchListingDescription">
-
-              <p>A general discription of the Hotel</p>
-              <br>
-              <p>Adelaide SA 5000
-              </p>
-            </div>
-            <div class="priceBox">$1</div>
-            <div class="bottomRight">
-              <button id="goto" class="button" onclick="location.href='listing.html'">Goto</button>
-            </div>
-          </div>
-        </div>
-
       </div>
 
       <div id="showMapButton" onclick="toggleMap()" class="column right2 transitionType1">

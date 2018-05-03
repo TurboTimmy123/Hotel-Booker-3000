@@ -15,6 +15,8 @@ var markers = [];
 var currentMarkerIndex = -1;
 var currentMarkerDivRef;
 
+var TEMPLATE;
+
 //when we have the map, disable it then
 var allowFooter = true;
 
@@ -39,6 +41,10 @@ function Start() {
   } else {
     console.log("doges not found");
   }
+
+  $.get("includes/listing.html", function(data) {
+    TEMPLATE = data;
+  });
 }
 
 //this function is run whenever the user scrolls through the page
@@ -266,7 +272,29 @@ function hideHotel(divRef) {
   $(divRef).css("width", "85%");
 }
 
-//this function will load all the markers corresponding with the search results
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+
+
+
+
+
+
+
+
+//Gmaps related stuff
 function populateMapWithMarkers() {
   ////////////////////////////////////////////////////////////////////
   //THIS IS HARD CODED AND NOT THE RIGHT WAY TO DO THIS
@@ -294,10 +322,11 @@ function populateMapWithMarkers() {
 
 }
 
-function addMarker(dank) {
+function addMarker(dankCoordinate, epicLabel) {
   console.log("Adding dank marker...");
   var marker = new google.maps.Marker({
-    position: dank,
+    position: dankCoordinate,
+    label: epicLabel,
     map: theMap
   });
 
@@ -318,16 +347,119 @@ function markerClicked(e) {
   }
 }
 
-function openTab(evt, tabName) {
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
+
+
+
+
+
+
+//THE FOLLOWING IS AJAX RELATED STUFF
+var hotels = [];
+
+//the fromMain is just a true/false for whether we should redirect the user
+//to the search page after coming from index.html, or simply relist the entries
+//without actually reloading the page
+function findHotels(fromMain) {
+  console.log("Search request, from main: " + fromMain);
+  updateListings();
+  if (fromMain) {
+    window.location.replace("search.html");
   }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
+}
+
+//this function updates the search results page
+function updateListings() {
+  clearListings();
+
+  // Create new AJAX request
+  var xhttp = new XMLHttpRequest();
+  // Define behaviour for a response
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      // convert from string to JSON, populate hotels array
+      hotels = JSON.parse(xhttp.responseText);
+      // Populate map
+      console.log("Got hotels of length: " + hotels.length);
+      generateListingsAndMarkers();
+    }
+  };
+  // Initiate connection
+  xhttp.open("GET", "hotels.json", true);
+  // Send request
+  xhttp.send();
+  $("#plzWait").css("display", "none");
+}
+
+function generateListingsAndMarkers() {
+  // Loop over hotels array
+  for (var i = 0; i < hotels.length; i++) {
+    console.log("Creating entry: " + i + " with ID: " + hotels[i].uniqueId);
+    // Create new marker
+
+    temp = new google.maps.LatLng(hotels[i].lat, hotels[i].lng);
+    var tempMarker = addMarker(temp);
+    tempMarker.id = hotels[i].uniqueId;
+    console.log("me got: " + tempMarker);
+    google.maps.event.addDomListener(tempMarker, 'click', function() {
+      markerClicked(tempMarker);
+    });
+
+    // Add to markers array
+    markers.push(tempMarker);
+    createListingHtml(hotels[i].name, hotels[i].price, "NULL", hotels[i].uniqueId);
   }
-  document.getElementById(tabName).style.display = "block";
-  evt.currentTarget.className += " active";
+}
+
+// Halp me idk html plz be a better way to do this lololol xDDDDDD
+// So what im doing here, is inserting an external html file that is
+// a simple template file for 1 listing, i then modify it a bit with
+// the function parameters i got, and then we edit the ID's becuase
+// html can't have duplicate ID's
+function createListingHtml(hotelName, hotelPrice, hotelImage, hotelUniqueID) {
+  console.log("Generating html, ID: " + hotelUniqueID);
+
+
+  $("#theResults").append(TEMPLATE);
+
+  var blah = document.getElementById("TEMPLATE");
+  $("#TEMPLATE").attr('id', hotelUniqueID);
+
+  $("#TEMPLATE_price").html(hotelPrice);
+  $("#TEMPLATE_price").removeAttr("id");
+
+  $("#TEMPLATE_hotelName").html(hotelName);
+  $("#TEMPLATE_hotelName").removeAttr("id");
+
+
+
+
+  /*
+  //now we have loaded in a template file, with lots of TEMPLATE id's
+  //these give us access to modifying the listing
+
+
+    console.log("ID: " + hotelUniqueID + " :$" + blah);
+
+
+    $("#TEMPLATE_hotelName").text(hotelName);
+
+
+    $("#TEMPLATE_description").text("Epic stuff");
+    $("#TEMPLATE_description *").removeAttr("id");
+  */
+}
+
+
+function clearListings() {
+  console.log("Clearing results...");
+  //clear the results page
+  $("#theResults").html("");
+  //show the loading icon
+  $("#plzWait").css("display", "block");
+  //clear the map of it's current markers
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(null);
+  }
+  markers = [];
+  console.log("Done clearing");
 }

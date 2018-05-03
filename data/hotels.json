@@ -1,0 +1,5 @@
+[
+    {"name": "Very Dank Hotel", "lat": -34.9265988, "lng": 138.6061529, "City": "Adelaide", "price": 456, "uniqueId": 4567},
+    {"name": "Such Epic hotel", "lat": -34.9231506, "lng": 138.5927633, "City": "Adelaide", "price": 123, "uniqueId": 2345},
+    {"name": "Much Mint Hotel", "lat": -34.9350430, "lng": 138.6050371, "City": "Adelaide", "price": 789, "uniqueId": 1234}
+]

@@ -126,6 +126,7 @@ div.menuChoice {
 
 div.searchListing {
   min-height: 200px;
+  max-width: 80%;
   width: 85%;
   margin: 2%;
 }
@@ -157,31 +158,26 @@ div.searchListingDescription {
 }
 
 div.priceBox {
-  position: absolute;
   right: 10px;
-  font-size: 200%;
-  min-height: 85px;
+  font-size: 300%;
   min-width: 100px;
-  text-align: center;
-  line-height: 85px;
-  padding-right: 10px;
-  background-color: rgb(130, 130, 130);
+  text-align: right;
+  line-height: 65px;
+  padding-right: 30px;
 }
 
 div.bottomRight {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-  min-width: 110px;
+  float: right;
+  min-width: 20px;
   text-align: right;
   padding-right: 10px;
 }
 
 div.middleRight {
-  position: absolute;
+  float: right;
   right: 10px;
   bottom: 45px;
-  min-width: 110px;
+  max-width: 110px;
   text-align: right;
   padding-right: 10px;
 }
@@ -206,6 +202,7 @@ hr {
   background-color: rgb(5, 190, 175);
   border: none;
   color: white;
+  padding: 10px;
   padding-top: 3%;
   padding-bottom: 3%;
   width: 100%;
@@ -219,6 +216,11 @@ hr {
   /* Safari */
   transition-duration: 0.1s;
   cursor: pointer;
+}
+
+.listingButton {
+  padding: 10px;
+  margin-top: 50px;
 }
 
 .verticalButton {
@@ -374,6 +376,10 @@ div.captionStuff.w {
 
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+.hidden {
+  display: none;
 }
 
 /* Create three unequal columns that floats next to each other */
