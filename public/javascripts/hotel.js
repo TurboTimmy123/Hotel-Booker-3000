@@ -470,3 +470,35 @@ function clearListings() {
   markers = [];
   console.log("Done clearing");
 }
+
+
+
+// THE FOLLOWING IS USER LOGIN/REGISTRATION STUFF
+
+function login() {
+  // Create new AJAX request
+  var xhttp = new XMLHttpRequest();
+  // Define behaviour for a response
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      // convert from string to JSON, populate hotels array
+      var asdf = xhttp.responseText;
+      // Populate map
+      console.log("Reply: " + asdf);
+      if (asdf == "fail") {
+        alert("Wrong password m8 try again hahahahahaha");
+      }
+    }
+  };
+  // Initiate connection
+  var username = document.getElementById("username").value;
+  var password = document.getElementById("password").value;
+
+  var postRequest = "/login?username=" + username + "&password=" + password;
+  console.log("Post request: " + postRequest);
+
+
+  xhttp.open("POST", postRequest, true);
+  // Send request
+  xhttp.send();
+}
