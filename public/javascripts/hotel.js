@@ -169,7 +169,35 @@ function myMap() {
     mapTypeId: google.maps.MapTypeId.roadmap
   }
   theMap = new google.maps.Map(document.getElementById("map"), mapOptions);
+  var geocoder = new google.maps.Geocoder();
+
+  document.getElementById('epicButton').addEventListener('click', function() {
+    geocodeAddress(geocoder, theMap);
+  });
 }
+
+function geocodeAddress(geocoder, resultsMap) {
+  var address = document.getElementById('theDestination').value;
+  geocoder.geocode({
+    'address': address
+  }, function(results, status) {
+    if (status === 'OK') {
+      theMap.setZoom(10);
+      resultsMap.setCenter(results[0].geometry.location);
+      /*
+      var marker = new google.maps.Marker({
+        map: resultsMap,
+        position: results[0].geometry.location
+      });
+      */
+      updateListings(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
+
 
 function showRegisterOptions(i) {
   var temp1 = "none";
@@ -294,32 +322,6 @@ function openTab(evt, tabName) {
 
 
 //Gmaps related stuff
-function populateMapWithMarkers() {
-  ////////////////////////////////////////////////////////////////////
-  //THIS IS HARD CODED AND NOT THE RIGHT WAY TO DO THIS
-  //UNTIL WE GET A DATABASE THIS IS JUST FOR DEMONSTRATION PURPOSES
-  /////////////////////////////////////////////////////////////////////
-
-  //marker 1
-  temp = new google.maps.LatLng(-34.90, 138.60);
-  markers[0] = addMarker(temp);
-  markers[0].divId = 0;
-  console.log("me got: " + markers[0]);
-  google.maps.event.addDomListener(markers[0], 'click', function() {
-    markerClicked(markers[0])
-  });
-
-  //marker 2
-  temp = new google.maps.LatLng(-34.92, 138.69);
-  markers[1] = addMarker(temp);
-  markers[1].divId = 1;
-  console.log("me got: " + markers[1]);
-  google.maps.event.addDomListener(markers[1], 'click', function() {
-    markerClicked(markers[1])
-  });
-
-
-}
 
 function addMarker(dankCoordinate, epicLabel, i) {
   console.log("Adding dank marker...");
@@ -364,14 +366,14 @@ var hotels = [];
 //without actually reloading the page
 function findHotels(fromMain) {
   console.log("Search request, from main: " + fromMain);
-  updateListings();
   if (fromMain) {
     window.location.replace("search.html");
   }
 }
 
 //this function updates the search results page
-function updateListings() {
+function updateListings(lat, long) {
+  console.log("Requested search for: " + lat + " " + long);
   clearListings();
 
   // Create new AJAX request
@@ -387,7 +389,7 @@ function updateListings() {
     }
   };
   // Initiate connection
-  xhttp.open("GET", "hotels.json", true);
+  xhttp.open("GET", "hotels?lat=" + lat + "&lng=" + long, true);
   // Send request
   xhttp.send();
   $("#plzWait").css("display", "none");
@@ -395,24 +397,29 @@ function updateListings() {
 var i;
 
 function generateListingsAndMarkers() {
-  // Loop over hotels array
-  for (i = 0; i < hotels.length; i++) {
-    console.log("Creating marker entry: " + i + " with ID: " + hotels[i].uniqueId);
-    // Create new marker
+  if (hotels.length != 0) {
+    // Loop over hotels array
+    for (i = 0; i < hotels.length; i++) {
+      console.log("Creating marker entry: " + i + " with ID: " + hotels[i].uniqueId);
+      // Create new marker
 
-    var temp = new google.maps.LatLng(hotels[i].lat, hotels[i].lng);
-    var tempMarker = addMarker(temp, hotels[i].name, i);
-    markers[i] = tempMarker;
-    markers[i].divId = i;
+      var temp = new google.maps.LatLng(hotels[i].lat, hotels[i].lng);
+      var tempMarker = addMarker(temp, hotels[i].name, i);
+      markers[i] = tempMarker;
+      markers[i].divId = i;
 
 
-    google.maps.event.addDomListener(markers[i], 'click', function() {
-      markerClicked(this)
-    });
+      google.maps.event.addDomListener(markers[i], 'click', function() {
+        markerClicked(this)
+      });
 
-    // Add to markers array
-    createListingHtml(hotels[i].name, hotels[i].price, "NULL", hotels[i].uniqueId, i);
+      // Add to markers array
+      createListingHtml(hotels[i].name, hotels[i].price, "NULL", hotels[i].uniqueId, i);
+    }
+  } else {
+    console.log("RIP no results :(");
   }
+
 }
 
 // Halp me idk html plz be a better way to do this lololol xDDDDDD

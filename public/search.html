@@ -34,9 +34,6 @@
       <h2 class="wobbleThis">Find Hotels:</h2>
       <hr class="wobbleThis">
 
-      <div class="menuChoice wobbleThis">Destination:
-        <input type="text" class="textarea" name="first" value="420" size="35">
-      </div>
       <!--Inserts search.html here-->
       <div id="searchForm"></div>
       <div class="menuChoice">
@@ -51,35 +48,15 @@
 
     <div class="row">
       <div id="theList" class="column middle2 transitionType1">
+
+        <!-- <div id="loading" class="overLayBg"> <div class="loadingWindow"> <h1 style="color:white;">Loading please wait thnx.....</h1> <img src="/images/nyan.gif" alt="NYAN"> </div> </div> -->
+
         <h2>Avaliable Hotels:
         </h2>
         <h2 id="plzWait" class="hidden">Loading, plz wait thanx...</h2>
         <div id="theResults">
 
-          <!--Middle Listing 1-->
-          <div id="0" class="floatingWindow wobbleThis searchListing">
-            <div class="searchListingImage boxShadow">
-              <img class="maxImage rotateThis" src="images/doge2.jpg" alt="doge">
-            </div>
-            <div class="searchListingTitle">
-              <h3>Hotel A</h3>
-              <hr/>
-              <div class="searchListingDescription">
-
-                <p>A general discription of the Hotel</p>
-                <br>
-                <p>Romney Rd, Greenwich, London SE10 9NF, UK</p>
-              </div>
-              <div class="priceBox">$1337</div>
-
-              <div class="middleRight">
-                <button onclick="showHotel(0)" class="button listButton">Show on map</button>
-              </div>
-              <div class="bottomRight">
-                <button class="button" onclick="location.href='listing.html'">Goto</button>
-              </div>
-            </div>
-          </div>
+          <!--THE RESULTS WILL FILL UP THIS PLACE-->
 
         </div>
       </div>
@@ -98,7 +75,6 @@
 
     <script>
       Start();
-      populateMapWithMarkers();
       initializeEffects()
     </script>
   </body>

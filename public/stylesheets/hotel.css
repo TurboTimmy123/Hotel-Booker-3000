@@ -94,6 +94,15 @@ div.loginBox {
   background-color: #fefefe;
 }
 
+div.loadingWindow {
+  left: 50%;
+  top: 30%;
+  width: 20%;
+  z-index: 10;
+  position: fixed;
+  display: inline-block;
+}
+
 div.confirmWindow {
   left: 40%;
   top: 30%;
@@ -466,7 +475,7 @@ div.captionStuff.w {
 }
 
 .cancelButton {
-  padding: 14px;
+  padding: 10px;
   float: right;
   right: 0%;
   width: 150px;
