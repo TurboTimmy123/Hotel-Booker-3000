@@ -94,11 +94,11 @@ router.post('/login', function(req, res) {
 
   if (accounts[index].password == req.param("password")) {
     console.log("YAY! Creating session...");
-    req.session.user = req.param("password");
-    res.redirect('account.html');
+    req.session.user = req.param("username");
+    res.send("success");
   } else {
     console.log("lol u fail wrong password xD");
-    res.redirect('login.html');
+    res.send("fail");
     return;
   }
 });

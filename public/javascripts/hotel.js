@@ -542,6 +542,11 @@ function login() {
       if (asdf == "fail") {
         alert("Wrong password m8 try again hahahahahaha");
       }
+      if (asdf == "success") {
+        alert("Succesful login, redirecting to accounts page");
+        window.location.href = "/myAccount.html";
+
+      }
     }
   };
   // Initiate connection
@@ -588,4 +593,30 @@ function filloutListing() {
   xhttp.open("GET", "aHotel?id=" + id, true);
   // Send request
   xhttp.send();
+}
+
+
+
+
+
+
+
+
+
+// THE FOLLOWING IS OPENID STUFF
+function onSignIn(googleUser) {
+  console.log("(OpenID) onSignIn was called");
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+}
+
+
+function signOut() {
+  var auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function() {
+    console.log('User signed out.');
+  });
 }

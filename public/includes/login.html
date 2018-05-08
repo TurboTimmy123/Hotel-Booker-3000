@@ -1,4 +1,7 @@
 <div id="loginPopup" class="popupWindow">
+  <meta name="google-signin-client_id" content="739640612908-kagnds5o9pessmpuhbvui91h3j8cenj8.apps.googleusercontent.com">
+  <script src="https://apis.google.com/js/platform.js" async="async" defer="defer"></script>
+
   <div id="theLoginBackground" class="overLayBg"></div>
   <div class="floatingWindow wobbleThis loginBox">
 
@@ -22,13 +25,17 @@
       <input id="epicButton" onclick="login()" class="button button1 hideWhenRegistering" type="button" value="Login">
     </div>
 
-    <div class="menuChoice register wobbleThis">Favourite Color:
-      <select onchange="applyThemeColor(this.value)" name="color">
-        <option value="Red">Red</option>
-        <option value="Green">Green</option>
-        <option value="Blue">Blue</option>
-      </select>
+    <hr>
+    <div style="float: right" class="menuChoice wobbleThis">
+      <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
     </div>
+
+    <div style="float: left" class="menuChoice wobbleThis">
+      <h3>Skynet Login!</h3>
+    </div>
+    <br>
+    <br>
+    <hr>
 
     <h3 class="hideWhenRegistering wobbleThis">No account? Register for free!</h3>
     <div class="menuChoice wobbleThis">
