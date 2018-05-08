@@ -171,14 +171,23 @@ function myMap() {
     center: new google.maps.LatLng(-34.9, 138.6),
     zoom: 13,
     mapTypeId: google.maps.MapTypeId.roadmap
-  }
+  };
+
   theMap = new google.maps.Map(document.getElementById("map"), mapOptions);
   geocoder = new google.maps.Geocoder();
 
-  document.getElementById('epicButton').addEventListener('click', function() {
-    var address = document.getElementById('theDestination').value;
-    geocodeAddress(geocoder, theMap, address);
-  });
+  id = getParam('id');
+
+  console.log("id: " + id);
+  if (id == "") {
+    console.log("Adding searchbox listener");
+    document.getElementById('epicButton').addEventListener('click', function() {
+      var address = document.getElementById('theDestination').value;
+      geocodeAddress(geocoder, theMap, address);
+    });
+  } else {
+    console.log("Ommiting searchbox listener");
+  }
 }
 
 function geocodeAddress(geocoder, resultsMap, address) {
@@ -274,7 +283,7 @@ function toggleMap() {
 function showHotel(index) {
   var divRef = document.getElementById(index);
   console.log("index: " + index + " | Div reference: " + divRef);
-
+  theMap.setZoom(15);
   currentMarkerDivRef = divRef;
   if (!showMap) {
     toggleMap();
@@ -410,6 +419,8 @@ var i;
 function generateListingsAndMarkers() {
   if (hotels.length != 0) {
     // Loop over hotels array
+    $('#NoResults').css("display", "none");
+
     for (i = 0; i < hotels.length; i++) {
       console.log("Creating marker entry: " + i + " with ID: " + hotels[i].uniqueId);
       // Create new marker
@@ -425,10 +436,11 @@ function generateListingsAndMarkers() {
       });
 
       // Add to markers array
-      createListingHtml(hotels[i].name, hotels[i].price, "NULL", hotels[i].uniqueId, i);
+      createListingHtml(hotels[i].name, hotels[i].price, "NULL", hotels[i].uniqueId, hotels[i].Address, i);
     }
   } else {
     console.log("RIP no results :(");
+    $('#NoResults').css("display", "block");
   }
 }
 
@@ -437,7 +449,7 @@ function generateListingsAndMarkers() {
 // a simple template file for 1 listing, i then modify it a bit with
 // the function parameters i got, and then we edit the ID's becuase
 // html can't have duplicate ID's
-function createListingHtml(hotelName, hotelPrice, hotelImage, hotelUniqueID, index) {
+function createListingHtml(hotelName, hotelPrice, hotelImage, hotelUniqueID, hotelAddress, index) {
   console.log("Generating html, ID: " + hotelUniqueID);
   //now we have loaded in a template file, with lots of TEMPLATE id's
   //these give us access to modifying the listing
@@ -454,8 +466,16 @@ function createListingHtml(hotelName, hotelPrice, hotelImage, hotelUniqueID, ind
   $("#TEMPLATE_hotelName").html(hotelName);
   $("#TEMPLATE_hotelName").removeAttr("id");
 
+  $("#TEMPLATE_address").html("Address: " + hotelAddress);
+  $("#TEMPLATE_address").removeAttr("id");
+
   $("#TEMPLATE_button").attr("onclick", "showHotel(" + index + ")");
   $("#TEMPLATE_button").removeAttr("id");
+
+  $("#TEMPLATE_goto").attr("onclick", "location.href='listing.html?id=" + hotelUniqueID + "'");
+  $("#TEMPLATE_goto").removeAttr("id");
+
+
 }
 
 // the following function is run the first time the user access the search results
@@ -463,26 +483,32 @@ function createListingHtml(hotelName, hotelPrice, hotelImage, hotelUniqueID, ind
 function initSearchPage() {
   //parse url somehow
 
-  var destination = getParam('search');
-  if (destination != "deals") {
-    geocodeAddress(geocoder, theMap, destination);
+  var destination = getParam('destination');
+  var showDeals = getParam('showDeals');
+
+  if (showDeals == "true") {
+    console.log("Finding deals...");
+    //no destination was specified, we just show deals, this should only happen if the user somehow manually types out this
+    //page url, or if they search for an empty result
+
+    return;
   } else {
-    //ask the server for deals
+    geocodeAddress(geocoder, theMap, destination);
   }
 }
 
 
 // FOLLOWING FUNCTION IS NOT MINE, CREDIT FROM HERE:
 // https://stackoverflow.com/questions/9718634/how-to-get-the-parameter-value-from-the-url-in-javascript
-function getParam( name ) {
- name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
- var regexS = "[\\?&]"+name+"=([^&#]*)";
- var regex = new RegExp( regexS );
- var results = regex.exec( window.location.href );
- if( results == null )
-  return "";
-else
- return results[1];
+function getParam(name) {
+  name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+  var regexS = "[\\?&]" + name + "=([^&#]*)";
+  var regex = new RegExp(regexS);
+  var results = regex.exec(window.location.href);
+  if (results == null)
+    return "";
+  else
+    return results[1];
 }
 
 function clearListings() {
@@ -527,6 +553,39 @@ function login() {
 
 
   xhttp.open("POST", postRequest, true);
+  // Send request
+  xhttp.send();
+}
+
+
+
+
+
+
+
+
+
+// THE FOLLOWING IS THE LISTING PAGE GENERATION STUFF
+var id;
+
+function filloutListing() {
+  console.log("Fetching details for hotel ID: " + id);
+
+  // Create new AJAX request
+  var xhttp = new XMLHttpRequest();
+  // Define behaviour for a response
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      // convert from string to JSON, populate hotels array
+      var response = xhttp.responseText;
+      // Populate map
+      console.log("Got response: " + response);
+
+      //
+    }
+  };
+  // Initiate connection
+  xhttp.open("GET", "aHotel?id=" + id, true);
   // Send request
   xhttp.send();
 }

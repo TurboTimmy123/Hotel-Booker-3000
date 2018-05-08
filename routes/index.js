@@ -34,6 +34,15 @@ router.get('/hotels', function(req, res) {
   }, 500);
 });
 
+router.get('/aHotel', function(req, res) {
+  console.log("GET request for hotel ID: " + req.param("id"));
+
+
+  //var temp = findHotelsInRadius(req.param("lat"), req.param("lng"));
+  //console.log("Length of hotel list: " + temp.length);
+  res.send("yay");
+});
+
 function donothing() {
   //woah
 }
