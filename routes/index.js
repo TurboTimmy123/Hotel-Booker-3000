@@ -126,6 +126,6 @@ function deg2rad(deg) {
   return deg * (Math.PI / 180);
 }
 
-////////////////// End of copy pasted code
+////////////////// End of copy pasta
 
 module.exports = router;

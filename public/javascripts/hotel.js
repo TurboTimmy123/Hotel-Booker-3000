@@ -17,6 +17,10 @@ var currentMarkerDivRef;
 
 var TEMPLATE;
 
+
+// Google geocoder location service
+var geocoder;
+
 //when we have the map, disable it then
 var allowFooter = true;
 
@@ -169,15 +173,19 @@ function myMap() {
     mapTypeId: google.maps.MapTypeId.roadmap
   }
   theMap = new google.maps.Map(document.getElementById("map"), mapOptions);
-  var geocoder = new google.maps.Geocoder();
+  geocoder = new google.maps.Geocoder();
 
   document.getElementById('epicButton').addEventListener('click', function() {
-    geocodeAddress(geocoder, theMap);
+    var address = document.getElementById('theDestination').value;
+    geocodeAddress(geocoder, theMap, address);
   });
 }
 
-function geocodeAddress(geocoder, resultsMap) {
-  var address = document.getElementById('theDestination').value;
+function geocodeAddress(geocoder, resultsMap, address) {
+  // A request for new results has been made
+  // Show the loading screen
+  $("#loading").css("display", "block");
+
   geocoder.geocode({
     'address': address
   }, function(results, status) {
@@ -386,6 +394,9 @@ function updateListings(lat, long) {
       // Populate map
       console.log("Got hotels of length: " + hotels.length);
       generateListingsAndMarkers();
+
+      // After we've updated the page, hide loading stuff
+      $("#loading").css("display", "none");
     }
   };
   // Initiate connection
@@ -419,7 +430,6 @@ function generateListingsAndMarkers() {
   } else {
     console.log("RIP no results :(");
   }
-
 }
 
 // Halp me idk html plz be a better way to do this lololol xDDDDDD
@@ -429,6 +439,8 @@ function generateListingsAndMarkers() {
 // html can't have duplicate ID's
 function createListingHtml(hotelName, hotelPrice, hotelImage, hotelUniqueID, index) {
   console.log("Generating html, ID: " + hotelUniqueID);
+  //now we have loaded in a template file, with lots of TEMPLATE id's
+  //these give us access to modifying the listing
 
 
   $("#theResults").append(TEMPLATE);
@@ -444,25 +456,34 @@ function createListingHtml(hotelName, hotelPrice, hotelImage, hotelUniqueID, ind
 
   $("#TEMPLATE_button").attr("onclick", "showHotel(" + index + ")");
   $("#TEMPLATE_button").removeAttr("id");
-
-
-
-  /*
-  //now we have loaded in a template file, with lots of TEMPLATE id's
-  //these give us access to modifying the listing
-
-
-    console.log("ID: " + hotelUniqueID + " :$" + blah);
-
-
-    $("#TEMPLATE_hotelName").text(hotelName);
-
-
-    $("#TEMPLATE_description").text("Epic stuff");
-    $("#TEMPLATE_description *").removeAttr("id");
-  */
 }
 
+// the following function is run the first time the user access the search results
+// It mostly just creats the first initial request to the server
+function initSearchPage() {
+  //parse url somehow
+
+  var destination = getParam('search');
+  if (destination != "deals") {
+    geocodeAddress(geocoder, theMap, destination);
+  } else {
+    //ask the server for deals
+  }
+}
+
+
+// FOLLOWING FUNCTION IS NOT MINE, CREDIT FROM HERE:
+// https://stackoverflow.com/questions/9718634/how-to-get-the-parameter-value-from-the-url-in-javascript
+function getParam( name ) {
+ name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+ var regexS = "[\\?&]"+name+"=([^&#]*)";
+ var regex = new RegExp( regexS );
+ var results = regex.exec( window.location.href );
+ if( results == null )
+  return "";
+else
+ return results[1];
+}
 
 function clearListings() {
   console.log("Clearing results...");
