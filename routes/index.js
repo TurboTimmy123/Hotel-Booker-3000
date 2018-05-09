@@ -3,7 +3,9 @@ var router = express.Router();
 var fs = require('fs');
 
 var CLIENT_ID = '739640612908-kagnds5o9pessmpuhbvui91h3j8cenj8.apps.googleusercontent.com';
-var {OAuth2Client} = require('google-auth-library');
+var {
+  OAuth2Client
+} = require('google-auth-library');
 var client = new OAuth2Client(CLIENT_ID);
 var hotels = [];
 
@@ -90,7 +92,10 @@ router.post('/register', function(req, res) {
     }
   }
 
-  accounts.push({"username": theUsername, "password": thePassword});
+  accounts.push({
+    "username": theUsername,
+    "password": thePassword
+  });
   req.session.user = theUsername;
   console.log(accounts);
   console.log("Succesfuly created account! Yay!");
@@ -136,54 +141,71 @@ router.post('/login', function(req, res) {
 
 // COpied from 17-18 Lecture
 router.post('/user.json', function(req, res) {
-    console.log("Request for user.json made");
-    var user = "Anonymous";
+  console.log("Request for user.json made");
+  var user;
 
-    //console.log(JSON.stringify(req.body));
-    // If login details present, attempt login
-    //console.log("Got this Google ID token: " + req.param("idToken"));
-    if(req.param("idToken") != "") {
-        console.log("Google Token Recieved");
-        //
-        async function verify() {
-            // Verify google ID token
-            const ticket = await client.verifyIdToken({
-                idToken: req.param("idToken"),
-                audience: CLIENT_ID
-            });
+  //console.log(JSON.stringify(req.body));
+  // If login details present, attempt login
+  //console.log("Got this Google ID token: " + req.param("idToken"));
+  if (req.param("idToken") != "NULL") {
+    console.log("Google Token Recieved");
+    //
+    async function verify() {
+      // Verify google ID token
+      const ticket = await client.verifyIdToken({
+        idToken: req.param("idToken"),
+        audience: CLIENT_ID
+      });
+      // Get user data from token
+      const payload = ticket.getPayload();
+      console.log("Teh payload name: " + payload.name);
+      // Get user's Google ID
+      const userid = payload['sub'];
 
-            // Get user data from token
-            const payload = ticket.getPayload();
+      /*
+      for (var i=0; i<users.length; i++){
 
-            // Get user's Google ID
-            const userid = payload['sub'];
+           * If google ID matches a user
+           * save the session
+           * send that username
+           * (otherwise user will remain null)
+          if(accounts[i].user === userid){
+              req.session.username = users[i].username;
+              user = users[i].username;
+          }
+      }
+      */
+      accounts.push({
+        "username": payload.name
+      });
 
-            /*
-            for (var i=0; i<users.length; i++){
-
-                 * If google ID matches a user
-                 * save the session
-                 * send that username
-                 * (otherwise user will remain null)
-                if(accounts[i].user === userid){
-                    req.session.username = users[i].username;
-                    user = users[i].username;
-                }
-            }
-            */
-            user = "Some GOogle user";
-            res.json({"username":user});
-            return;
-        }
-        verify().catch(console.error);
-    // If no login details, but valid session
-    } else if(req.session.user !== undefined) {
-      user = req.session.user;
-      console.log("Already Valid session with user: " + user);
+      user = payload.name;
+      console.log("Using user: " + user);
+      req.session.user = payload.name;
+      res.json({
+        "username": user
+      });
+      return;
     }
+    verify().catch(console.error);
+    return;
+    // If no login details, but valid session
+  }
 
-    console.log("Replying user details: " + user);
-    res.json({"username":user});
+  if (req.session.user !== undefined) {
+    console.log("Already Valid session with user: " + req.session.user);
+    user = req.session.user;
+    res.json({
+      "username": user
+    });
+    return;
+  }
+
+  console.log("Appears to be first visit, sending Anonymous");
+  res.json({
+    "username": "Anonymous"
+  });
+
 });
 
 

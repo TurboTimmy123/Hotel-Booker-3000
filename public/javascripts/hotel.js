@@ -638,18 +638,18 @@ function getSessionDetails(params) {
 
   // Define behaviour for a response
   xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-          var temp = JSON.parse(xhttp.responseText);
-          // Check is logged in
-          console.log("Got user: " + temp.user);
+    if (this.readyState == 4 && this.status == 200) {
+      var temp = JSON.parse(xhttp.responseText);
+      // Check is logged in
+      console.log("Got name: " + temp.username);
 
-          if(temp.user !== null){
-            activeUsersName = temp.user;
-          // else prompt for login
-          } else {
-              // Nope
-          }
+      if (temp.user !== null) {
+        activeUsersName = temp;
+        // else prompt for login
+      } else {
+        // Nope
       }
+    }
   };
 
   // Initiate connection
@@ -660,7 +660,7 @@ function getSessionDetails(params) {
     xhttp.open("POST", "/user.json?idToken=" + params.idToken, true);
   } else {
     console.log("No Google session ID detected (yet)");
-    xhttp.open("POST", "/user.json", true);
+    xhttp.open("POST", "/user.json?idToken=NULL", true);
   }
 
   // NOTE: params only exist when there's a OpenID session
@@ -687,7 +687,9 @@ function onSignIn(googleUser) {
   var id_token = googleUser.getAuthResponse().id_token;
   //console.log("ID Token: " + id_token);
   // Pass the token to my getUserInfo
-  getSessionDetails({"idToken": id_token});
+  getSessionDetails({
+    "idToken": id_token
+  });
 }
 
 
