@@ -4,15 +4,15 @@
   <a id="name" href="index.html">Dogeotels</a>
 
   <div class="dropdown wobbleThis">
-    <button class="dropbtn wobbleThis">My Account
+    <button class="dropbtn wobbleThis">{{name}}
       <i class="fa fa-caret-down wobbleThis"></i>
     </button>
     <div class="dropdown-content wobbleThis">
-      <a id="headerAccount" href="myAccount.html">My Account</a>
-      <a id="headerLogin" onclick="showLoginScreen(false)">Login</a>
-      <a id="headerRegister" onclick="showLoginScreen(true)">Regsiter</a>
+      <a style="display:{{showWhenLogged}}" id="headerAccount" href="myAccount.html">My Account</a>
+      <a style="display:{{showWhenAnon}}" id="headerLogin" onclick="showLoginScreen(false)">Login</a>
+      <a style="display:{{showWhenAnon}}" id="headerRegister" onclick="showLoginScreen(true)">Regsiter</a>
       <hr>
-      <a id="headerLogout" onclick="userLogOut()">Logout</a>
+      <a style="display:{{showWhenLogged}}" id="headerLogout" onclick="userLogOut()">Logout</a>
     </div>
   </div>
 

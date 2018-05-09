@@ -1,6 +1,8 @@
 var express = require('express');
+
 var router = express.Router();
 var fs = require('fs');
+var handlebars = require('handlebars');
 
 var CLIENT_ID = '739640612908-kagnds5o9pessmpuhbvui91h3j8cenj8.apps.googleusercontent.com';
 var {
@@ -8,6 +10,8 @@ var {
 } = require('google-auth-library');
 var client = new OAuth2Client(CLIENT_ID);
 var hotels = [];
+
+var navbar;
 
 accounts = [];
 
@@ -27,6 +31,10 @@ fs.readFile('data/accounts.json', 'utf8', function(err, data) {
   accounts = JSON.parse(data);
 });
 
+fs.readFile('public/includes/header.html', 'utf8', function(err, data) {
+  navbar = data;
+});
+
 router.get('/hotels', function(req, res) {
   console.log("GET hotels.json");
 
@@ -39,6 +47,35 @@ router.get('/hotels', function(req, res) {
     console.log("Length of hotel list: " + temp.length);
     res.send(JSON.stringify(temp));
   }, 500);
+});
+
+router.get('/header', function(req, res) {
+  console.log("Requested header");
+  var template = handlebars.compile(navbar);
+
+  if (req.session.user !== undefined) {
+    console.log("Logged in user detected, generating html");
+    var data = {
+      "name": "Hi, " + req.session.user,
+      "showWhenLogged": "block",
+      "showWhenAnon": "none"
+    };
+
+    var result = template(data);
+    res.send(result);
+    return;
+  } else {
+    console.log("Guest user, sending standard header");
+    var data = {
+      "name": "Signin",
+      "showWhenLogged": "none",
+      "showWhenAnon": "block"
+    };
+
+    var result = template(data);
+    res.send(result);
+    return;
+  }
 });
 
 router.get('/aHotel', function(req, res) {
@@ -137,6 +174,8 @@ router.post('/login', function(req, res) {
     return;
   }
 });
+
+
 
 
 // COpied from 17-18 Lecture

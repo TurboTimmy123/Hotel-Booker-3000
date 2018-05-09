@@ -53,6 +53,13 @@ function Start() {
     TEMPLATE = data;
   });
 
+
+  //INCLUDES STUFF
+  $("#header").load("header");
+  $("#footer").load("includes/footer.html");
+  $("#login").load("includes/login.html");
+  $("#searchForm").load("includes/searchForm.html");
+
   getSessionDetails();
 }
 
