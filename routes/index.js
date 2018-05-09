@@ -1,7 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
+
+var CLIENT_ID = '739640612908-kagnds5o9pessmpuhbvui91h3j8cenj8.apps.googleusercontent.com';
+var {OAuth2Client} = require('google-auth-library');
+var client = new OAuth2Client(CLIENT_ID);
 var hotels = [];
+
 accounts = [];
 
 /* GET home page. */
@@ -78,17 +83,19 @@ router.post('/register', function(req, res) {
   console.log("Creating new Account, Username: " + theUsername + " Password: " + thePassword);
 
   for (var i = 0; i < accounts.length; i++) {
-    if (accounts[i].username == theUsername) {
+    if (accounts[i].user == theUsername) {
       console.log("Username taken, try again");
       res.send("fail");
       return;
     }
   }
-  res.send("success");
+
   accounts.push({"username": theUsername, "password": thePassword});
   req.session.user = theUsername;
   console.log(accounts);
   console.log("Succesfuly created account! Yay!");
+  res.send("success");
+  //res.redirect("/login?username=" + theUsername + "&password=" + thePassword);
   return;
 });
 
@@ -124,6 +131,59 @@ router.post('/login', function(req, res) {
     res.send("fail");
     return;
   }
+});
+
+
+// COpied from 17-18 Lecture
+router.post('/user.json', function(req, res) {
+    console.log("Request for user.json made");
+    var user = "Anonymous";
+
+    //console.log(JSON.stringify(req.body));
+    // If login details present, attempt login
+    //console.log("Got this Google ID token: " + req.param("idToken"));
+    if(req.param("idToken") != "") {
+        console.log("Google Token Recieved");
+        //
+        async function verify() {
+            // Verify google ID token
+            const ticket = await client.verifyIdToken({
+                idToken: req.param("idToken"),
+                audience: CLIENT_ID
+            });
+
+            // Get user data from token
+            const payload = ticket.getPayload();
+
+            // Get user's Google ID
+            const userid = payload['sub'];
+
+            /*
+            for (var i=0; i<users.length; i++){
+
+                 * If google ID matches a user
+                 * save the session
+                 * send that username
+                 * (otherwise user will remain null)
+                if(accounts[i].user === userid){
+                    req.session.username = users[i].username;
+                    user = users[i].username;
+                }
+            }
+            */
+            user = "Some GOogle user";
+            res.json({"username":user});
+            return;
+        }
+        verify().catch(console.error);
+    // If no login details, but valid session
+    } else if(req.session.user !== undefined) {
+      user = req.session.user;
+      console.log("Already Valid session with user: " + user);
+    }
+
+    console.log("Replying user details: " + user);
+    res.json({"username":user});
 });
 
 

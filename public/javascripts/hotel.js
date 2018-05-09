@@ -15,6 +15,9 @@ var markers = [];
 var currentMarkerIndex = -1;
 var currentMarkerDivRef;
 
+var activeUsersName = "Anonymous";
+var isGoogleSession = false;
+
 var TEMPLATE;
 
 
@@ -49,6 +52,8 @@ function Start() {
   $.get("includes/listing.html", function(data) {
     TEMPLATE = data;
   });
+
+  getSessionDetails();
 }
 
 //this function is run whenever the user scrolls through the page
@@ -626,7 +631,41 @@ function filloutListing() {
 
 
 
+function getSessionDetails(params) {
+  console.log("Gettings user session details and stuff...");
+  // Create new AJAX request
+  var xhttp = new XMLHttpRequest();
 
+  // Define behaviour for a response
+  xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          var temp = JSON.parse(xhttp.responseText);
+          // Check is logged in
+          console.log("Got user: " + temp.user);
+
+          if(temp.user !== null){
+            activeUsersName = temp.user;
+          // else prompt for login
+          } else {
+              // Nope
+          }
+      }
+  };
+
+  // Initiate connection
+  // Send request
+  console.log("PARAMS IS: " + params);
+  if (params !== undefined) {
+    console.log("Passing token: " + params.idToken);
+    xhttp.open("POST", "/user.json?idToken=" + params.idToken, true);
+  } else {
+    console.log("No Google session ID detected (yet)");
+    xhttp.open("POST", "/user.json", true);
+  }
+
+  // NOTE: params only exist when there's a OpenID session
+  xhttp.send();
+}
 
 
 
@@ -636,10 +675,19 @@ function filloutListing() {
 function onSignIn(googleUser) {
   console.log("(OpenID) onSignIn was called");
   var profile = googleUser.getBasicProfile();
-  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  //console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
   console.log('Name: ' + profile.getName());
-  console.log('Image URL: ' + profile.getImageUrl());
-  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  //console.log('Image URL: ' + profile.getImageUrl());
+  //console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+  activeUsersName = profile.getName();
+  isGoogleSession = true;
+
+  // The ID token you need to pass to your backend:
+  var id_token = googleUser.getAuthResponse().id_token;
+  //console.log("ID Token: " + id_token);
+  // Pass the token to my getUserInfo
+  getSessionDetails({"idToken": id_token});
 }
 
 
