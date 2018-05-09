@@ -70,6 +70,28 @@ function findHotelsInRadius(lat, lng) {
   return hotelResponseArray;
 }
 
+router.post('/register', function(req, res) {
+  var newAccount;
+  var theUsername = req.param("username");
+  var thePassword = req.param("password");
+
+  console.log("Creating new Account, Username: " + theUsername + " Password: " + thePassword);
+
+  for (var i = 0; i < accounts.length; i++) {
+    if (accounts[i].username == theUsername) {
+      console.log("Username taken, try again");
+      res.send("fail");
+      return;
+    }
+  }
+  res.send("success");
+  accounts.push({"username": theUsername, "password": thePassword});
+  req.session.user = theUsername;
+  console.log(accounts);
+  console.log("Succesfuly created account! Yay!");
+  return;
+});
+
 router.post('/login', function(req, res) {
   console.log("Input Usename: " + req.param("username"));
   console.log("Input Password: " + req.param("password"));
@@ -77,6 +99,7 @@ router.post('/login', function(req, res) {
   var index = -1;
   //please close your eyes for the next few lines thankx
   for (var i = 0; i < accounts.length; i++) {
+    console.log("Trying: " + accounts[i].username);
     if (accounts[i].username == req.param("username")) {
       index = i;
     }

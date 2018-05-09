@@ -562,7 +562,36 @@ function login() {
   xhttp.send();
 }
 
+function register() {
+  // Create new AJAX request
+  var xhttp = new XMLHttpRequest();
+  // Define behaviour for a response
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      // convert from string to JSON, populate hotels array
+      var asdf = xhttp.responseText;
+      // Populate map
+      console.log("Reply: " + asdf);
+      if (asdf == "fail") {
+        alert("Fail xD");
+      }
+      if (asdf == "success") {
+        alert("Registration Succesful, redirecting to accounts page");
+        window.location.href = "/myAccount.html";
+      }
+    }
+  };
+  // Initiate connection
+  var username = document.getElementById("username").value;
+  var password = document.getElementById("password").value;
 
+  var postRequest = "/register?username=" + username + "&password=" + password;
+  console.log("[Register] Post request: " + postRequest);
+
+  xhttp.open("POST", postRequest, true);
+  // Send request
+  xhttp.send();
+}
 
 
 
