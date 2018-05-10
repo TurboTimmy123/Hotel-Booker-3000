@@ -44,6 +44,11 @@ fs.readFile('public/includes/hotelListing.html', 'utf8', function(err, data) {
   listing = data;
 });
 
+
+// GET REQUESTS BELOW
+
+
+
 router.get('/hotels', function(req, res) {
   console.log("GET hotels.json");
 
@@ -64,18 +69,31 @@ router.get('/hotelListing', function(req, res) {
   var id = req.param("id");
   console.log("Generating hotel page for: " + id);
   console.log("Hotel name: " + hotels[id].name);
-  console.log("listing html: " + listing);
   var template = handlebars.compile(listing);
+  var reviewHTML = generateReviewHTML(id);
   var data = {
     "name": hotels[id].name,
     "adress": hotels[id].Address,
-    "price": hotels[id].price
+    "price": hotels[id].price,
+    "reviews": reviewHTML
   };
 
   var result = template(data);
   console.log("Done generating listing html, sending now yay!");
   res.send(result);
 });
+
+// Given a hotel ID, will return a HTML string containing it's reviews
+function generateReviewHTML(hotelID) {
+  var amazingVariable = '';
+  console.log("Hotel ID: " + hotelID + " Reviews count: " + hotels[hotelID].review.length);
+
+  for (var i = 0; i < hotels[hotelID].review.length; i++) {
+    amazingVariable += '<p><b>' + hotels[hotelID].review[i].reviewerName + '</b>: ' + hotels[hotelID].review[i].text + '</p><hr>';
+  }
+  console.log("Generated: " + amazingVariable);
+  return amazingVariable;
+}
 
 // Build the header account for guest/users
 // For guests it gives them an option to login
@@ -143,6 +161,27 @@ function findHotelsInRadius(lat, lng) {
 
   return hotelResponseArray;
 }
+
+
+
+//  POST REQUESTS BELOW
+
+
+//When the client sends a new review to add to the database
+router.post('/newReview', function(req, res) {
+  var theUser = req.param("user");
+  var hotelID = req.param("id");
+  var theMsg = req.param("msg");
+  console.log("Adding review to hotel: " + hotelID + " By: " + theUser + " With: " + theMsg);
+
+  hotels[hotelID].review.push({
+    "reviewerName": theUser,
+    "text": theMsg
+  });
+
+  console.log("Hotel review: " + JSON.stringify(hotels[hotelID].review));
+  res.send("success");
+});
 
 // When the user registers for an account do this stuff
 router.post('/register', function(req, res) {

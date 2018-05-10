@@ -116,12 +116,31 @@ function hideConfirmScreen() {
 }
 
 // Append a reivew to the hotel listings review section
+
 function addReview() {
-  console.log("Adding Review...");
-  var ourText = document.getElementById("msg");
-  console.log(ourText.value);
-  $("#reviews").append("<div class=\"reviews\">" + ourText.value + "</div><hr>");
+  console.log("Adding New Review...");
+  var ourText = document.getElementById("msg").value;
+  appendReview(activeUsersName, ourText);
+  uploadNewReview(activeUsersName, ourText);
   closeReviewBox();
+}
+
+function uploadNewReview(user, msg) {
+  console.log("Uploading new review... plz wait thanx m8 xD");
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var response = xhttp.responseText;
+      console.log("Got response: " + response);
+      alert("Succesfully added review");
+    }
+  };
+  xhttp.open("POST", "/newReview?id=" + getParam("id") + "&user=" + user + "&msg=" + msg, true);
+  xhttp.send();
+}
+
+function appendReview(user, msg) {
+  $("#reviews").append("<p><b>" + user + ":</b>  " + msg + "</div><hr>");
 }
 
 function userLogOut() {
