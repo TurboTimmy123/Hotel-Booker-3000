@@ -69,10 +69,16 @@ div.floatingWindow {
 }
 
 .wideCentre {
+  top: 12%;
   width: 80%;
   top: 8%;
   margin-left: 10%;
   height: 700px;
+}
+
+.accountsPage {
+  position: absolute;
+  margin-top: 2%
 }
 
 div.searchBox {
