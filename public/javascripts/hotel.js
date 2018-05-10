@@ -20,7 +20,6 @@ var isGoogleSession = false;
 
 var TEMPLATE;
 
-
 // Google geocoder location service
 var geocoder;
 
@@ -39,9 +38,10 @@ function Start() {
     console.log("counter exists");
     setInterval(fakeCounterIncrementer, 10);
   } else {
-    console.log("counter not found");
+    console.log("User counter not found on this page");
   }
 
+  //check if the page has tiling doges to animate
   if (document.getElementById("tilingDoge") != null) {
     console.log("doges exists");
     setInterval(scrollingDoge, 10);
@@ -54,16 +54,19 @@ function Start() {
   });
 
 
-  //INCLUDES STUFF
+  //INCLUDES STUFF, these are present on EVERY page that the user goes to
   $("#header").load("header");
   $("#footer").load("includes/footer.html");
   $("#login").load("includes/login.html");
   $("#searchForm").load("includes/searchForm.html");
 
+  //update our current session status
   getSessionDetails();
 }
 
-//this function is run whenever the user scrolls through the page
+// this function is run whenever the user scrolls through the page
+// This simply creates a shadown under the banner that gets progressively strong
+// as the user scrolls down
 $(window).scroll(function() {
   //the maximum shadow strength cast from the banner
   var maxShadowStrength = 0.5;
@@ -78,21 +81,28 @@ $(window).scroll(function() {
   $(temp).css("box-shadow", "0px 0px 20px rgba(0,0,0," + shadowIntensity + ")");
 });
 
+// Fake counter showing how many users are using the website
 function fakeCounterIncrementer() {
   document.getElementById("fakeCounter").textContent++;
 }
 
+// The follosing simply switch whether certain content is visible in the page
+// These use usually called from html buttons
+
 function showLoginScreen(reg) {
   console.log("Open login");
   showRegisterOptions(reg);
-  //hideConfirmScreen();
   document.getElementById("loginPopup").style.display = 'block';
 }
 
 function confirmBooking() {
   console.log("Opening confirm Booking window");
-  hideLoginScreen();
-  document.getElementById("confirmBooking").style.display = 'block';
+  //hideLoginScreen();
+  if (activeUsersName == "Anonymous") {
+    alert("Plz login first");
+  } else {
+    document.getElementById("confirmBooking").style.display = 'block';
+  }
 }
 
 function hideLoginScreen() {
@@ -105,6 +115,7 @@ function hideConfirmScreen() {
   document.getElementById("confirmBooking").style.display = 'none';
 }
 
+// Append a reivew to the hotel listings review section
 function addReview() {
   console.log("Adding Review...");
   var ourText = document.getElementById("msg");
@@ -121,7 +132,7 @@ function userLogIn() {
   alert("User attempted to log in");
 }
 
-//the following 2 function were copied from here:
+//the following function were copied from here:
 //https://stackoverflow.com/questions/3898130/check-if-a-user-has-scrolled-to-the-bottom
 window.onscroll = function(ev) {
   if ($(window).scrollTop() + $(window).height() >= getDocHeight()) {
@@ -137,11 +148,6 @@ window.onscroll = function(ev) {
   }
 };
 
-//when we see the map, force hide the footer
-function hideFooterNow() {
-  $("#foot").css("bottom", "-10%");
-}
-
 function getDocHeight() {
   var D = document;
   return Math.max(
@@ -151,6 +157,12 @@ function getDocHeight() {
   );
 }
 
+//when we see the map, force hide the footer
+function hideFooterNow() {
+  $("#foot").css("bottom", "-20%");
+}
+
+// Give off a cool animation effect thing when we open/close the review box
 function openReviewBox() {
   $("#reviewButton").css("width", "8%");
   $("#reviewButton").css("height", "100%");
@@ -172,12 +184,13 @@ function closeReviewBox() {
   document.getElementById("msg").value = "";
 }
 
-
+// Animate tiling doge image on the main home screen
 function scrollingDoge() {
   scroll -= 1;
   $("#tilingDoge").css('background-position', -scroll + "px " + scroll + "px");
 }
 
+// Initializes our epic map
 function myMap() {
   var mapOptions = {
     center: new google.maps.LatLng(-34.9, 138.6),
@@ -192,16 +205,23 @@ function myMap() {
 
   console.log("id: " + id);
   if (id == "") {
+
+    // The following is a listener element that when the user inputs a search, we will
+    // Run google geocoder service and do epic stuff
     console.log("Adding searchbox listener");
     document.getElementById('epicButton').addEventListener('click', function() {
       var address = document.getElementById('theDestination').value;
       geocodeAddress(geocoder, theMap, address);
     });
   } else {
+    // Omit the listener from listing pages
     console.log("Ommiting searchbox listener");
   }
 }
 
+// Google geocode service
+// Based off:
+// https://developers.google.com/maps/documentation/javascript/geocoding
 function geocodeAddress(geocoder, resultsMap, address) {
   // A request for new results has been made
   // Show the loading screen
@@ -213,21 +233,15 @@ function geocodeAddress(geocoder, resultsMap, address) {
     if (status === 'OK') {
       theMap.setZoom(10);
       resultsMap.setCenter(results[0].geometry.location);
-      /*
-      var marker = new google.maps.Marker({
-        map: resultsMap,
-        position: results[0].geometry.location
-      });
-      */
       updateListings(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
   });
 }
 
-
+// The user can switch to register from the login screen
+// This simply toggles some elements in the window to switch to register mode
 function showRegisterOptions(i) {
   var temp1 = "none";
   var temp2 = "block";
@@ -254,9 +268,9 @@ function showRegisterOptions(i) {
 
 }
 
+// Given a color, will set this to the websites theme color
 function applyThemeColor(col) {
   console.log("got: " + col);
-
   for (var q = 0; q < ourButtons.length; q++) {
     $(ourButtons[q]).css("background-color", col);
   }
@@ -264,6 +278,7 @@ function applyThemeColor(col) {
   $('#foot').css("background", col);
 }
 
+// Toggle between results/map mode
 function toggleMap() {
   showMap = !showMap;
   console.log("setting map to: " + showMap);
@@ -290,24 +305,32 @@ function toggleMap() {
   $('#showMapButton').css("right", buttonOffset + "%");
 }
 
-
-
+// Given a hotel index, reveal a popup with information about it
 function showHotel(index) {
   var divRef = document.getElementById(index);
   console.log("index: " + index + " | Div reference: " + divRef);
   theMap.setZoom(15);
   currentMarkerDivRef = divRef;
+
+  // The information on the map is just fetching the divs from the results page
+  // When we click "show on map", we need to finish our amazing animation
+  // Before popping up the div, so we add a delay, else, show immedietaly
+  if (showMap == true) {
+    console.log("Map shown, no delay");
+    revealHotelPopup(divRef, index);
+  } else {
+    console.log("Results shown, delay");
+    setTimeout(function() {
+      revealHotelPopup(divRef, index);
+    }, 500);
+  }
+
   if (!showMap) {
     toggleMap();
   }
-
-  setTimeout(function() {
-    revealHotelPopup(divRef, index)
-  }, 500);
 }
 
-//takes the same div used in the search result and places
-//it on top of the map
+// Takes the same div used in the search result and places it on top of the map
 function revealHotelPopup(divRef, index) {
   console.log("Revealing: " + divRef);
   $(divRef).css("position", "fixed");
@@ -319,7 +342,7 @@ function revealHotelPopup(divRef, index) {
   theMap.panTo(markers[index].position);
 }
 
-//simply puts the popup div back to it's place
+// Simply puts the popup div back to it's place
 function hideHotel(divRef) {
   console.log("Hiding hotel: " + divRef);
   $(divRef).css("position", "static");
@@ -328,6 +351,7 @@ function hideHotel(divRef) {
   $(divRef).css("width", "85%");
 }
 
+// Used on the accounts page to switch between tabs
 function openTab(evt, tabName) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
@@ -378,12 +402,7 @@ function markerClicked(e) {
     console.log('Marker ' + e.divId + ' has been clicked');
     showHotel(e.divId);
   }
-
 }
-
-
-
-
 
 
 
@@ -407,11 +426,13 @@ function updateListings(lat, long) {
 
   // Create new AJAX request
   var xhttp = new XMLHttpRequest();
+
   // Define behaviour for a response
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       // convert from string to JSON, populate hotels array
       hotels = JSON.parse(xhttp.responseText);
+
       // Populate map
       console.log("Got hotels of length: " + hotels.length);
       generateListingsAndMarkers();
@@ -420,20 +441,21 @@ function updateListings(lat, long) {
       $("#loading").css("display", "none");
     }
   };
+
   // Initiate connection
   xhttp.open("GET", "hotels?lat=" + lat + "&lng=" + long, true);
+
   // Send request
   xhttp.send();
   $("#plzWait").css("display", "none");
 }
-var i;
 
 function generateListingsAndMarkers() {
   if (hotels.length != 0) {
     // Loop over hotels array
     $('#NoResults').css("display", "none");
 
-    for (i = 0; i < hotels.length; i++) {
+    for (var i = 0; i < hotels.length; i++) {
       console.log("Creating marker entry: " + i + " with ID: " + hotels[i].uniqueId);
       // Create new marker
 
@@ -444,7 +466,7 @@ function generateListingsAndMarkers() {
 
 
       google.maps.event.addDomListener(markers[i], 'click', function() {
-        markerClicked(this)
+        markerClicked(this);
       });
 
       // Add to markers array
@@ -496,20 +518,15 @@ function createListingHtml(hotelName, hotelPrice, hotelImage, hotelUniqueID, hot
 }
 
 // the following function is run the first time the user access the search results
-// It mostly just creats the first initial request to the server
+// It mostly just creates the first initial request to the server
 function initSearchPage() {
-  //parse url somehow
-
   var destination = getParam('destination');
   var showDeals = getParam('showDeals');
 
-  var myEpicJson = {"Destination": destination, "asdf": showDeals};
-
-  if (showDeals == "true") {
+  if (showDeals == "true" || destination == "") {
     console.log("Finding deals...");
     //no destination was specified, we just show deals, this should only happen if the user somehow manually types out this
     //page url, or if they search for an empty result
-
     return;
   } else {
     geocodeAddress(geocoder, theMap, destination);
@@ -518,6 +535,7 @@ function initSearchPage() {
 
 
 // FOLLOWING FUNCTION IS NOT MINE, CREDIT FROM HERE:
+// For some reason i got stuck trying to get url parameters, dunno, looked easy, so we use fancy regex stuff
 // https://stackoverflow.com/questions/9718634/how-to-get-the-parameter-value-from-the-url-in-javascript
 function getParam(name) {
   name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
@@ -529,7 +547,9 @@ function getParam(name) {
   else
     return results[1];
 }
+// End of copy pasta
 
+// clearListings... (get ready for it) clears your listings... WOAHHH!!!!!
 function clearListings() {
   console.log("Clearing results...");
   //clear the results page
@@ -547,7 +567,6 @@ function clearListings() {
 
 
 // THE FOLLOWING IS USER LOGIN/REGISTRATION STUFF
-
 function login() {
   // Create new AJAX request
   var xhttp = new XMLHttpRequest();
@@ -564,7 +583,6 @@ function login() {
       if (asdf == "success") {
         alert("Succesful login, redirecting to accounts page");
         window.location.href = "/myAccount.html";
-
       }
     }
   };
@@ -574,13 +592,13 @@ function login() {
 
   var postRequest = "/login?username=" + username + "&password=" + password;
   console.log("Post request: " + postRequest);
-
-
   xhttp.open("POST", postRequest, true);
   // Send request
   xhttp.send();
 }
 
+
+// Standard account registration stuff
 function register() {
   // Create new AJAX request
   var xhttp = new XMLHttpRequest();
@@ -612,8 +630,8 @@ function register() {
   xhttp.send();
 }
 
-
-
+// Asks the server who am i, and get's some epic information on the current active
+// users accounts, such as name and current bookings
 function getSessionDetails(params) {
   console.log("Gettings user session details and stuff...");
   // Create new AJAX request
@@ -626,11 +644,12 @@ function getSessionDetails(params) {
       // Check is logged in
       console.log("Got name: " + temp.username);
 
-      if (temp.user !== null) {
-        activeUsersName = temp;
+      if (temp.username !== null) {
+        activeUsersName = temp.username;
+        console.log("Settings activeUsersName to: " + activeUsersName);
         // else prompt for login
       } else {
-        // Nope
+        console.log("Anonymous login");
       }
     }
   };
@@ -653,18 +672,11 @@ function getSessionDetails(params) {
 
 
 
-
 // THE FOLLOWING IS OPENID STUFF
 function onSignIn(googleUser) {
   console.log("(OpenID) onSignIn was called");
   var profile = googleUser.getBasicProfile();
-  //console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-  console.log('Name: ' + profile.getName());
-  //console.log('Image URL: ' + profile.getImageUrl());
-  //console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-
-  activeUsersName = profile.getName();
-  isGoogleSession = true;
+  console.log('Google Name: ' + profile.getName());
 
   // The ID token you need to pass to your backend:
   var id_token = googleUser.getAuthResponse().id_token;
@@ -673,6 +685,15 @@ function onSignIn(googleUser) {
   getSessionDetails({
     "idToken": id_token
   });
+
+  if (activeUsersName == "Anonymous") {
+    isGoogleSession = true;
+    activeUsersName = profile.getName();
+    console.log("First time Google Login... Going to accounts page");
+    window.location.href = "/myAccount.html";
+  } else {
+    console.log("Same session");
+  }
 }
 
 // Signing out from google requires some extra steps
@@ -696,10 +717,10 @@ function sendLogoutRequest() {
     if (this.readyState == 4 && this.status == 200) {
       var response = xhttp.responseText;
       console.log("Got response: " + response);
-      location.reload();
+      alert("Succesfully logged out");
+      window.location.href = "/index.html";
     }
   };
-
   xhttp.open("POST", "/logout", true);
   xhttp.send();
 }

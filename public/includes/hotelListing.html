@@ -52,8 +52,6 @@
       </div>
     </div>
 
-    <hr/>
-
     <!--The following is the Reviews window-->
     <div class="floatingWindow wobbleThis wide">
       <h2>Reviews</h2>
@@ -70,15 +68,18 @@
     </div>
 
     <!--Now the confirm booking window thing-->
-    <div id="confirmBooking" class="popupWindow wobbleThis">
-      <div id="theLoginBackground" class="overLayBg"></div>
+    <div id="confirmBooking" class="overLayBg" style="display: none">
       <div class="floatingWindow wobbleThis confirmWindow">
         <span class="close" onclick="hideConfirmScreen()"></span>
         <h2>Confirm Booking?</h2>
         <hr>
         <div id="searchForm"></div>
-        <button class="button">Book!</button>
-
+        <br>
+        <br>
+        <hr>
+        <h3>Price:</h3>
+        <hr>
+        <input id="epicButton" onclick="confirmHotel()" class="button" type="button" value="Very Confirm">
       </div>
     </div>
 

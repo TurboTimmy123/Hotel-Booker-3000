@@ -8,6 +8,13 @@
   </head>
 
   <body>
+    <!--The main page includes a scrooling paralax effect, for this we must specify a hieght for the effect to work properly-->
+    <style>
+      body {
+        height: 1200px;
+      }
+    </style>
+
     <script src="javascripts/jquery.min.js"></script>
     <script src="javascripts/hotel.js"></script>
     <script src="javascripts/veryImportant.js"></script>
@@ -25,6 +32,10 @@
         <h1 class="wobbleThis">Find Hotels!</h1>
 
         <form action="/search.html">
+          <div class="menuChoice wobbleThis">Destination:
+            <input id="theDestination" type="text" class="textarea" name="destination" value="Adelaide" size="35">
+          </div>
+
           <!--Inserts search.html here-->
           <div id="searchForm"></div>
           <div class="menuChoice">

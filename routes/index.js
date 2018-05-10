@@ -15,6 +15,7 @@ var hotels = [];
 var navbar;
 var listing;
 
+// Accounts arrray, we load this from a file when the server starts
 accounts = [];
 
 /* GET home page. */
@@ -22,6 +23,7 @@ router.get('/', function(req, res, next) {
   res.render('index', {
     title: 'Express'
   });
+  res.send("/public/index.html");
 });
 
 fs.readFile('data/hotels.json', 'utf8', function(err, data) {
@@ -33,6 +35,7 @@ fs.readFile('data/accounts.json', 'utf8', function(err, data) {
   accounts = JSON.parse(data);
 });
 
+// Handlebars template stuff
 fs.readFile('public/includes/header.html', 'utf8', function(err, data) {
   navbar = data;
 });
@@ -74,6 +77,10 @@ router.get('/hotelListing', function(req, res) {
   res.send(result);
 });
 
+// Build the header account for guest/users
+// For guests it gives them an option to login
+// For signed in users, we show their name
+// And instead have options to log out and stuff
 router.get('/header', function(req, res) {
   console.log("Requested header");
   var template = handlebars.compile(navbar);
@@ -92,7 +99,6 @@ router.get('/header', function(req, res) {
       data.logout = "sendLogoutRequest()";
     }
 
-
     var result = template(data);
     res.send(result);
     return;
@@ -110,23 +116,15 @@ router.get('/header', function(req, res) {
   }
 });
 
-router.get('/aHotel', function(req, res) {
-  console.log("GET request for hotel ID: " + req.param("id"));
-
-
-  //var temp = findHotelsInRadius(req.param("lat"), req.param("lng"));
-  //console.log("Length of hotel list: " + temp.length);
-  res.send("yay");
-});
-
+// Very important function
 function doNothing() {
   // woah
 }
 
-//given some coordinates, return an array containing hotels within this area
+//given some coordinates, return an array containing hotels within that area of 50km
 function findHotelsInRadius(lat, lng) {
   var hotelResponseArray = [];
-  var maximumDistance = 100; //in km
+  var maximumDistance = 50; //in km
   var temp; //unnecsary, just for debugging
 
   for (var i = 0; i < hotels.length; i++) {
@@ -146,6 +144,7 @@ function findHotelsInRadius(lat, lng) {
   return hotelResponseArray;
 }
 
+// When the user registers for an account do this stuff
 router.post('/register', function(req, res) {
   var newAccount;
   var theUsername = req.param("username");
@@ -161,6 +160,7 @@ router.post('/register', function(req, res) {
     }
   }
 
+  // Much secure, very plaintext
   accounts.push({
     "username": theUsername,
     "password": thePassword
@@ -173,6 +173,7 @@ router.post('/register', function(req, res) {
   return;
 });
 
+// Epic login stuff
 router.post('/login', function(req, res) {
   console.log("Input Usename: " + req.param("username"));
   console.log("Input Password: " + req.param("password"));
@@ -207,6 +208,7 @@ router.post('/login', function(req, res) {
   }
 });
 
+// Logs out and clears the current users session
 router.post('/logout', function(req, res) {
   console.log("Logout requested");
   req.session.user = undefined;
@@ -218,10 +220,6 @@ router.post('/logout', function(req, res) {
 router.post('/user.json', function(req, res) {
   console.log("Request for user.json made");
   var user;
-
-  //console.log(JSON.stringify(req.body));
-  // If login details present, attempt login
-  //console.log("Got this Google ID token: " + req.param("idToken"));
   if (req.param("idToken") != "NULL") {
     console.log("Google Token Recieved");
     //
@@ -236,20 +234,6 @@ router.post('/user.json', function(req, res) {
       console.log("Teh payload name: " + payload.name);
       // Get user's Google ID
       const userid = payload['sub'];
-
-      /*
-      for (var i=0; i<users.length; i++){
-
-           * If google ID matches a user
-           * save the session
-           * send that username
-           * (otherwise user will remain null)
-          if(accounts[i].user === userid){
-              req.session.username = users[i].username;
-              user = users[i].username;
-          }
-      }
-      */
       accounts.push({
         "username": payload.name
       });
@@ -265,7 +249,6 @@ router.post('/user.json', function(req, res) {
     }
     verify().catch(console.error);
     return;
-    // If no login details, but valid session
   }
 
   if (req.session.user !== undefined) {
@@ -283,7 +266,6 @@ router.post('/user.json', function(req, res) {
   res.json({
     "username": "Anonymous"
   });
-
 });
 
 
@@ -317,7 +299,6 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
 function deg2rad(deg) {
   return deg * (Math.PI / 180);
 }
-
 ////////////////// End of copy pasta
 
 module.exports = router;
