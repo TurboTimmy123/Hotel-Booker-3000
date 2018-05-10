@@ -1,7 +1,7 @@
 [
-    {"name": "Very Dank Hotel", "lat": -34.9265988, "lng": 138.6061529, "Address": "12 asdf Avenue", "price": 456, "uniqueId": 8123467},
-    {"name": "Such Epic hotel", "lat": -34.9231506, "lng": 138.5927633, "Address": "1337 qwerty lane", "price": 123, "uniqueId": 24693},
-    {"name": "Much Mint Hotel", "lat": -34.9350430, "lng": 138.6050371, "Address": "420 Great Gravel", "price": 789, "uniqueId": 2569234},
-    {"name": "Super Hot Hotel", "lat": -33.86882, "lng": 151.2092955, "Address": "12345 Meow Motorway", "price": 789, "uniqueId": 89234567},
-    {"name": "Very Dank Hotel", "lat": 40.71277, "lng": -74.005978, "Address": "420 Dank Drive", "price": 420, "uniqueId": 420420420}
+    {"name": "Very Dank Hotel", "lat": -34.9265988, "lng": 138.6061529, "Address": "12 asdf Avenue", "price": 456, "uniqueId": 0},
+    {"name": "Such Epic hotel", "lat": -34.9231506, "lng": 138.5927633, "Address": "1337 qwerty lane", "price": 123, "uniqueId": 1},
+    {"name": "Much Mint Hotel", "lat": -34.9350430, "lng": 138.6050371, "Address": "420 Great Gravel", "price": 789, "uniqueId": 2},
+    {"name": "Super Hot Hotel", "lat": -33.86882, "lng": 151.2092955, "Address": "12345 Meow Motorway", "price": 789, "uniqueId": 3},
+    {"name": "Very Dank Hotel", "lat": 40.71277, "lng": -74.005978, "Address": "420 Dank Drive", "price": 420, "uniqueId": 4}
 ]

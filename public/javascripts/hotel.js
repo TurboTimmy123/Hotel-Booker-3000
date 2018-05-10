@@ -463,8 +463,13 @@ function generateListingsAndMarkers() {
 // html can't have duplicate ID's
 function createListingHtml(hotelName, hotelPrice, hotelImage, hotelUniqueID, hotelAddress, index) {
   console.log("Generating html, ID: " + hotelUniqueID);
-  //now we have loaded in a template file, with lots of TEMPLATE id's
-  //these give us access to modifying the listing
+
+
+  ////////////////////////////////////////////////////
+  // THIS IS NOT THE RIGHT WAY TO DO THIS
+  // I did this before finding out about handlebars
+  // And i will replace it when i get time
+  ////////////////////////////////////////////////////
 
 
   $("#theResults").append(TEMPLATE);
@@ -484,7 +489,7 @@ function createListingHtml(hotelName, hotelPrice, hotelImage, hotelUniqueID, hot
   $("#TEMPLATE_button").attr("onclick", "showHotel(" + index + ")");
   $("#TEMPLATE_button").removeAttr("id");
 
-  $("#TEMPLATE_goto").attr("onclick", "location.href='listing.html?id=" + hotelUniqueID + "'");
+  $("#TEMPLATE_goto").attr("onclick", "location.href='hotelListing?id=" + hotelUniqueID + "'");
   $("#TEMPLATE_goto").removeAttr("id");
 
 
@@ -497,6 +502,8 @@ function initSearchPage() {
 
   var destination = getParam('destination');
   var showDeals = getParam('showDeals');
+
+  var myEpicJson = {"Destination": destination, "asdf": showDeals};
 
   if (showDeals == "true") {
     console.log("Finding deals...");
@@ -607,37 +614,6 @@ function register() {
 
 
 
-
-
-
-
-// THE FOLLOWING IS THE LISTING PAGE GENERATION STUFF
-var id;
-
-function filloutListing() {
-  console.log("Fetching details for hotel ID: " + id);
-
-  // Create new AJAX request
-  var xhttp = new XMLHttpRequest();
-  // Define behaviour for a response
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      // convert from string to JSON, populate hotels array
-      var response = xhttp.responseText;
-      // Populate map
-      console.log("Got response: " + response);
-
-      //
-    }
-  };
-  // Initiate connection
-  xhttp.open("GET", "aHotel?id=" + id, true);
-  // Send request
-  xhttp.send();
-}
-
-
-
 function getSessionDetails(params) {
   console.log("Gettings user session details and stuff...");
   // Create new AJAX request
@@ -699,10 +675,31 @@ function onSignIn(googleUser) {
   });
 }
 
-
-function signOut() {
+// Signing out from google requires some extra steps
+// Before we can actually ask the server to logout
+function googleSignOut() {
+  console.log("Attemping Google Sign out");
   var auth2 = gapi.auth2.getAuthInstance();
   auth2.signOut().then(function() {
-    console.log('User signed out.');
+    console.log("Google User signed out");
   });
+
+  // Begin teh logout request
+  sendLogoutRequest();
+}
+
+// Logout request, redirects back to home page when done
+function sendLogoutRequest() {
+  console.log("Sending logout request...");
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var response = xhttp.responseText;
+      console.log("Got response: " + response);
+      location.reload();
+    }
+  };
+
+  xhttp.open("POST", "/logout", true);
+  xhttp.send();
 }

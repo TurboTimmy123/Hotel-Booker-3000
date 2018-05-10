@@ -29,11 +29,16 @@
 
         </div>
         <div class="column middle" style="text-align:center">
-          <h2>Description</h2>
-          <p>Very text...</p>
-          <p>After we set up a database we will replace this text</p>
-          <p>Currently we just have a small hotel database using js arrays</p>
-          <p>You can however, still book this hotel, and manage it under account settings</p>
+          <h2>{{name}}</h2>
+          <hr>
+          <h3>Address:
+            {{adress}}</h3>
+          <h3>Price per night:
+            {{price}}
+          </h3>
+          <br>
+          <p>Description and images in progress</p>
+          <p>You can still book this hotel</p>
         </div>
 
         <div class="bookButton">
@@ -52,10 +57,10 @@
     <!--The following is the Reviews window-->
     <div class="floatingWindow wobbleThis wide">
       <h2>Reviews</h2>
-      <textarea id="msg" onclick="openReviewBox()" class="reviewTextArea" rows="10" placeholder="Write your review here..."></textarea>
-      <button id="reviewButton" class="button reviewButton" onclick="addReview()">Post</button>
+      <textarea id="msg" onclick="openReviewBox()" class="reviewTextArea wobbleThis" rows="10" placeholder="Write your review here..."></textarea>
+      <button id="reviewButton" class="button reviewButton wobbleThis" onclick="addReview()">Post</button>
 
-      <div id="reviews" class="reviews">
+      <div id="reviews" class="reviews wobbleThis">
         <hr>
         <p class="review">Amazing 8/8</p>
         <hr>
@@ -65,7 +70,7 @@
     </div>
 
     <!--Now the confirm booking window thing-->
-    <div id="confirmBooking" class="popupWindow">
+    <div id="confirmBooking" class="popupWindow wobbleThis">
       <div id="theLoginBackground" class="overLayBg"></div>
       <div class="floatingWindow wobbleThis confirmWindow">
         <span class="close" onclick="hideConfirmScreen()"></span>

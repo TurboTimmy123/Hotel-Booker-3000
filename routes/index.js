@@ -11,7 +11,9 @@ var {
 var client = new OAuth2Client(CLIENT_ID);
 var hotels = [];
 
+// Handlebars templates
 var navbar;
+var listing;
 
 accounts = [];
 
@@ -35,6 +37,10 @@ fs.readFile('public/includes/header.html', 'utf8', function(err, data) {
   navbar = data;
 });
 
+fs.readFile('public/includes/hotelListing.html', 'utf8', function(err, data) {
+  listing = data;
+});
+
 router.get('/hotels', function(req, res) {
   console.log("GET hotels.json");
 
@@ -49,6 +55,25 @@ router.get('/hotels', function(req, res) {
   }, 500);
 });
 
+
+router.get('/hotelListing', function(req, res) {
+  console.log("HELLO?!??!?");
+  var id = req.param("id");
+  console.log("Generating hotel page for: " + id);
+  console.log("Hotel name: " + hotels[id].name);
+  console.log("listing html: " + listing);
+  var template = handlebars.compile(listing);
+  var data = {
+    "name": hotels[id].name,
+    "adress": hotels[id].Address,
+    "price": hotels[id].price
+  };
+
+  var result = template(data);
+  console.log("Done generating listing html, sending now yay!");
+  res.send(result);
+});
+
 router.get('/header', function(req, res) {
   console.log("Requested header");
   var template = handlebars.compile(navbar);
@@ -60,6 +85,13 @@ router.get('/header', function(req, res) {
       "showWhenLogged": "block",
       "showWhenAnon": "none"
     };
+
+    if (req.session.isGoogleSession == true) {
+      data.logout = "googleSignOut()";
+    } else {
+      data.logout = "sendLogoutRequest()";
+    }
+
 
     var result = template(data);
     res.send(result);
@@ -87,8 +119,8 @@ router.get('/aHotel', function(req, res) {
   res.send("yay");
 });
 
-function donothing() {
-  //woah
+function doNothing() {
+  // woah
 }
 
 //given some coordinates, return an array containing hotels within this area
@@ -175,8 +207,12 @@ router.post('/login', function(req, res) {
   }
 });
 
-
-
+router.post('/logout', function(req, res) {
+  console.log("Logout requested");
+  req.session.user = undefined;
+  res.send("yea logged out m8, redirecting u to home");
+  return;
+});
 
 // COpied from 17-18 Lecture
 router.post('/user.json', function(req, res) {
@@ -221,6 +257,7 @@ router.post('/user.json', function(req, res) {
       user = payload.name;
       console.log("Using user: " + user);
       req.session.user = payload.name;
+      req.session.isGoogleSession = true;
       res.json({
         "username": user
       });
@@ -234,12 +271,14 @@ router.post('/user.json', function(req, res) {
   if (req.session.user !== undefined) {
     console.log("Already Valid session with user: " + req.session.user);
     user = req.session.user;
+    req.session.isGoogleSession = false;
     res.json({
       "username": user
     });
     return;
   }
 
+  req.session.isGoogleSession = false;
   console.log("Appears to be first visit, sending Anonymous");
   res.json({
     "username": "Anonymous"
