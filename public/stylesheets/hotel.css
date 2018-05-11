@@ -475,22 +475,17 @@ div.captionStuff.w {
 }
 
 .boughtHotels {
-  height: 60px;
   padding: 2px;
+  min-height: 100px;
   padding-left: 20px;
   padding-right: 20px;
 }
 
-.cancelButton {
+.rightButton {
   padding: 10px;
   float: right;
   right: 0%;
   width: 150px;
-  background-color: red;
-}
-
-.boughtHotelsText {
-  float: left;
 }
 
 .cancelButton:hover {

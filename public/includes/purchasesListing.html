@@ -1,0 +1,17 @@
+<div class="floatingWindow wobbleThis boughtHotels">
+  <h3>Hotel:
+    {{hotelName}}</h3>
+  <p>date:
+    {{checkIn}}
+    to
+    {{checkOut}}</p>
+  <p>Adults:
+    {{adults}}
+    Kids:
+    {{kids}}
+    Doges:
+    {{doges}}
+  </p>
+  <button style="background-color: red" onclick="cancelBooking({{bookingID}})" class="button rightButton">Cancel Booking</button>
+  <button style="background-color: orange" onclick="editBooking({{bookingID}})" class="button rightButton">Edit</button>
+</div>

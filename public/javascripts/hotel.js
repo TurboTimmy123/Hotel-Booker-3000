@@ -95,7 +95,7 @@ function showLoginScreen(reg) {
   document.getElementById("loginPopup").style.display = 'block';
 }
 
-function confirmBooking() {
+function openConfirmWindow() {
   console.log("Opening confirm Booking window");
   //hideLoginScreen();
   if (activeUsersName == "Anonymous") {
@@ -103,6 +103,50 @@ function confirmBooking() {
   } else {
     document.getElementById("confirmBooking").style.display = 'block';
   }
+}
+
+
+// The following function is called when the user confirms their hotel choice
+function confirmHotel() {
+  var checkInDate = document.getElementById('checkIn').value;
+  var checkOutDate = document.getElementById('checkOut').value;
+  var countAdults = document.getElementById('numberOfAdults').value;
+  var countKids = document.getElementById('numberOfChildren').value;
+  var countDoges = document.getElementById('numberOfDoges').value;
+  var hotelID = getParam("id");
+
+  console.log("Using data: \nCheckin:\t" +
+    checkInDate + "\nCheckOut:\t" +
+    checkOutDate + "\nAdults:\t" +
+    countAdults + "\nKids:\t" +
+    countKids + "\nDoges:\t" +
+    countDoges + "\nhotelID:\t" + hotelID);
+
+  var xhttp = new XMLHttpRequest();
+
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var response = xhttp.responseText;
+      console.log("Got response: " + response);
+      if (response == "Yeah") {
+        alert("Booking Succesful!");
+        hideConfirmScreen();
+      } else {
+        alert("Something went terrible wrong lol");
+        hideConfirmScreen();
+      }
+    }
+  };
+
+  xhttp.open("POST", "/confirm?checkIn=" +
+    checkInDate + "&checkOut=" +
+    checkOutDate + "&adults=" +
+    countAdults + "&kids=" +
+    countKids + "&doges=" +
+    countDoges + "&hotelID=" +
+    hotelID, true);
+
+  xhttp.send();
 }
 
 function hideLoginScreen() {
@@ -132,7 +176,6 @@ function uploadNewReview(user, msg) {
     if (this.readyState == 4 && this.status == 200) {
       var response = xhttp.responseText;
       console.log("Got response: " + response);
-      alert("Succesfully added review");
     }
   };
   xhttp.open("POST", "/newReview?id=" + getParam("id") + "&user=" + user + "&msg=" + msg, true);
@@ -601,7 +644,7 @@ function login() {
       }
       if (asdf == "success") {
         alert("Succesful login, redirecting to accounts page");
-        window.location.href = "/myAccount.html";
+        window.location.href = "/myAccount";
       }
     }
   };
@@ -633,7 +676,7 @@ function register() {
       }
       if (asdf == "success") {
         alert("Registration Succesful, redirecting to accounts page");
-        window.location.href = "/myAccount.html";
+        window.location.href = "/myAccount";
       }
     }
   };
@@ -709,7 +752,7 @@ function onSignIn(googleUser) {
     isGoogleSession = true;
     activeUsersName = profile.getName();
     console.log("First time Google Login... Going to accounts page");
-    window.location.href = "/myAccount.html";
+    window.location.href = "/myAccount";
   } else {
     console.log("Same session");
   }

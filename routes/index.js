@@ -14,6 +14,8 @@ var hotels = [];
 // Handlebars templates
 var navbar;
 var listing;
+var accountPage;
+var purchases;
 
 // Accounts arrray, we load this from a file when the server starts
 accounts = [];
@@ -44,10 +46,16 @@ fs.readFile('public/includes/hotelListing.html', 'utf8', function(err, data) {
   listing = data;
 });
 
+fs.readFile('public/myAccount.html', 'utf8', function(err, data) {
+  accountPage = data;
+});
+
+fs.readFile('public/includes/purchasesListing.html', 'utf8', function(err, data) {
+  purchases = data;
+});
+
 
 // GET REQUESTS BELOW
-
-
 
 router.get('/hotels', function(req, res) {
   console.log("GET hotels.json");
@@ -82,6 +90,46 @@ router.get('/hotelListing', function(req, res) {
   console.log("Done generating listing html, sending now yay!");
   res.send(result);
 });
+
+router.get('/myAccount', function(req, res) {
+  console.log("myAccount requested");
+  if (req.session.user == undefined) {
+    console.log("User is not logged in, redirecting");
+    res.redirect('index.html');
+  }
+
+  console.log("Generating accounts page for: " + req.session.user);
+  var template = handlebars.compile(accountPage);
+
+  var purchasesResult = generateManageBookingsHTML(req.session.index);
+  var data = {
+    "user": req.session.user,
+    "purchases": purchasesResult
+  };
+
+  var result = template(data);
+  res.send(result);
+  return;
+});
+
+// This function will create purchases listings on the accounts page
+function generateManageBookingsHTML(index) {
+  console.log("HEELLOOO?!?!?!?!?!?");
+  if (index < 0) {
+    console.log("Invalid user");
+    return;
+  }
+  console.log("Generating bookings html with index: " + index);
+  var amountOfPurchases = accounts[index].bookings.length;
+
+  console.log("Account index: " + index + " has: " + amountOfPurchases + " purchases");
+
+  var purchasesTemplate = handlebars.compile(purchases);
+  var purchasesData = {
+    "hotelName": "blah"
+  };
+  return purchasesTemplate(purchasesData);
+}
 
 // Given a hotel ID, will return a HTML string containing it's reviews
 function generateReviewHTML(hotelID) {
@@ -202,29 +250,39 @@ router.post('/register', function(req, res) {
   // Much secure, very plaintext
   accounts.push({
     "username": theUsername,
-    "password": thePassword
+    "password": thePassword,
+    "bookings": []
   });
+
+  req.session.index = getUserIndex(req.session.user);
   req.session.user = theUsername;
+
   console.log(accounts);
   console.log("Succesfuly created account! Yay!");
   res.send("success");
+
   //res.redirect("/login?username=" + theUsername + "&password=" + thePassword);
   return;
 });
+
+function getUserIndex(user) {
+  var index = -1;
+  //please close your eyes for the next few lines thankx
+  for (var i = 0; i < accounts.length; i++) {
+    console.log("Trying: " + accounts[i].username);
+    if (accounts[i].username == user) {
+      index = i;
+    }
+  }
+  return index;
+}
 
 // Epic login stuff
 router.post('/login', function(req, res) {
   console.log("Input Usename: " + req.param("username"));
   console.log("Input Password: " + req.param("password"));
 
-  var index = -1;
-  //please close your eyes for the next few lines thankx
-  for (var i = 0; i < accounts.length; i++) {
-    console.log("Trying: " + accounts[i].username);
-    if (accounts[i].username == req.param("username")) {
-      index = i;
-    }
-  }
+  var index = getUserIndex(req.param("username"));
 
   if (index == -1) {
     console.log("lol u fail no account found to login xD");
@@ -239,7 +297,9 @@ router.post('/login', function(req, res) {
   if (accounts[index].password == req.param("password")) {
     console.log("YAY! Creating session...");
     req.session.user = req.param("username");
+    req.session.index = index;
     res.send("success");
+    //res.redirect('account.html');
   } else {
     console.log("lol u fail wrong password xD");
     res.send("fail");
@@ -254,6 +314,80 @@ router.post('/logout', function(req, res) {
   res.send("yea logged out m8, redirecting u to home");
   return;
 });
+
+router.post('/confirm', function(req, res) {
+  var checkInDate = req.param('checkIn');
+  var checkOutDate = req.param('checkOut');
+  var countAdults = req.param('adults');
+  var countKids = req.param('kids');
+  var countDoges = req.param('doges');
+  var hotelID = req.param('hotelID');
+
+  console.log("Using data: \nCheckin:\t" +
+    checkInDate + "\nCheckOut:\t" +
+    checkOutDate + "\nAdults:\t" +
+    countAdults + "\nKids:\t" +
+    countKids + "\nDoges:\t" +
+    countDoges + "\nhotelID:\t" + hotelID);
+
+  var result = AddUserBookings(req.session.index, hotelID, checkInDate, checkOutDate, countAdults, countKids, countDoges, -1);
+
+
+  if (result != 0) {
+    console.log("Whoops");
+    res.send("Nah");
+    return;
+  }
+
+  // do magic
+
+  res.send("Yeah");
+});
+
+function AddUserBookings(userIndex, hotelID, checkIn, checkOut, adults, kids, doges, bookingID) {
+  // Now we also need to check if the user want to edit his booking
+  // Or whether they just want to add a booking, adding a booking require a new bookingID
+  // So we just call the function with -1 to create a new one, however, if the user is wanting
+  // to edit a book, they will specify a bookingID which will overwrite that booking with new details
+
+  if (bookingID != -1) {
+    console.log("Overwriting exisiting booking data...");
+    // of course first we need to check does such a booking exist,
+    // so we can remove it
+    var asdf = -1;
+    for (var i = 0; i < accounts.length; i++) {
+      if (accounts[userIndex].bookings[i].bookingID == bookingID) {
+        // Delete this booking
+        console.log("Removing bookingID: " + bookingID + " At index: " + i);
+        accounts[userIndex].bookings.splice(i, 1);
+      } else {
+        console.log("Nothing found to overwrite, this shouldn't happen hmmmmm");
+      }
+    }
+
+    return 0;
+  }
+
+  bookingID = Math.floor((Math.random() * 10000000) + 1);
+  console.log("Created booking with ID: " + bookingID);
+
+  console.log("Bookings page before push: " + JSON.stringify(accounts[userIndex].bookings));
+
+
+  accounts[userIndex].bookings.push({
+    "hotelID": hotelID,
+    "bookingID": bookingID,
+    "checkIn": checkIn,
+    "checkOut": checkOut,
+    "adults": adults,
+    "kids": kids,
+    "doges": doges
+  });
+
+  console.log("Bookings page after push: " + JSON.stringify(accounts[userIndex].bookings));
+
+  return 0;
+}
 
 // COpied from 17-18 Lecture
 router.post('/user.json', function(req, res) {
@@ -271,18 +405,32 @@ router.post('/user.json', function(req, res) {
       // Get user data from token
       const payload = ticket.getPayload();
       console.log("Teh payload name: " + payload.name);
+
+      var temp = getUserIndex(payload.name);
+      if (temp == -1) {
+        console.log("Registering Google accounts user...");
+        accounts.push({
+          "username": payload.name,
+          "password": "memes",
+          "bookings": []
+        });
+        req.session.index = getUserIndex(payload.name);
+        console.log("Registered google user as: " + JSON.stringify(accounts[req.session.index]));
+        console.log("Google users new index is: " + req.session.index);
+        //res.redirect('register?referer=wdc.html');
+      }
+
+
       // Get user's Google ID
       const userid = payload['sub'];
-      accounts.push({
-        "username": payload.name
-      });
 
       user = payload.name;
       console.log("Using user: " + user);
       req.session.user = payload.name;
       req.session.isGoogleSession = true;
       res.json({
-        "username": user
+        "username": user,
+        "bookings": []
       });
       return;
     }

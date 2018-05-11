@@ -28,13 +28,14 @@
 
       <div id="Account" class="tabcontent">
         <h3>My Account</h3>
-        <p>User info here, including name/email/birthday/favourite color/currency/language</p>
+        <h2>Welcome
+          {{user}}!</h2>
 
         <div class="menuChoice">
-          <input type="text" class="textarea wideTextarea" name="Username" placeholder="Username"></input>
+          <input type="text" class="textarea wideTextarea" name="Username" placeholder="Username">
         </div>
         <div class="menuChoice">
-          <input type="text" class="textarea wideTextarea" name="Email" placeholder="Email"></input>
+          <input type="text" class="textarea wideTextarea" name="Email" placeholder="Email">
         </div>
 
         <button class="button">Very Save</button>
@@ -44,19 +45,14 @@
       <div id="Bookings" class="tabcontent">
         <h3>My Bookings</h3>
         <p>Users purchased bookings will appear here</p>
-
-        <div class="floatingWindow wobbleThis boughtHotels">
-          <p class="boughtHotelsText">Hotel 123</p>
-          <button class="button cancelButton">Cancel Booking</button>
-        </div>
-
+        {{{purchases}}}
       </div>
 
       <div id="Billing" class="tabcontent">
         <h3>Billing info</h3>
         <p>User can fill here their banking stuff and dogecoin address</p>
-        <input type="text" class="textarea wideTextarea" name="Dogecoin Address" placeholder="Dogecoin Adress"></input>
-        <input type="text" class="textarea wideTextarea" name="Dogecoin Private key" placeholder="Dogecoin Private key"></input>
+        <input type="text" class="textarea wideTextarea" name="Dogecoin Address" placeholder="Dogecoin Adress">
+        <input type="text" class="textarea wideTextarea" name="Dogecoin Private key" placeholder="Dogecoin Private key">
         <button class="button">Very Save</button>
 
       </div>
@@ -66,11 +62,11 @@
         <p>Here the user can change their password</p>
 
         <div class="menuChoice">
-          <input type="text" class="textarea wideTextarea" name="Old Password" placeholder="Old Password"></input>
+          <input type="text" class="textarea wideTextarea" name="Old Password" placeholder="Old Password">
           <br>
           <br>
-          <input type="text" class="textarea wideTextarea" name="New Password" placeholder="New Password"></input>
-          <input type="text" class="textarea wideTextarea" name="Repeat" placeholder="Repeat"></input>
+          <input type="text" class="textarea wideTextarea" name="New Password" placeholder="New Password">
+          <input type="text" class="textarea wideTextarea" name="Repeat" placeholder="Repeat">
           <button class="button">Very Save</button>
 
         </div>
