@@ -121,11 +121,11 @@ function generateManageBookingsHTML(index) {
 
   var reallyBigString = handlebars.compile(purchases);
   var data;
-  var response;
+  var response = '';
   console.log("Account index: " + index + " has: " + amountOfPurchases + " purchases");
   for (var i = 0; i < amountOfPurchases; i++) {
     data = {
-      "hotelID": accounts[index].bookings[i].hotelid,
+      "hotelName": getHotelNameById(accounts[index].bookings[i].hotelID),
       "checkIn": accounts[index].bookings[i].checkIn,
       "checkOut": accounts[index].bookings[i].checkOut,
       "adults": accounts[index].bookings[i].adults,
@@ -137,6 +137,20 @@ function generateManageBookingsHTML(index) {
 
   console.log("Generating purchases: " + response);
   return response;
+}
+
+function getHotelNameById(id) {
+  console.log("Finding hotel: " + id);
+  var reply;
+  for (var i = 0; i < hotels.length; i++) {
+    if (hotels[i].uniqueId == id) {
+      reply = hotels[i].name;
+      console.log("Found hotel called: " + reply);
+      return reply;
+    }
+  }
+  console.log("Hotel not found, returning Unititled");
+  return "Untitled";
 }
 
 // Given a hotel ID, will return a HTML string containing it's reviews

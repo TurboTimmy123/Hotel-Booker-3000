@@ -1,24 +1,5 @@
 [
-  {"username": "user1", "password":"somepassword",
-    "bookings":
-        [{"hotelID": 0},
-         {"bookingID": 0},
-         {"checkIn": "2018-05-10"},
-         {"checkOut": "2018-05-11"},
-         {"adults": 2},
-         {"kids": 2},
-         {"doges": 2}]},
-
-  {"username": "test", "password":"password",
-        "bookings": []},
-
-  {"username": "", "password":"",
-    "bookings":
-        [{"hotelID": 0},
-         {"bookingID": 0},
-         {"checkIn": "2018-05-10"},
-         {"checkOut": "2018-05-11"},
-         {"adults": 2},
-         {"kids": 2},
-         {"doges": 2}]}
+  {"username": "user1", "password":"somepassword", "bookings": [] },
+  {"username": "test", "password":"password", "bookings": []},
+  {"username": "a", "password":"", "bookings": [] }
 ]

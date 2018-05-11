@@ -115,6 +115,11 @@ function confirmHotel() {
   var countDoges = document.getElementById('numberOfDoges').value;
   var hotelID = getParam("id");
 
+  if (checkInDate == "" || checkOutDate == "") {
+    alert("ERROR! Please specify the dates...");
+    return;
+  }
+
   console.log("Using data: \nCheckin:\t" +
     checkInDate + "\nCheckOut:\t" +
     checkOutDate + "\nAdults:\t" +
@@ -129,7 +134,7 @@ function confirmHotel() {
       var response = xhttp.responseText;
       console.log("Got response: " + response);
       if (response == "Yeah") {
-        alert("Booking Succesful!");
+        alert("Booking Succesful!!! Yay!!!");
         hideConfirmScreen();
       } else {
         alert("Something went terrible wrong lol");
@@ -428,7 +433,13 @@ function openTab(evt, tabName) {
   evt.currentTarget.className += " active";
 }
 
+function cancelBooking(id) {
+  alert("Sorry, not implemented yet :(");
+}
 
+function editBooking(id) {
+  alert("Sorry, not implemented yet :(");
+}
 
 
 
