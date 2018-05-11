@@ -98,7 +98,7 @@ router.get('/myAccount', function(req, res) {
     res.redirect('index.html');
   }
 
-  console.log("Generating accounts page for: " + req.session.user);
+  console.log("Generating accounts page for: " + req.session.user + " index:" + req.session.index);
   var template = handlebars.compile(accountPage);
 
   var purchasesResult = generateManageBookingsHTML(req.session.index);
@@ -114,21 +114,29 @@ router.get('/myAccount', function(req, res) {
 
 // This function will create purchases listings on the accounts page
 function generateManageBookingsHTML(index) {
-  console.log("HEELLOOO?!?!?!?!?!?");
-  if (index < 0) {
-    console.log("Invalid user");
-    return;
-  }
-  console.log("Generating bookings html with index: " + index);
+  console.log("Generating purchased hotel list for index: " + index);
+
+  //console.log("Generating bookings html with index: " + index);
   var amountOfPurchases = accounts[index].bookings.length;
 
+  var reallyBigString = handlebars.compile(purchases);
+  var data;
+  var response;
   console.log("Account index: " + index + " has: " + amountOfPurchases + " purchases");
+  for (var i = 0; i < amountOfPurchases; i++) {
+    data = {
+      "hotelID": accounts[index].bookings[i].hotelid,
+      "checkIn": accounts[index].bookings[i].checkIn,
+      "checkOut": accounts[index].bookings[i].checkOut,
+      "adults": accounts[index].bookings[i].adults,
+      "kids": accounts[index].bookings[i].kids,
+      "doges": accounts[index].bookings[i].doges
+    };
+    response += reallyBigString(data);
+  }
 
-  var purchasesTemplate = handlebars.compile(purchases);
-  var purchasesData = {
-    "hotelName": "blah"
-  };
-  return purchasesTemplate(purchasesData);
+  console.log("Generating purchases: " + response);
+  return response;
 }
 
 // Given a hotel ID, will return a HTML string containing it's reviews
@@ -254,10 +262,11 @@ router.post('/register', function(req, res) {
     "bookings": []
   });
 
-  req.session.index = getUserIndex(req.session.user);
   req.session.user = theUsername;
+  req.session.index = getUserIndex(req.session.user);
+  console.log("New registered user will have index: " + req.session.index);
 
-  console.log(accounts);
+  //console.log(accounts);
   console.log("Succesfuly created account! Yay!");
   res.send("success");
 
@@ -329,6 +338,7 @@ router.post('/confirm', function(req, res) {
     countAdults + "\nKids:\t" +
     countKids + "\nDoges:\t" +
     countDoges + "\nhotelID:\t" + hotelID);
+
 
   var result = AddUserBookings(req.session.index, hotelID, checkInDate, checkOutDate, countAdults, countKids, countDoges, -1);
 
