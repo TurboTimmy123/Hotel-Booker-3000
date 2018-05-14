@@ -11,6 +11,8 @@ var {
 var client = new OAuth2Client(CLIENT_ID);
 var hotels = [];
 
+module.exports = router;
+
 // Handlebars templates
 var navbar;
 var listing;
@@ -20,13 +22,10 @@ var purchases;
 // Accounts arrray, we load this from a file when the server starts
 accounts = [];
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', {
-    title: 'Express'
-  });
-  res.send("/public/index.html");
-});
+
+//////////////////////
+// Database stuff
+///////////////////////
 
 fs.readFile('data/hotels.json', 'utf8', function(err, data) {
   console.log("Reading from database...");
@@ -37,7 +36,14 @@ fs.readFile('data/accounts.json', 'utf8', function(err, data) {
   accounts = JSON.parse(data);
 });
 
+
+
+
+
+
+///////////////////////////////////
 // Handlebars template stuff
+/////////////////////////////////
 fs.readFile('public/includes/header.html', 'utf8', function(err, data) {
   navbar = data;
 });
@@ -54,8 +60,24 @@ fs.readFile('public/includes/purchasesListing.html', 'utf8', function(err, data)
   purchases = data;
 });
 
+////////////////////////////////////////
+// End of handlebars templaye stuff
+/////////////////////////////////////////
 
+
+
+///////////////////////////
 // GET REQUESTS BELOW
+/////////////////////////
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', {
+    title: 'Express'
+  });
+  res.send("/public/index.html");
+});
+
 
 router.get('/hotels', function(req, res) {
   console.log("GET hotels.json");
@@ -70,7 +92,6 @@ router.get('/hotels', function(req, res) {
     res.send(JSON.stringify(temp));
   }, 500);
 });
-
 
 router.get('/hotelListing', function(req, res) {
   console.log("HELLO?!??!?");
@@ -93,6 +114,8 @@ router.get('/hotelListing', function(req, res) {
   res.send(result);
 });
 
+// Will generate the logged in users page
+// Redirect them if no valid session
 router.get('/myAccount', function(req, res) {
   console.log("myAccount requested");
   if (req.session.user == undefined) {
@@ -114,58 +137,7 @@ router.get('/myAccount', function(req, res) {
   return;
 });
 
-// This function will create purchases listings on the accounts page
-function generateManageBookingsHTML(index) {
-  console.log("Generating purchased hotel list for index: " + index);
 
-  //console.log("Generating bookings html with index: " + index);
-  var amountOfPurchases = accounts[index].bookings.length;
-
-  var reallyBigString = handlebars.compile(purchases);
-  var data;
-  var response = '';
-  console.log("Account index: " + index + " has: " + amountOfPurchases + " purchases");
-  for (var i = 0; i < amountOfPurchases; i++) {
-    data = {
-      "hotelName": getHotelNameById(accounts[index].bookings[i].hotelID),
-      "checkIn": accounts[index].bookings[i].checkIn,
-      "checkOut": accounts[index].bookings[i].checkOut,
-      "adults": accounts[index].bookings[i].adults,
-      "kids": accounts[index].bookings[i].kids,
-      "doges": accounts[index].bookings[i].doges
-    };
-    response += reallyBigString(data);
-  }
-
-  console.log("Generating purchases: " + response);
-  return response;
-}
-
-function getHotelNameById(id) {
-  console.log("Finding hotel: " + id);
-  var reply;
-  for (var i = 0; i < hotels.length; i++) {
-    if (hotels[i].uniqueId == id) {
-      reply = hotels[i].name;
-      console.log("Found hotel called: " + reply);
-      return reply;
-    }
-  }
-  console.log("Hotel not found, returning Unititled");
-  return "Untitled";
-}
-
-// Given a hotel ID, will return a HTML string containing it's reviews
-function generateReviewHTML(hotelID) {
-  var amazingVariable = '';
-  console.log("Hotel ID: " + hotelID + " Reviews count: " + hotels[hotelID].review.length);
-
-  for (var i = 0; i < hotels[hotelID].review.length; i++) {
-    amazingVariable += '<p><b>' + hotels[hotelID].review[i].reviewerName + '</b>: ' + hotels[hotelID].review[i].text + '</p><hr>';
-  }
-  console.log("Generated: " + amazingVariable);
-  return amazingVariable;
-}
 
 // Build the header account for guest/users
 // For guests it gives them an option to login
@@ -206,38 +178,41 @@ router.get('/header', function(req, res) {
   }
 });
 
-// Very important function
-function doNothing() {
-  // woah
-}
-
-//given some coordinates, return an array containing hotels within that area of 50km
-function findHotelsInRadius(lat, lng) {
-  var hotelResponseArray = [];
-  var maximumDistance = 50; //in km
-  var temp; //unnecsary, just for debugging
-
-  for (var i = 0; i < hotels.length; i++) {
-    console.log("Centre: " + lat + " " + lng);
-    console.log("Hotel: " + hotels[i].lat + " " + hotels[i].lng);
-
-    temp = getDistanceFromLatLonInKm(lat, lng, hotels[i].lat, hotels[i].lng);
-    console.log("Distance to hotel index: " + i + " is: " + temp);
-    if (temp < maximumDistance) {
-      hotelResponseArray.push(hotels[i]);
-      console.log("Adding hotel: " + i);
-    } else {
-      console.log("Ommiting hotel: " + i);
-    }
-  }
-
-  return hotelResponseArray;
-}
+//////////////////////////
+// END OF GET REQUESTS
+/////////////////////////
 
 
 
+
+
+/*
+
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+░░░░░░░░░░▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄░░░░░░░░░
+░░░░░░░░▄▀░░░░░░░░░░░░▄░░░░░░░▀▄░░░░░░░
+░░░░░░░░█░░▄░░░░▄░░░░░░░░░░░░░░█░░░░░░░
+░░░░░░░░█░░░░░░░░░░░░▄█▄▄░░▄░░░█░▄▄▄░░░
+░▄▄▄▄▄░░█░░░░░░▀░░░░▀█░░▀▄░░░░░█▀▀░██░░
+░██▄▀██▄█░░░▄░░░░░░░██░░░░▀▀▀▀▀░░░░██░░
+░░▀██▄▀██░░░░░░░░▀░██▀░░░░░░░░░░░░░▀██░
+░░░░▀████░▀░░░░▄░░░██░░░▄█░░░░▄░▄█░░██░
+░░░░░░░▀█░░░░▄░░░░░██░░░░▄░░░▄░░▄░░░██░
+░░░░░░░▄█▄░░░░░░░░░░░▀▄░░▀▀▀▀▀▀▀▀░░▄▀░░
+░░░░░░█▀▀█████████▀▀▀▀████████████▀░░░░
+░░░░░░████▀░░███▀░░░░░░▀███░░▀██▀░░░░░░
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+*/
+
+
+
+
+
+
+
+////////////////////////////
 //  POST REQUESTS BELOW
-
+////////////////////////////
 
 //When the client sends a new review to add to the database
 router.post('/newReview', function(req, res) {
@@ -290,17 +265,7 @@ router.post('/register', function(req, res) {
   return;
 });
 
-function getUserIndex(user) {
-  var index = -1;
-  //please close your eyes for the next few lines thankx
-  for (var i = 0; i < accounts.length; i++) {
-    console.log("Trying: " + accounts[i].username);
-    if (accounts[i].username == user) {
-      index = i;
-    }
-  }
-  return index;
-}
+
 
 // Epic login stuff
 router.post('/login', function(req, res) {
@@ -355,9 +320,7 @@ router.post('/confirm', function(req, res) {
     countKids + "\nDoges:\t" +
     countDoges + "\nhotelID:\t" + hotelID);
 
-
   var result = AddUserBookings(req.session.index, hotelID, checkInDate, checkOutDate, countAdults, countKids, countDoges, -1);
-
 
   if (result != 0) {
     console.log("Whoops");
@@ -365,55 +328,9 @@ router.post('/confirm', function(req, res) {
     return;
   }
 
-  // do magic
-
   res.send("Yeah");
 });
 
-function AddUserBookings(userIndex, hotelID, checkIn, checkOut, adults, kids, doges, bookingID) {
-  // Now we also need to check if the user want to edit his booking
-  // Or whether they just want to add a booking, adding a booking require a new bookingID
-  // So we just call the function with -1 to create a new one, however, if the user is wanting
-  // to edit a book, they will specify a bookingID which will overwrite that booking with new details
-
-  if (bookingID != -1) {
-    console.log("Overwriting exisiting booking data...");
-    // of course first we need to check does such a booking exist,
-    // so we can remove it
-    var asdf = -1;
-    for (var i = 0; i < accounts.length; i++) {
-      if (accounts[userIndex].bookings[i].bookingID == bookingID) {
-        // Delete this booking
-        console.log("Removing bookingID: " + bookingID + " At index: " + i);
-        accounts[userIndex].bookings.splice(i, 1);
-      } else {
-        console.log("Nothing found to overwrite, this shouldn't happen hmmmmm");
-      }
-    }
-
-    return 0;
-  }
-
-  bookingID = Math.floor((Math.random() * 10000000) + 1);
-  console.log("Created booking with ID: " + bookingID);
-
-  console.log("Bookings page before push: " + JSON.stringify(accounts[userIndex].bookings));
-
-
-  accounts[userIndex].bookings.push({
-    "hotelID": hotelID,
-    "bookingID": bookingID,
-    "checkIn": checkIn,
-    "checkOut": checkOut,
-    "adults": adults,
-    "kids": kids,
-    "doges": doges
-  });
-
-  console.log("Bookings page after push: " + JSON.stringify(accounts[userIndex].bookings));
-
-  return 0;
-}
 
 // COpied from 17-18 Lecture
 router.post('/user.json', function(req, res) {
@@ -481,8 +398,159 @@ router.post('/user.json', function(req, res) {
   });
 });
 
+//////////////////////////
+// END OF POST REQUESTS
+/////////////////////////
 
 
+
+
+
+
+
+//////////////////////////////
+// General functions below
+////////////////////////////////
+
+
+function AddUserBookings(userIndex, hotelID, checkIn, checkOut, adults, kids, doges, bookingID) {
+  // Now we also need to check if the user want to edit his booking
+  // Or whether they just want to add a booking, adding a booking require a new bookingID
+  // So we just call the function with -1 to create a new one, however, if the user is wanting
+  // to edit a book, they will specify a bookingID which will overwrite that booking with new details
+
+  if (bookingID != -1) {
+    console.log("Overwriting exisiting booking data...");
+    // of course first we need to check does such a booking exist,
+    // so we can remove it
+    var asdf = -1;
+    for (var i = 0; i < accounts.length; i++) {
+      if (accounts[userIndex].bookings[i].bookingID == bookingID) {
+        // Delete this booking
+        console.log("Removing bookingID: " + bookingID + " At index: " + i);
+        accounts[userIndex].bookings.splice(i, 1);
+      } else {
+        console.log("Nothing found to overwrite, this shouldn't happen hmmmmm");
+      }
+    }
+
+    return 0;
+  }
+
+  bookingID = Math.floor((Math.random() * 10000000) + 1);
+  console.log("Created booking with ID: " + bookingID);
+
+  console.log("Bookings page before push: " + JSON.stringify(accounts[userIndex].bookings));
+
+
+  accounts[userIndex].bookings.push({
+    "hotelID": hotelID,
+    "bookingID": bookingID,
+    "checkIn": checkIn,
+    "checkOut": checkOut,
+    "adults": adults,
+    "kids": kids,
+    "doges": doges
+  });
+
+  console.log("Bookings page after push: " + JSON.stringify(accounts[userIndex].bookings));
+
+  return 0;
+}
+
+function getUserIndex(user) {
+  var index = -1;
+  //please close your eyes for the next few lines thankx
+  for (var i = 0; i < accounts.length; i++) {
+    console.log("Trying: " + accounts[i].username);
+    if (accounts[i].username == user) {
+      index = i;
+    }
+  }
+  return index;
+}
+
+//given some coordinates, return an array containing hotels within that area of 50km
+function findHotelsInRadius(lat, lng) {
+  var hotelResponseArray = [];
+  var maximumDistance = 50; //in km
+  var temp; //unnecsary, just for debugging
+
+  for (var i = 0; i < hotels.length; i++) {
+    console.log("Centre: " + lat + " " + lng);
+    console.log("Hotel: " + hotels[i].lat + " " + hotels[i].lng);
+
+    temp = getDistanceFromLatLonInKm(lat, lng, hotels[i].lat, hotels[i].lng);
+    console.log("Distance to hotel index: " + i + " is: " + temp);
+    if (temp < maximumDistance) {
+      hotelResponseArray.push(hotels[i]);
+      console.log("Adding hotel: " + i);
+    } else {
+      console.log("Ommiting hotel: " + i);
+    }
+  }
+
+  return hotelResponseArray;
+}
+
+// This function will create purchases listings on the accounts page
+function generateManageBookingsHTML(index) {
+  console.log("Generating purchased hotel list for index: " + index);
+
+  //console.log("Generating bookings html with index: " + index);
+  var amountOfPurchases = accounts[index].bookings.length;
+
+  var reallyBigString = handlebars.compile(purchases);
+  var data;
+  var response = '';
+  console.log("Account index: " + index + " has: " + amountOfPurchases + " purchases");
+  for (var i = 0; i < amountOfPurchases; i++) {
+    data = {
+      "hotelName": getHotelNameById(accounts[index].bookings[i].hotelID),
+      "checkIn": accounts[index].bookings[i].checkIn,
+      "checkOut": accounts[index].bookings[i].checkOut,
+      "adults": accounts[index].bookings[i].adults,
+      "kids": accounts[index].bookings[i].kids,
+      "doges": accounts[index].bookings[i].doges
+    };
+    response += reallyBigString(data);
+  }
+
+  console.log("Generating purchases: " + response);
+  return response;
+}
+
+function getHotelNameById(id) {
+  console.log("Finding hotel: " + id);
+  var reply;
+  for (var i = 0; i < hotels.length; i++) {
+    if (hotels[i].uniqueId == id) {
+      reply = hotels[i].name;
+      console.log("Found hotel called: " + reply);
+      return reply;
+    }
+  }
+  console.log("Hotel not found, returning Unititled");
+  return "Untitled";
+}
+
+// Given a hotel ID, will return a HTML string containing it's reviews
+function generateReviewHTML(hotelID) {
+  var amazingVariable = '';
+  console.log("Hotel ID: " + hotelID + " Reviews count: " + hotels[hotelID].review.length);
+
+  for (var i = 0; i < hotels[hotelID].review.length; i++) {
+    amazingVariable += '<p><b>' + hotels[hotelID].review[i].reviewerName + '</b>: ' + hotels[hotelID].review[i].text + '</p><hr>';
+  }
+  console.log("Generated: " + amazingVariable);
+  return amazingVariable;
+}
+
+
+// Very important function
+function doNothing() {
+  // woah
+}
 
 
 
@@ -490,7 +558,7 @@ router.post('/user.json', function(req, res) {
 
 
 //////////////////////////////////////////////////////////////
-// THE FOLLOWING CODE IS NOT MINE, ALL CREDIT IS DUE HERE:
+// THE FOLLOWING CODE IS --> NOT <-- MINE, ALL CREDIT IS DUE HERE:
 // https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula
 //////////////////////////////////////////////////////////////
 //
@@ -512,6 +580,6 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
 function deg2rad(deg) {
   return deg * (Math.PI / 180);
 }
-////////////////// End of copy pasta
-
-module.exports = router;
+////////////////////////////
+//// End of copy pasta
+/////////////////////////////
