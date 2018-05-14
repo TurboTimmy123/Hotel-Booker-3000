@@ -27,17 +27,17 @@
     <!--Inserts login.html here-->
     <div id="login"></div>
 
-    <input class="button backButton" onclick="window.history.back();" value="&#8592; Back to results">
+    <input class="button backButton wobbleThis" onclick="window.history.back();" value="&#8592; Back to results">
 
     <!--The following is the three hotel listing windows on the left centre and right of the page-->
     <div class="floatingWindow wobbleThis wideCentre">
       <div class="row">
-        <div class="column left boxShadow listingPicture" style="text-align:center">
+        <div class="column left boxShadow listingPicture wobbleThis" style="text-align:center">
           <h2>Images</h2>
           <p>Put images here!!!</p>
 
         </div>
-        <div class="column middle" style="text-align:center">
+        <div class="column middle wobbleThis" style="text-align:center">
           <h2 id="hotelName">{{name}}</h2>
           <hr>
           <h3>Address:
@@ -50,11 +50,11 @@
           <p>You can still book this hotel</p>
         </div>
 
-        <div class="bookButton">
+        <div class="bookButton wobbleThis">
           <button id="Book" onclick="openConfirmWindow()" class="button">Book Now!</button>
         </div>
 
-        <div class="column columnNoPadding right boxShadow">
+        <div class="column columnNoPadding right boxShadow wobbleThis">
           <div id="map" class="suchMap">Map failed to load lol</div>
         </div>
 
@@ -62,7 +62,7 @@
     </div>
 
     <!--The following is the Reviews window-->
-    <div class="floatingWindow wobbleThis wide">
+    <div class="floatingWindow wobbleThis wide wobbleThis">
       <h2>Reviews</h2>
       <textarea id="msg" onclick="openReviewBox()" class="reviewTextArea wobbleThis" rows="10" placeholder="Write your review here..."></textarea>
       <button id="reviewButton" class="button reviewButton wobbleThis" onclick="addReview()">Post</button>
@@ -74,7 +74,7 @@
     </div>
 
     <!--Now the confirm booking window thing-->
-    <div id="confirmBooking" class="overLayBg" style="display: none">
+    <div id="confirmBooking" class="overLayBg wobbleThis" style="display: none">
       <div class="floatingWindow wobbleThis confirmWindow">
         <span class="close" onclick="hideConfirmScreen()"></span>
         <h2>Confirm Booking?</h2>
@@ -85,7 +85,7 @@
         <hr>
         <h3>Price:</h3>
         <hr>
-        <input id="epicButton" onclick="confirmHotel()" class="button" type="button" value="Very Confirm">
+        <input id="epicButton" onclick="confirmHotel()" class="button wobbleThis" type="button" value="Very Confirm">
       </div>
     </div>
 

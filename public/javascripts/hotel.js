@@ -463,6 +463,10 @@ function addMarker(dankCoordinate, epicLabel, i) {
   return marker;
 }
 
+function saveUserSettings() {
+  alert("Unimplemented");
+}
+
 //marker on click code from here:
 //https://stackoverflow.com/questions/15299495/how-to-identify-a-google-map-marker-on-click
 function markerClicked(e) {
