@@ -83,7 +83,9 @@ router.get('/hotelListing', function(req, res) {
     "name": hotels[id].name,
     "adress": hotels[id].Address,
     "price": hotels[id].price,
-    "reviews": reviewHTML
+    "reviews": reviewHTML,
+    "lat": hotels[id].lat,
+    "lng": hotels[id].lng
   };
 
   var result = template(data);

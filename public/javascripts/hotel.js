@@ -454,7 +454,9 @@ function addMarker(dankCoordinate, epicLabel, i) {
   var marker = new google.maps.Marker({
     position: dankCoordinate,
     label: epicLabel,
-    map: theMap
+    map: theMap,
+    optimized: false
+    //icon: "https://i.pinimg.com/originals/3d/c0/e0/3dc0e094e7e634f271582f3254f8dea8.jpg"
   });
 
   marker.index = i;
@@ -549,6 +551,14 @@ function generateListingsAndMarkers() {
     console.log("RIP no results :(");
     $('#NoResults').css("display", "block");
   }
+}
+
+function putMarkerOnListingPage() {
+  console.log("Placing marker at: " + latCoord + " " + lngCoord);
+  var temp = new google.maps.LatLng(latCoord, lngCoord);
+  var asdf = document.getElementById("hotelName").innerHTML;
+  var tempMarker = addMarker(temp, asdf, 0);
+  theMap.panTo(tempMarker.position);
 }
 
 // Halp me idk html plz be a better way to do this lololol xDDDDDD
