@@ -26,6 +26,7 @@ function toggleEffects() {
 
 function mainLoop() {
   if (usingNecessaryEffects) {
+    dogePopup();
     usingDefaults = false;
     t++;
     $("#theBackground").css("background-color", getRainboxHex(t / 2, 0.05));
@@ -45,7 +46,7 @@ function mainLoop() {
     }
     $("#banner").css("background", getRainboxHex(t / 5, 1));
 
-    if ((Math.random() * 1000) > 999) {
+    if ((Math.random() * 5000) < 2) {
       if (confirm("CONGRATULATIONS, You just won a free iPad, click OK to claim prize!!!")) {
         console.log("Pressed ok");
       } else {
@@ -150,4 +151,30 @@ function dank() {
       t = 0;
       break;
   }
+}
+
+
+
+// The following slides in a doge popup
+// that stares into your soul for a brief second
+// Then hides again for a few more seconds
+
+var allowPopup = true;
+
+function dogePopup() {
+  console.log("Animating doge popup");
+  if (((Math.random() * 200) < 1) && (allowPopup == true)) {
+    $('#dogePopup').css('bottom', "-50%");
+    setTimeout(hideDoge, 2000);
+  }
+}
+
+function hideDoge() {
+  allowPopup = false;
+  $('#dogePopup').css('bottom', "-200%");
+  setTimeout(allowPopupDelay, 3000);
+}
+
+function allowPopupDelay() {
+  allowPopup = true;
 }
