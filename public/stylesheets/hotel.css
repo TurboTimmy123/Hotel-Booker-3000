@@ -667,6 +667,7 @@ div.captionStuff.w {
 }
 
 .dogePopup {
+  display: none;
   position: fixed;
   bottom: -200%;
   left: 15%;

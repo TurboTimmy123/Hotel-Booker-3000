@@ -68,6 +68,8 @@ function mainLoop() {
         $(ourWobblingWindows[b]).css("border-color", "black");
         $(ourWobblingWindows[b]).css("transform", "rotate(0deg)");
       }
+      $('#dogePopup').css('display', "none");
+
 
       //we use this variable so we only apply these settings once
       usingDefaults = true;
@@ -162,6 +164,7 @@ function dank() {
 var allowPopup = true;
 
 function dogePopup() {
+  $('#dogePopup').show();
   console.log("Animating doge popup");
   if (((Math.random() * 200) < 1) && (allowPopup == true)) {
     $('#dogePopup').css('bottom', "-50%");
