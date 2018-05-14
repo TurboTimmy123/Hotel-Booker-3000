@@ -20,53 +20,53 @@
 
     <div class="floatingWindow wobbleThis wideCentre accountsPage">
       <div class="tab">
-        <button class="tablinks" onclick="openTab(event, 'Account')" id="defaultOpen">My Account</button>
-        <button class="tablinks" onclick="openTab(event, 'Bookings')">My Bookings</button>
-        <button class="tablinks" onclick="openTab(event, 'Billing')">Billing info</button>
-        <button class="tablinks" onclick="openTab(event, 'Security')">Security</button>
+        <button class="tablinks wobbleThis" onclick="openTab(event, 'Account')" id="defaultOpen">My Account</button>
+        <button class="tablinks wobbleThis" onclick="openTab(event, 'Bookings')">My Bookings</button>
+        <button class="tablinks wobbleThis" onclick="openTab(event, 'Billing')">Billing info</button>
+        <button class="tablinks wobbleThis" onclick="openTab(event, 'Security')">Security</button>
       </div>
 
-      <div id="Account" class="tabcontent">
+      <div id="Account" class="tabcontent wobbleThis">
         <h3>My Account</h3>
         <h2>Welcome
           {{user}}!</h2>
 
         <div class="menuChoice">
-          <input type="text" class="textarea wideTextarea" name="Username" placeholder="Username">
+          <input type="text" class="textarea wideTextarea wobbleThis" name="Username" placeholder="Username">
         </div>
         <div class="menuChoice">
-          <input type="text" class="textarea wideTextarea" name="Email" placeholder="Email">
+          <input type="text" class="textarea wideTextarea wobbleThis" name="Email" placeholder="Email">
         </div>
 
-        <button onclick="saveUserSettings()" class="button">Very Save</button>
+        <button onclick="saveUserSettings()" class="button wobbleThis">Very Save</button>
 
       </div>
 
-      <div id="Bookings" class="tabcontent">
+      <div id="Bookings" class="tabcontent wobbleThis">
         <h3>My Bookings</h3>
         <p>Users purchased bookings will appear here</p>
         {{{purchases}}}
       </div>
 
-      <div id="Billing" class="tabcontent">
+      <div id="Billing" class="tabcontent wobbleThis">
         <h3>Billing info</h3>
         <p>User can fill here their banking stuff and dogecoin address</p>
-        <input type="text" class="textarea wideTextarea" name="Dogecoin Address" placeholder="Dogecoin Adress">
-        <input type="text" class="textarea wideTextarea" name="Dogecoin Private key" placeholder="Dogecoin Private key">
+        <input type="text" class="textarea wideTextarea wobbleThis" name="Dogecoin Address" placeholder="Dogecoin Adress">
+        <input type="text" class="textarea wideTextarea wobbleThis" name="Dogecoin Private key" placeholder="Dogecoin Private key">
         <button onclick="saveUserSettings()" class="button">Very Save</button>
 
       </div>
 
-      <div id="Security" class="tabcontent">
+      <div id="Security" class="tabcontent wobbleThis">
         <h3>Security</h3>
         <p>Here the user can change their password</p>
 
         <div class="menuChoice">
-          <input type="text" class="textarea wideTextarea" name="Old Password" placeholder="Old Password">
+          <input type="text" class="textarea wideTextarea wobbleThis" name="Old Password" placeholder="Old Password">
           <br>
           <br>
-          <input type="text" class="textarea wideTextarea" name="New Password" placeholder="New Password">
-          <input type="text" class="textarea wideTextarea" name="Repeat" placeholder="Repeat">
+          <input type="text" class="textarea wideTextarea wobbleThis" name="New Password" placeholder="New Password">
+          <input type="text" class="textarea wideTextarea wobbleThis" name="Repeat" placeholder="Repeat">
           <button onclick="saveUserSettings()" class="button">Very Save</button>
 
         </div>

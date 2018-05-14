@@ -1,5 +1,5 @@
 [
-  {"username": "user1", "password":"somepassword", "bookings": [] },
+  {"username": "user1", "password":"somepassword", "bookings": []},
   {"username": "test", "password":"password", "bookings": []},
-  {"username": "a", "password":"", "bookings": [] }
+  {"username": "a", "password":"", "bookings": []}
 ]

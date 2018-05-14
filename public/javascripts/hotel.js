@@ -483,6 +483,20 @@ function markerClicked(e) {
   }
 }
 
+function calculatePrice(pricePerNight, checkIn, checkOut, adults, kids, doges) {
+  var x = 86400000; // hours * minutes * seconds * milliseconds
+  var i = Date.parse(checkIn);
+  var o = Date.parse(checkOut);
+
+  // Adults = 1x
+  // Kids = 0.5x
+  // Doges = 12x
+  var days = Math.round(Math.abs((i.getTime() - o.getTime()) / (x)));
+  var price = (days * adults) + (days * kids * 0.5) + (days * doges * 12);
+  console.log("Price: " + price);
+  return price;
+}
+
 
 
 //THE FOLLOWING IS AJAX RELATED STUFF
@@ -687,6 +701,15 @@ function login() {
 
 // Standard account registration stuff
 function register() {
+  var username = document.getElementById("username").value;
+  var password = document.getElementById("password").value;
+  var repeat = document.getElementById("confirmPassword").value;
+
+  if (password != repeat) {
+    alert("Passwords don't match");
+    return;
+  }
+
   // Create new AJAX request
   var xhttp = new XMLHttpRequest();
   // Define behaviour for a response
@@ -706,8 +729,7 @@ function register() {
     }
   };
   // Initiate connection
-  var username = document.getElementById("username").value;
-  var password = document.getElementById("password").value;
+
 
   var postRequest = "/register?username=" + username + "&password=" + password;
   console.log("[Register] Post request: " + postRequest);
