@@ -32,11 +32,11 @@
     <!--The following is the three hotel listing windows on the left centre and right of the page-->
     <div class="floatingWindow wobbleThis wideCentre">
       <div class="row">
-        <div class="column left boxShadow listingPicture wobbleThis" style="text-align:center">
-          <h2>Images</h2>
-          <p>Put images here!!!</p>
 
+        <div class="column left boxShadow wobbleThis" style="text-align:center">
+          <img style="object-fit: contain; max-width: 100%" src="https://images.pexels.com/photos/70441/pexels-photo-70441.jpeg?cs=srgb&dl=architecture-building-dubai-70441.jpg&fm=jpg" alt="Hotel pic here">
         </div>
+
         <div class="column middle wobbleThis" style="text-align:center">
           <h2 id="hotelName">{{name}}</h2>
           <hr>
@@ -45,9 +45,10 @@
           <h3>Price per night:
             {{price}}
           </h3>
-          <br>
-          <p>Description and images in progress</p>
-          <p>You can still book this hotel</p>
+          <hr>
+          <p class="description">
+            {{description}}
+          </p>
         </div>
 
         <div class="bookButton wobbleThis">

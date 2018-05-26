@@ -100,9 +100,11 @@ router.get('/hotelListing', function(req, res) {
   console.log("Hotel name: " + hotels[id].name);
   var template = handlebars.compile(listing);
   var reviewHTML = generateReviewHTML(id);
+  console.log("Description: " + hotels[id].description);
   var data = {
     "name": hotels[id].name,
     "adress": hotels[id].Address,
+    "description": hotels[id].description,
     "price": hotels[id].price,
     "reviews": reviewHTML,
     "lat": hotels[id].lat,
