@@ -38,6 +38,7 @@
 
           <!--Inserts search.html here-->
           <div id="searchForm"></div>
+
           <div class="menuChoice">
             <input id="epicButton" class="button button1 wobbleThis" type="submit" value="Find">
           </div>
@@ -88,7 +89,11 @@
 
     <script>
       Start();
-      initializeEffects()
+      initializeEffects();
+
+      setTimeout(function () {
+        fillPageWithCookies();
+      }, 500);
     </script>
   </body>
 </html>

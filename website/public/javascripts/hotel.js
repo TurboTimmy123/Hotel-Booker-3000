@@ -833,3 +833,54 @@ function sendLogoutRequest() {
   xhttp.open("POST", "/logout", true);
   xhttp.send();
 }
+
+// Cookie related stuff
+// All this does, is keep user input across pages
+
+function updateSearchCookie(name) {
+  console.log("Updating search cookies for: " + name);
+  document.cookie = name + "=" + document.getElementById(name).value;
+
+  fillPageWithCookies();
+}
+
+function fillPageWithCookies() {
+  console.log("Filling page with cookies...");
+
+  // Names of the cookies we want to restore
+  // Cookie names and element ID contents are the same for simplicity
+  var cookies = ["checkIn", "checkOut", "numberOfAdults", "numberOfChildren", "numberOfDoges"];
+
+  // Loop through each cookie
+  for (var i = 0; i < cookies.length; i++) {
+    document.getElementById(cookies[i]).value = getCookie(cookies[i]);
+  }
+}
+
+$(document).ready(function() {
+
+});
+
+
+
+// Copy pasta from here:
+// https://www.w3schools.com/js/js_cookies.asp
+function getCookie(cname) {
+  console.log("Cookie request for: " + cname);
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      var temp = c.substring(name.length, c.length);
+      console.log("[getCookie] Got: " + temp);
+      return temp;
+    }
+  }
+  console.log("[getCookie] No cookies :(");
+  return "";
+}

@@ -1,12 +1,12 @@
 <div class="menuChoice wobbleThis">Check in:
-  <input id="checkIn" type="date" name="inDate" class="textarea"></input>
+  <input onchange="updateSearchCookie('checkIn')" id="checkIn" type="date" name="inDate" class="textarea"></input>
 </div>
 <div class="menuChoice wobbleThis">Check out:
-  <input id="checkOut" type="date" name="outDate" class="textarea"></input>
+  <input onchange="updateSearchCookie('checkOut')" id="checkOut" type="date" name="outDate" class="textarea"></input>
 </div>
 
 <div class="menuChoice floatRight wobbleThis">Adults:
-  <select id="numberOfAdults" name="Adults">
+  <select onchange="updateSearchCookie('numberOfAdults')" id="numberOfAdults" name="Adults">
     <option value="0">0</option>
     <option value="1">1</option>
     <option value="2">2</option>
@@ -15,7 +15,7 @@
   </select>
 </div>
 <div class="menuChoice floatRight wobbleThis">Children:
-  <select id="numberOfChildren" name="Children">
+  <select onchange="updateSearchCookie('numberOfChildren')" id="numberOfChildren" name="Children">
     <option value="0">0</option>
     <option value="1">1</option>
     <option value="2">2</option>
@@ -24,7 +24,7 @@
   </select>
 </div>
 <div class="menuChoice floatRight wobbleThis">Doges:
-  <select id="numberOfDoges" name="Doges">
+  <select onchange="updateSearchCookie('numberOfDoges')" id="numberOfDoges" name="Doges">
     <option value="0">0</option>
     <option value="1">1</option>
     <option value="2">2</option>
