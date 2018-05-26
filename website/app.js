@@ -9,7 +9,25 @@ var usersRouter = require('./routes/users');
 
 var session = require('express-session');
 
+// SQL stuff
+var mysql = require('mysql');
+var dbConnectionPool = mysql.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: 'password ',
+  database: 'hotels'
+});
+
+
 var app = express();
+
+// Moar SQL stuff
+app.use(function(
+  req, res, next) {
+  req.pool =
+    dbConnectionPool;
+  next();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
