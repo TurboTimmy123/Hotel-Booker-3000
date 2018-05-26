@@ -1,0 +1,50 @@
+// Create hotels table:
+
+CREATE TABLE hotel(
+uniqueID int NOT NULL,
+name VARCHAR(30),
+lat DOUBLE(8, 8),
+lng DOUBLE(8, 8),
+address TEXT,
+description TEXT,
+price INT,
+PRIMARY KEY(uniqueID));
+
+//Load data:
+LOAD DATA LOCAL INFILE 'C:/Users/Meow/Hotel-Booker-3000/mysql/hotelData.txt' INTO TABLE hotel;
+
+
+
+
+
+
+// Create reviews table:
+create table review (
+uniqueId int NOT NULL,
+reviewerName VARCHAR(30),
+text TEXT,
+FOREIGN KEY(uniqueID) REFERENCES hotel(uniqueID));
+
+//Data:
+insert into review values(1, "asdf", "asdf");
+
+// Create accounts table:
+CREATE TABLE accounts(
+username VARCHAR(30),
+password VARCHAR(30),
+PRIMARY KEY(username));
+
+//Load data:
+insert into accounts values("a", "a");
+
+
+// Create Bookings table:
+create table booking (
+bookingID INT,
+hotelID INT,
+checkIn DATE,
+checkOut DATE,
+adults INT,
+kids INT,
+doges INT,
+PRIMARY KEY(bookingID));

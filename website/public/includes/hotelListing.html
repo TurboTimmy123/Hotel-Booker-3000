@@ -101,7 +101,9 @@
       Start();
       initializeEffects();
       putMarkerOnListingPage();
-      fillPageWithCookies();
+      setTimeout(function () {
+        fillPageWithCookies();
+      }, 500);
     </script>
   </body>
 </html>

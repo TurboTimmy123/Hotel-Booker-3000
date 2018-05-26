@@ -81,7 +81,9 @@
       Start();
       initializeEffects();
       initSearchPage();
-      fillPageWithCookies();
+      setTimeout(function () {
+        fillPageWithCookies();
+      }, 500);
     </script>
   </body>
 </html>

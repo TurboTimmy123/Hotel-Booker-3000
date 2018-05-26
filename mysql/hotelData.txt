@@ -1,0 +1,5 @@
+0	"Very Dank Hotel"	-34.9265988	138.6061529	"144 asdf Avenue"	"Woah, Check out this amazing hotel"	456
+1	"Such Epic hotel"	-34.9231506	138.5927633	"1337 qwerty lane"	"A very typical boring hotel"	123
+2	"Much Mint Hotel"	-34.9350430	138.6050371	"420 Great Gravel"	"Our hotel is so amazing, buy to find out why!!!"	789
+3	"Super Hot Hotel"	-33.86882	151.2092955	"12345 Meow Motorway"	"Featuring FREE Dial up internet!!!"	789
+4	"Very Dank Hotel"	40.71277	-74.005978	"420 Dank Drive"	"An amzaing description"	420
