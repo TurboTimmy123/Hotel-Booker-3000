@@ -8,18 +8,18 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var session = require('express-session');
+var app = express();
 
 // SQL stuff
 var mysql = require('mysql');
 var dbConnectionPool = mysql.createPool({
   host: 'localhost',
   user: 'root',
-  password: 'password ',
-  database: 'hotels'
+  password: 'asdfghjkl\'',
+  database: 'dogeotels'
 });
 
 
-var app = express();
 
 // Moar SQL stuff
 app.use(function(

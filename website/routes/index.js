@@ -1,4 +1,5 @@
 var express = require('express');
+var mysql = require('mysql');
 
 var router = express.Router();
 var fs = require('fs');
@@ -10,6 +11,8 @@ var {
 } = require('google-auth-library');
 var client = new OAuth2Client(CLIENT_ID);
 var hotels = [];
+// Accounts arrray, we load this from a file when the server starts
+accounts = [];
 
 module.exports = router;
 
@@ -19,18 +22,19 @@ var listing;
 var accountPage;
 var purchases;
 
-// Accounts arrray, we load this from a file when the server starts
-accounts = [];
+
 
 
 //////////////////////
 // Database stuff
 ///////////////////////
 
+/* NOT SQL STUFF
 fs.readFile('data/hotels.json', 'utf8', function(err, data) {
   console.log("Reading from database...");
   hotels = JSON.parse(data);
 });
+*/
 
 fs.readFile('data/accounts.json', 'utf8', function(err, data) {
   accounts = JSON.parse(data);
@@ -38,6 +42,40 @@ fs.readFile('data/accounts.json', 'utf8', function(err, data) {
 
 
 
+////////////////////
+// SQL STUFF HERE
+////////////////////
+
+// This is a bit of a different approach then what is on myuni
+// This method creates and holds the same connection throughout
+// The entire duration of the server running
+// The examples on myuni recreate and close connection on *every query*
+// which is just slow, here, we create one connection.
+
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "asdfghjkl;\'",
+  database: 'dogeotels'
+});
+
+
+
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+
+  console.log("Updating hotels...");
+  console.log("Connecting to SQL database...");
+});
+
+// Our request to get hotel data stuff
+var query = "SELECT * from hotel";
+con.query(query, function (err, result) {
+    if (err) throw err;
+    console.log("Got: " + JSON.stringify(result));
+    hotels = result;
+});
 
 
 
@@ -80,7 +118,6 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/hotels', function(req, res) {
-  console.log("GET hotels.json");
 
   console.log("lat: " + req.param("lat"));
   console.log("lng: " + req.param("lng"));
@@ -88,7 +125,7 @@ router.get('/hotels', function(req, res) {
   //yes im deliberately lagging the request hahaha xDDDDD
   setTimeout(function() {
     var temp = findHotelsInRadius(req.param("lat"), req.param("lng"));
-    console.log("Length of hotel list: " + temp.length);
+    console.log("SEARCH RESPONSE: " + JSON.stringify(temp));
     res.send(JSON.stringify(temp));
   }, 500);
 });
@@ -99,11 +136,11 @@ router.get('/hotelListing', function(req, res) {
   console.log("Generating hotel page for: " + id);
   console.log("Hotel name: " + hotels[id].name);
   var template = handlebars.compile(listing);
-  var reviewHTML = generateReviewHTML(id);
+  var reviewHTML = ""; //generateReviewHTML(id); //TODO: Fix this
   console.log("Description: " + hotels[id].description);
   var data = {
     "name": hotels[id].name,
-    "adress": hotels[id].Address,
+    "adress": hotels[id].address,
     "description": hotels[id].description,
     "price": hotels[id].price,
     "reviews": reviewHTML,
@@ -526,7 +563,7 @@ function getHotelNameById(id) {
   console.log("Finding hotel: " + id);
   var reply;
   for (var i = 0; i < hotels.length; i++) {
-    if (hotels[i].uniqueId == id) {
+    if (hotels[i].id == id) {
       reply = hotels[i].name;
       console.log("Found hotel called: " + reply);
       return reply;

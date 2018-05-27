@@ -563,7 +563,7 @@ function generateListingsAndMarkers() {
       });
 
       // Add to markers array
-      createListingHtml(hotels[i].name, hotels[i].price, "NULL", hotels[i].uniqueId, hotels[i].Address, i);
+      createListingHtml(hotels[i].name, hotels[i].price, "NULL", hotels[i].id, hotels[i].Address, i);
     }
   } else {
     console.log("RIP no results :(");

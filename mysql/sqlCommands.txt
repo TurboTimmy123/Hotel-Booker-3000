@@ -1,17 +1,17 @@
 // Create hotels table:
 
 CREATE TABLE hotel(
-uniqueID int NOT NULL,
+id int NOT NULL,
 name VARCHAR(30),
-lat DOUBLE(8, 8),
-lng DOUBLE(8, 8),
+lat DOUBLE(8, 5),
+lng DOUBLE(8, 5),
 address TEXT,
 description TEXT,
 price INT,
 PRIMARY KEY(uniqueID));
 
 //Load data:
-LOAD DATA LOCAL INFILE 'C:/Users/Meow/Hotel-Booker-3000/mysql/hotelData.txt' INTO TABLE hotel;
+LOAD DATA LOCAL INFILE 'hotelData.txt' INTO TABLE hotel;
 
 
 
