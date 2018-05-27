@@ -78,6 +78,14 @@ function addNewReviewToSQL(hotelID, theUser, theMsg) {
   });
 }
 
+function deleteBookingFromSQL(bookingID) {
+  var temp = "DELETE from booking where bookingID=" + bookingID;
+  con.query(temp, function (err, result) {
+      if (err) throw err;
+      console.log("Succesfully removed!");
+  });
+}
+
 // The client will make a request for reviews to a particular page
 // Eg: /getReviews?id=2
 // This get request returns a JSON object containing the reviews for that page
@@ -384,6 +392,14 @@ router.post('/logout', function(req, res) {
   console.log("Logout requested");
   req.session.user = undefined;
   res.send("yea logged out m8, redirecting u to home");
+  return;
+});
+
+// Logs out and clears the current users session
+router.post('/cancelBooking', function(req, res) {
+  console.log("Cancelling booking for: " + req.param("bookingID"));
+  deleteBookingFromSQL(req.param("bookingID"));
+  res.send("good");
   return;
 });
 

@@ -434,7 +434,21 @@ function openTab(evt, tabName) {
 }
 
 function cancelBooking(id) {
-  alert("Sorry, not implemented yet :(");
+  console.log("Cancelling booking for: " + id);
+  // Create new AJAX request
+  var xhttp = new XMLHttpRequest();
+
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log("Cancel response: " + xhttp.responseText);
+      location.reload();
+    }
+  };
+
+  // Initiate connection
+  // Send request
+  xhttp.open("POST", "/cancelBooking?bookingID=" + id);
+  xhttp.send();
 }
 
 function editBooking(id) {
