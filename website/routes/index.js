@@ -64,12 +64,37 @@ console.log("Updating hotels...");
 // It's best if our nodejs server has all the hotels loaded up and ready to parse
 // In a bigger database, there'd be a better way to handle this, as with this
 // approach, we need to "redownload" the database to nodejs to update it
-var query = "SELECT * from hotel";
+var query = "SELECT * from hotel;";
 con.query(query, function (err, result) {
     if (err) throw err;
     //console.log("Got: " + JSON.stringify(result));
     hotels = result;
 });
+
+var query = "SELECT * from accounts;";
+con.query(query, function (err, result) {
+    if (err) throw err;
+    //console.log("Got: " + JSON.stringify(result));
+    accounts = result;
+});
+
+// Adds a new user to the database
+function addNewAccountToSQL(username, password) {
+  var query = "INSERT INTO accounts values(\"" + username + "\", \"" + password + "\");";
+  con.query(query, function (err, result) {
+      if (err) throw err;
+      console.log("Added account...");
+  });
+}
+
+// Add a review to the database
+function addNewReviewToSQL(hotelID, theUser, theMsg) {
+  temp = "INSERT INTO review values(" + hotelID + ", \"" + theUser + "\", \"" + theMsg + "\");";
+  con.query(temp, function (err, result) {
+      if (err) throw err;
+      console.log("Updating database revew...: " + result);
+  });
+}
 
 // The client will make a request for reviews to a particular page
 // Eg: /getReviews?id=2
@@ -171,10 +196,10 @@ router.get('/myAccount', function(req, res) {
   console.log("Generating accounts page for: " + req.session.user + " index:" + req.session.index);
   var template = handlebars.compile(accountPage);
 
-  var purchasesResult = generateManageBookingsHTML(req.session.index);
+  //var purchasesResult = generateManageBookingsHTML(req.session.index);
   var data = {
     "user": req.session.user,
-    "purchases": purchasesResult
+    "purchases": ""
   };
 
   var result = template(data);
@@ -265,14 +290,8 @@ router.post('/newReview', function(req, res) {
   var hotelID = req.param("id");
   var theMsg = req.param("msg");
   console.log("Adding review to hotel: " + hotelID + " By: " + theUser + " With: " + theMsg);
-
-  temp = "INSERT INTO review values(" + hotelID + ", \"" + theUser + "\", \"" + theMsg + "\");";
-  con.query(temp, function (err, result) {
-      if (err) throw err;
-      console.log("Updating database revew...: " + result);
-      //res.send(result);
-      res.send("success");
-  });
+  addNewReviewToSQL(hotelID, theUser, theMsg);
+  res.send("success");
 });
 
 // When the user registers for an account do this stuff
@@ -301,6 +320,9 @@ router.post('/register', function(req, res) {
   req.session.user = theUsername;
   req.session.index = getUserIndex(req.session.user);
   console.log("New registered user will have index: " + req.session.index);
+
+  // Add it to our database
+  addNewAccountToSQL(theUsername, thePassword);
 
   //console.log(accounts);
   console.log("Succesfuly created account! Yay!");
@@ -365,7 +387,7 @@ router.post('/confirm', function(req, res) {
     countKids + "\nDoges:\t" +
     countDoges + "\nhotelID:\t" + hotelID);
 
-  var result = AddUserBookings(req.session.index, hotelID, checkInDate, checkOutDate, countAdults, countKids, countDoges, -1);
+  //var result = AddUserBookings(req.session.index, hotelID, checkInDate, checkOutDate, countAdults, countKids, countDoges, -1);
 
   if (result != 0) {
     console.log("Whoops");
