@@ -10,8 +10,6 @@ var {
   OAuth2Client
 } = require('google-auth-library');
 var client = new OAuth2Client(CLIENT_ID);
-// Accounts arrray, we load this from a file when the server starts
-accounts = [];
 
 module.exports = router;
 
@@ -20,17 +18,6 @@ var navbar;
 var listing;
 var accountPage;
 var purchases;
-
-
-
-
-//////////////////////
-// Database stuff
-///////////////////////
-
-fs.readFile('data/accounts.json', 'utf8', function(err, data) {
-  accounts = JSON.parse(data);
-});
 
 ////////////////////
 // SQL STUFF HERE
@@ -41,6 +28,9 @@ fs.readFile('data/accounts.json', 'utf8', function(err, data) {
 // The entire duration of the server running
 // The examples on myuni recreate and close connection on *every query*
 // which is just slow, here, we create one connection.
+//
+// Credit:
+// https://www.w3schools.com/nodejs/nodejs_mysql.asp
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -49,33 +39,25 @@ var con = mysql.createConnection({
   database: 'dogeotels'
 });
 
-
-
+// Perform initial connection
 console.log("Connecting to SQL database...");
 con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
-});
 
-console.log("Updating hotels...");
-// Our request to get hotel data stuff
-// Ok so this could be optimized a bit better
-// However, due to the search function parsing the entire database
-// It's best if our nodejs server has all the hotels loaded up and ready to parse
-// In a bigger database, there'd be a better way to handle this, as with this
-// approach, we need to "redownload" the database to nodejs to update it
-var query = "SELECT * from hotel;";
-con.query(query, function (err, result) {
-    if (err) throw err;
-    //console.log("Got: " + JSON.stringify(result));
-    hotels = result;
-});
+  var query = "SELECT * from hotel;";
+  con.query(query, function (err, result) {
+      if (err) throw err;
+      //console.log("Got: " + JSON.stringify(result));
+      hotels = result;
+  });
 
-var query = "SELECT * from accounts;";
-con.query(query, function (err, result) {
-    if (err) throw err;
-    //console.log("Got: " + JSON.stringify(result));
-    accounts = result;
+  query = "SELECT * from accounts;";
+  con.query(query, function (err, result) {
+      if (err) throw err;
+      //console.log("Got: " + JSON.stringify(result));
+      accounts = result;
+  });
 });
 
 // Adds a new user to the database
@@ -110,17 +92,36 @@ router.get('/getReviews', function(req, res){
 
 router.get('/getPurchases', function(req, res){
     var sql = "SELECT * from booking where username=\"" + req.session.user + "\";";
-
     con.query(sql, function (err, result) {
         if (err) throw err;
         console.log("SQL purchases response: " + JSON.stringify(result));
         var temp = generateManageBookingsHTML(result);
         console.log("Sending purchases: " + JSON.stringify(temp));
         res.send(temp);
-
 	});
-
 });
+
+function addPurchase(hotelID, username, checkIn, checkOut, adults, kids, doges) {
+
+  // Wow this is so ugly lol
+
+  var sql = "INSERT into booking values(DEFAULT, \"" +
+  username + "\", \"" +
+  hotelID + "\", \"" +
+  checkIn + "\", \"" + // Check out this beautiful code!!!
+  checkOut + "\", " +
+  adults + "," +
+  kids + "," +
+  doges + ");";
+
+  console.log("sql add booking command: " + sql);
+
+  con.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log("Purchase Succesful");
+    });
+  return 0;
+}
 
 
 
@@ -399,7 +400,11 @@ router.post('/confirm', function(req, res) {
     countKids + "\nDoges:\t" +
     countDoges + "\nhotelID:\t" + hotelID);
 
-  //var result = AddUserBookings(req.session.index, hotelID, checkInDate, checkOutDate, countAdults, countKids, countDoges, -1);
+  //var result = AddUserBookings(req.session.username, hotelID, checkInDate, checkOutDate, countAdults, countKids, countDoges, -1);
+  console.log("Adding purchase to database...");
+  var result = addPurchase(hotelID, req.session.user, checkInDate, checkOutDate, countAdults, countKids, countDoges);
+  //var result = addPurchase(0, 0, 0, 0, 0, 0, 0);
+  console.log("Done!");
 
   if (result != 0) {
     console.log("Whoops");
@@ -492,7 +497,7 @@ router.post('/user.json', function(req, res) {
 ////////////////////////////////
 
 
-function AddUserBookings(userIndex, hotelID, checkIn, checkOut, adults, kids, doges, bookingID) {
+function AddUserBookings(username, hotelID, checkIn, checkOut, adults, kids, doges, bookingID) {
   // Now we also need to check if the user want to edit his booking
   // Or whether they just want to add a booking, adding a booking require a new bookingID
   // So we just call the function with -1 to create a new one, however, if the user is wanting
@@ -518,21 +523,6 @@ function AddUserBookings(userIndex, hotelID, checkIn, checkOut, adults, kids, do
 
   bookingID = Math.floor((Math.random() * 10000000) + 1);
   console.log("Created booking with ID: " + bookingID);
-
-  console.log("Bookings page before push: " + JSON.stringify(accounts[userIndex].bookings));
-
-
-  accounts[userIndex].bookings.push({
-    "hotelID": hotelID,
-    "bookingID": bookingID,
-    "checkIn": checkIn,
-    "checkOut": checkOut,
-    "adults": adults,
-    "kids": kids,
-    "doges": doges
-  });
-
-  console.log("Bookings page after push: " + JSON.stringify(accounts[userIndex].bookings));
 
   return 0;
 }
