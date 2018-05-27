@@ -10,7 +10,6 @@ var {
   OAuth2Client
 } = require('google-auth-library');
 var client = new OAuth2Client(CLIENT_ID);
-var hotels = [];
 // Accounts arrray, we load this from a file when the server starts
 accounts = [];
 
@@ -29,18 +28,9 @@ var purchases;
 // Database stuff
 ///////////////////////
 
-/* NOT SQL STUFF
-fs.readFile('data/hotels.json', 'utf8', function(err, data) {
-  console.log("Reading from database...");
-  hotels = JSON.parse(data);
-});
-*/
-
 fs.readFile('data/accounts.json', 'utf8', function(err, data) {
   accounts = JSON.parse(data);
 });
-
-
 
 ////////////////////
 // SQL STUFF HERE
@@ -61,21 +51,34 @@ var con = mysql.createConnection({
 
 
 
+console.log("Connecting to SQL database...");
 con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
-
-  console.log("Updating hotels...");
-  console.log("Connecting to SQL database...");
 });
 
+console.log("Updating hotels...");
 // Our request to get hotel data stuff
 var query = "SELECT * from hotel";
 con.query(query, function (err, result) {
     if (err) throw err;
-    console.log("Got: " + JSON.stringify(result));
+    //console.log("Got: " + JSON.stringify(result));
     hotels = result;
 });
+
+router.get('/getReviews', function(req, res){
+    var id = req.param("id");
+		var sql = "SELECT * from review where ID=" + id;
+    //res.send("blah");
+
+    con.query(sql, function (err, result) {
+        if (err) throw err;
+        console.log("Sending review: " + result);
+        res.send(result);
+	});
+});
+
+
 
 
 
@@ -136,14 +139,12 @@ router.get('/hotelListing', function(req, res) {
   console.log("Generating hotel page for: " + id);
   console.log("Hotel name: " + hotels[id].name);
   var template = handlebars.compile(listing);
-  var reviewHTML = ""; //generateReviewHTML(id); //TODO: Fix this
   console.log("Description: " + hotels[id].description);
   var data = {
     "name": hotels[id].name,
     "adress": hotels[id].address,
     "description": hotels[id].description,
     "price": hotels[id].price,
-    "reviews": reviewHTML,
     "lat": hotels[id].lat,
     "lng": hotels[id].lng
   };
@@ -260,13 +261,13 @@ router.post('/newReview', function(req, res) {
   var theMsg = req.param("msg");
   console.log("Adding review to hotel: " + hotelID + " By: " + theUser + " With: " + theMsg);
 
-  hotels[hotelID].review.push({
-    "reviewerName": theUser,
-    "text": theMsg
+  temp = "INSERT INTO review values(" + hotelID + ", \"" + theUser + "\", \"" + theMsg + "\");";
+  con.query(temp, function (err, result) {
+      if (err) throw err;
+      console.log("Updating database revew...: " + result);
+      //res.send(result);
+      res.send("success");
   });
-
-  console.log("Hotel review: " + JSON.stringify(hotels[hotelID].review));
-  res.send("success");
 });
 
 // When the user registers for an account do this stuff
@@ -572,19 +573,6 @@ function getHotelNameById(id) {
   console.log("Hotel not found, returning Unititled");
   return "Untitled";
 }
-
-// Given a hotel ID, will return a HTML string containing it's reviews
-function generateReviewHTML(hotelID) {
-  var amazingVariable = '';
-  console.log("Hotel ID: " + hotelID + " Reviews count: " + hotels[hotelID].review.length);
-
-  for (var i = 0; i < hotels[hotelID].review.length; i++) {
-    amazingVariable += '<p><b>' + hotels[hotelID].review[i].reviewerName + '</b>: ' + hotels[hotelID].review[i].text + '</p><hr>';
-  }
-  console.log("Generated: " + amazingVariable);
-  return amazingVariable;
-}
-
 
 // Very important function
 function doNothing() {

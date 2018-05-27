@@ -62,6 +62,7 @@ function Start() {
 
   //update our current session status
   getSessionDetails();
+  loadReviews();
 }
 
 // this function is run whenever the user scrolls through the page
@@ -883,4 +884,33 @@ function getCookie(cname) {
   }
   console.log("[getCookie] No cookies :(");
   return "";
+}
+
+//Generate review content
+// Given a hotel ID, will return a HTML string containing it's reviews
+function generateReviewHTML(reviewData) {
+  var amazingVariable = '';
+  console.log("Reviews count: " + reviewData.length);
+  for (var i = 0; i < reviewData.length; i++) {
+    appendReview(reviewData[i].reviewerName, reviewData[i].text);
+  }
+}
+
+function loadReviews() {
+  // Create new AJAX request
+  var xhttp = new XMLHttpRequest();
+
+  // Define behaviour for a response
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      // convert from string to JSON, populate hotels array
+      var reviews = JSON.parse(xhttp.responseText);
+      //console.log("Got reviews: " + json.stringify);
+      generateReviewHTML(reviews);
+    }
+  };
+  // Initiate connection
+  xhttp.open("GET", "getReviews?id=" + getParam("id"));
+  // Send request
+  xhttp.send();
 }
