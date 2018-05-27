@@ -913,3 +913,20 @@ function loadReviews() {
   // Send request
   xhttp.send();
 }
+
+function createUserPurchasesList() {
+  // Create new AJAX request
+  var xhttp = new XMLHttpRequest();
+
+  // Define behaviour for a response
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      // convert from string to JSON, populate hotels array
+      document.getElementById("myBookings").innerHTML = xhttp.responseText;
+    }
+  };
+  // Initiate connection
+  xhttp.open("GET", "getPurchases");
+  // Send request
+  xhttp.send();
+}

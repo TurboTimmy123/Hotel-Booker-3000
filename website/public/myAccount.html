@@ -45,7 +45,9 @@
       <div id="Bookings" class="tabcontent wobbleThis">
         <h3>My Bookings</h3>
         <p>Users purchased bookings will appear here</p>
-        {{{purchases}}}
+        <div id="myBookings">
+          <!--Insert here-->
+        </div>
       </div>
 
       <div id="Billing" class="tabcontent wobbleThis">
@@ -82,7 +84,8 @@
 
     <script>
       Start();
-      initializeEffects()
+      initializeEffects();
+      createUserPurchasesList();
     </script>
   </body>
 </html>

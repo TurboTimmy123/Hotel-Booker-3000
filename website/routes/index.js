@@ -108,6 +108,20 @@ router.get('/getReviews', function(req, res){
 	});
 });
 
+router.get('/getPurchases', function(req, res){
+    var sql = "SELECT * from booking where username=\"" + req.session.user + "\";";
+
+    con.query(sql, function (err, result) {
+        if (err) throw err;
+        console.log("SQL purchases response: " + JSON.stringify(result));
+        var temp = generateManageBookingsHTML(result);
+        console.log("Sending purchases: " + JSON.stringify(temp));
+        res.send(temp);
+
+	});
+
+});
+
 
 
 
@@ -196,10 +210,8 @@ router.get('/myAccount', function(req, res) {
   console.log("Generating accounts page for: " + req.session.user + " index:" + req.session.index);
   var template = handlebars.compile(accountPage);
 
-  //var purchasesResult = generateManageBookingsHTML(req.session.index);
   var data = {
-    "user": req.session.user,
-    "purchases": ""
+    "user": req.session.user
   };
 
   var result = template(data);
@@ -561,28 +573,26 @@ function findHotelsInRadius(lat, lng) {
 }
 
 // This function will create purchases listings on the accounts page
-function generateManageBookingsHTML(index) {
-  console.log("Generating purchased hotel list for index: " + index);
+function generateManageBookingsHTML(bookingData) {
+  console.log("Generating purchased hotel list");
 
   //console.log("Generating bookings html with index: " + index);
-  var amountOfPurchases = accounts[index].bookings.length;
-
+  var amountOfPurchases = bookingData.length;
   var reallyBigString = handlebars.compile(purchases);
   var data;
   var response = '';
-  console.log("Account index: " + index + " has: " + amountOfPurchases + " purchases");
+  console.log("Purchases: " + amountOfPurchases);
   for (var i = 0; i < amountOfPurchases; i++) {
     data = {
-      "hotelName": getHotelNameById(accounts[index].bookings[i].hotelID),
-      "checkIn": accounts[index].bookings[i].checkIn,
-      "checkOut": accounts[index].bookings[i].checkOut,
-      "adults": accounts[index].bookings[i].adults,
-      "kids": accounts[index].bookings[i].kids,
-      "doges": accounts[index].bookings[i].doges
+      "hotelName": getHotelNameById(bookingData[i].hotelID),
+      "checkIn": bookingData[i].checkIn,
+      "checkOut": bookingData[i].checkOut,
+      "adults": bookingData[i].adults,
+      "kids": bookingData[i].kids,
+      "doges": bookingData[i].doges
     };
     response += reallyBigString(data);
   }
-
   console.log("Generating purchases: " + response);
   return response;
 }

@@ -20,10 +20,10 @@ LOAD DATA LOCAL INFILE 'hotelData.txt' INTO TABLE hotel;
 
 // Create reviews table:
 create table review (
-uniqueId int NOT NULL,
+id int NOT NULL,
 reviewerName VARCHAR(30),
 text TEXT,
-FOREIGN KEY(uniqueID) REFERENCES hotel(uniqueID));
+FOREIGN KEY(id) REFERENCES hotel(id));
 
 //Data:
 insert into review values(1, "asdf", "asdf");
@@ -40,11 +40,14 @@ insert into accounts values("a", "a");
 
 // Create Bookings table:
 create table booking (
-bookingID INT,
+bookingID int NOT NULL AUTO_INCREMENT,
+username VARCHAR(30),
 hotelID INT,
 checkIn DATE,
 checkOut DATE,
 adults INT,
 kids INT,
 doges INT,
-PRIMARY KEY(bookingID));
+PRIMARY KEY(bookingID),
+FOREIGN KEY(userID) REFERENCES accounts(username),
+FOREIGN KEY(hotelID) REFERENCES hotel(id));
