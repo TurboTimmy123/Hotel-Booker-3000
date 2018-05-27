@@ -59,6 +59,11 @@ con.connect(function(err) {
 
 console.log("Updating hotels...");
 // Our request to get hotel data stuff
+// Ok so this could be optimized a bit better
+// However, due to the search function parsing the entire database
+// It's best if our nodejs server has all the hotels loaded up and ready to parse
+// In a bigger database, there'd be a better way to handle this, as with this
+// approach, we need to "redownload" the database to nodejs to update it
 var query = "SELECT * from hotel";
 con.query(query, function (err, result) {
     if (err) throw err;
@@ -66,14 +71,14 @@ con.query(query, function (err, result) {
     hotels = result;
 });
 
+// The client will make a request for reviews to a particular page
+// Eg: /getReviews?id=2
+// This get request returns a JSON object containing the reviews for that page
 router.get('/getReviews', function(req, res){
     var id = req.param("id");
 		var sql = "SELECT * from review where ID=" + id;
-    //res.send("blah");
-
     con.query(sql, function (err, result) {
         if (err) throw err;
-        console.log("Sending review: " + result);
         res.send(result);
 	});
 });

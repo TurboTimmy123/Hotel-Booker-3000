@@ -62,7 +62,6 @@ function Start() {
 
   //update our current session status
   getSessionDetails();
-  loadReviews();
 }
 
 // this function is run whenever the user scrolls through the page
