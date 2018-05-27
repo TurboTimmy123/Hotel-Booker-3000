@@ -104,8 +104,10 @@ router.get('/getPurchases', function(req, res){
 function addPurchase(hotelID, username, checkIn, checkOut, adults, kids, doges) {
 
   // Wow this is so ugly lol
+  bookingID = Math.floor((Math.random() * 10000000) + 1);
 
-  var sql = "INSERT into booking values(DEFAULT, \"" +
+  var sql = "INSERT into booking values(" +
+  bookingID + ", \"" +
   username + "\", \"" +
   hotelID + "\", \"" +
   checkIn + "\", \"" + // Check out this beautiful code!!!
@@ -579,7 +581,8 @@ function generateManageBookingsHTML(bookingData) {
       "checkOut": bookingData[i].checkOut,
       "adults": bookingData[i].adults,
       "kids": bookingData[i].kids,
-      "doges": bookingData[i].doges
+      "doges": bookingData[i].doges,
+      "bookingID": bookingData[i].bookingID
     };
     response += reallyBigString(data);
   }

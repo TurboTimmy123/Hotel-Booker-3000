@@ -170,7 +170,6 @@ div.searchListingTitle {}
 div.searchListingDescription {
   padding-left: 10px;
   float: left;
-  background-color: rgb(220, 220, 220);
 }
 
 div.priceBox {
@@ -448,7 +447,7 @@ div.captionStuff.w {
 }
 
 .left2 {
-  width: 20%;
+  width: 22%;
   height: 100%;
   margin-left: 0%;
   z-index: 7;
@@ -533,7 +532,7 @@ div.captionStuff.w {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   outline: none;
-  width: 70%;
+  width: 150px;
   padding: 7px;
   border: none;
   border-bottom: 1px solid #ddd;
