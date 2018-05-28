@@ -40,7 +40,7 @@ insert into accounts values("a", "a");
 
 // Create Bookings table:
 create table booking (
-bookingID int NOT NULL AUTO_INCREMENT,
+bookingID int NOT NULL,
 username VARCHAR(30),
 hotelID INT,
 checkIn DATE,
