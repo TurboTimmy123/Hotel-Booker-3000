@@ -337,7 +337,6 @@ router.post('/register', function(req, res) {
   accounts.push({
     "username": theUsername,
     "password": thePassword,
-    "bookings": []
   });
 
   req.session.user = theUsername;
@@ -457,8 +456,8 @@ router.post('/user.json', function(req, res) {
         accounts.push({
           "username": payload.name,
           "password": "memes",
-          "bookings": []
         });
+        addNewAccountToSQL(payload.name, "memes");
         req.session.index = getUserIndex(payload.name);
         console.log("Registered google user as: " + JSON.stringify(accounts[req.session.index]));
         console.log("Google users new index is: " + req.session.index);
