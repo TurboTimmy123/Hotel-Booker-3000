@@ -441,7 +441,9 @@ function cancelBooking(id) {
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       console.log("Cancel response: " + xhttp.responseText);
-      location.reload();
+      document.getElementById(id).remove();
+      alert("Succesfully removed!!!");
+      //location.reload();
     }
   };
 

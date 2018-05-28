@@ -1,4 +1,4 @@
-<div class="floatingWindow wobbleThis boughtHotels">
+<div id="{{bookingID}}" class="floatingWindow wobbleThis boughtHotels">
   <h3>Hotel:
     {{hotelName}}</h3>
   <p>checkIn:
@@ -13,6 +13,6 @@
     Doges:
     {{doges}}
   </p>
-  <button style="background-color: red" onclick="cancelBooking({{bookingID}})" class="button rightButton">Cancel Booking</button>
-  <button style="background-color: orange" onclick="editBooking({{bookingID}})" class="button rightButton">Edit</button>
+  <button style="background-color: red" onclick="cancelBooking({{bookingID}})" class="button wobbleThis rightButton">Cancel Booking</button>
+  <button style="background-color: orange" onclick="editBooking({{bookingID}})" class="button wobbleThis rightButton">Edit</button>
 </div>

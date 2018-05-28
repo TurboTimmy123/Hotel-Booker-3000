@@ -8,7 +8,7 @@ lng DOUBLE(8, 5),
 address TEXT,
 description TEXT,
 price INT,
-PRIMARY KEY(uniqueID));
+PRIMARY KEY(id));
 
 //Load data:
 LOAD DATA LOCAL INFILE 'hotelData.txt' INTO TABLE hotel;
@@ -49,5 +49,5 @@ adults INT,
 kids INT,
 doges INT,
 PRIMARY KEY(bookingID),
-FOREIGN KEY(userID) REFERENCES accounts(username),
+FOREIGN KEY(username) REFERENCES accounts(username),
 FOREIGN KEY(hotelID) REFERENCES hotel(id));
