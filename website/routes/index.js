@@ -34,9 +34,9 @@ var purchases;
 
 var con = mysql.createConnection({
   host: "localhost",
-  user: "root",
-  password: "asdfghjkl;\'",
-  database: 'dogeotels'
+  user: "yeet",
+  password: "yeet",
+  database: 'db'
 });
 
 // Perform initial connection
